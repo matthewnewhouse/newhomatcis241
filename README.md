@@ -8,3 +8,5 @@ Quote:
 
 
 Repository Link: https://github.com/matthewnewhouse/newhomatcis241.git 
+or
+git@github.com:matthewnewhouse/newhomatcis241.git
