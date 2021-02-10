@@ -65,3 +65,29 @@ man cd
 echo text >> fileName.txt
 '''
 
+**vim** - A command that will open up the vim editor so a file can be edited.
+'''
+vim fileName.txt.
+'''
+
+**chown** - A command that can be used to change file ownership.
+'''
+chown user file
+'''
+
+**chgrp** - A command that can be used to change a group's file ownership.
+'''
+chgrp group file
+'''
+
+**ln** - A command that can create a link to a file. The "-s" flag means that the link is symbolic.
+'''
+ln -s fileName linkName
+'''
+
+**mount** - A command used to attach file systems and removable devices.
+'''
+mount device directory
+'''
+
+
