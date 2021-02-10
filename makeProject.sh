@@ -4,7 +4,7 @@ mkdir $1
 
 cd $1
 
-git init 
+git init
 
 mkdir bin
 
@@ -22,6 +22,6 @@ echo $1 >> README.md
 
 touch .gitignore
 
-git add *
+git add -A
 
 git commit -m "Create initial structure."
