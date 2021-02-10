@@ -45,4 +45,23 @@ cat fileName
 file Glossary.md
 '''
 
+**cd** - A command that will change the current directory. Just "cd" will take the user back to their home directory.
+'''
+cd newhomatcis241/
+'''
+
+**touch** - A command that will create an empty file in the current directory.
+'''
+touch newFile.txt
+'''
+
+**man** - A command that will print the manual for the command the user specifies.
+'''
+man cd
+'''
+
+**echo** - A command that can move data into a file, ussually text. Uses the ">>" symbols to append to or create a file.
+'''
+echo text >> fileName.txt
+'''
 
