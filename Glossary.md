@@ -30,3 +30,19 @@ cp sourceDirectory newDirectory
 rm -r directoryName
 '''
 
+**chmod** - A command that can change access permissions for the user, the user's group, and others. An octal system can be used to specify permissions.
+'''
+chmod 777 fileName
+'''
+
+**cat** - A command that will concatenate files, or essentially prints the file.
+'''
+cat fileName
+'''
+
+**file** - A command that will display the type of a file.
+'''
+file Glossary.md
+'''
+
+
