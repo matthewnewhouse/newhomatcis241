@@ -22,6 +22,6 @@ echo $1 >> README.md
 
 touch .gitignore
 
-git add *
+git add -A
 
 git commit -m "Create initial structure."
