@@ -90,4 +90,38 @@ ln -s fileName linkName
 mount device directory
 '''
 
+**git add** - A command that will add changes to a file that can later be committed.
+'''
+git add fileName
+'''
+
+**git commit** - A command that will record file changes to a repository. Use "-m" flag to record a message.
+'''
+git commit -m "message"
+'''
+
+**git status** - A command that will show changes that need to be added or committed.
+'''
+git status
+'''
+
+**git push** - A command that will update remote repositories with file changes.
+'''
+git push
+'''
+
+**git pull** - A command that will pull updates from a remote repository and add the changes to the local repository.
+'''
+git pull
+'''
+
+**find** - A command that will locate files based on specfic criteria like a file name. Use "-name", "-type", etc.
+'''
+find /home -name "text.txt"
+'''
+
+**history** - A command that will print items in regard to previous commands. Use "-c" to clear history.
+'''
+history -c
+'''
 
