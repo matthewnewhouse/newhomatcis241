@@ -1,6 +1,10 @@
-Questions 1:
+Question 1:
 #!/usr/bin/env bash
 
 sed -E 's/color/colour/g;s/honor/honour/g;s/behavior/behaviour/g;s/humor/humour/g' /usr/share/dict/american-english  > new_dict.txt
+
+Question 2:
+
+sed -E 's/FOOPS/if/g' /home/woodriir/241/prog.c | sed -E 's/BEEPBOOP/\/\*\*/g' > MyFile.c
 
 
