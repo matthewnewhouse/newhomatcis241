@@ -4,8 +4,6 @@ mkdir $1
 
 cd $1
 
-git init
-
 mkdir bin
 
 mkdir include
