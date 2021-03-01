@@ -7,4 +7,8 @@ Question 2:
 
 sed -E 's/FOOPS/if/g' /home/woodriir/241/prog.c | sed -E 's/BEEPBOOP/\/\*\*/g' > MyFile.c
 
+Question 3:
+
+sed -E 's/<\/script>/<\/script>\n/g' faculty | sed -E '/<script.*>/,/<\/script>/d' > faculty.index
+
 
