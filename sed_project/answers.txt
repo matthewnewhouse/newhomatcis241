@@ -11,4 +11,8 @@ Question 3:
 
 sed -E 's/<\/script>/<\/script>\n/g' faculty | sed -E '/<script.*>/,/<\/script>/d' > faculty.index
 
+Question 4:
+
+sed -E -n '/\#[ \t]*define/p' /usr/include/limits.h > clean_limits.h
+
 
