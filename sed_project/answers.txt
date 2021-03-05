@@ -17,7 +17,7 @@ sed -E -n '/\#[ \t]*define/p' /usr/include/limits.h > clean_limits.h
 
 Question 5:
 
-sed -E -i[dna.txt.ORIG] 's/gattaca/\@\@GREATMOVIE\@\@/g' dna.txt
+sed -E -i.ORIG 's/gattaca/\@\@GREATMOVIE\@\@/g' dna.txt
 
 Question 6:
 
