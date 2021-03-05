@@ -51,3 +51,7 @@ s/57/W/g
 s/58/X/g
 s/59/Y/g
 s/5A/Z/g
+
+Question 7:
+sed -n '50,$p' lyrics |sed '1!G;h;$!d' > ending_lyrics
+
