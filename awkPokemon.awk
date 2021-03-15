@@ -396,6 +396,7 @@ END{
 	avgSPAttack/=lastNum
 	avgSPDefense/=lastNum
 	avgSpeed/=lastNum
+
 	bugStats["total"]/=bugStats["num"]
 	bugStats["HP"]/=bugStats["num"]
 	bugStats["attack"]/=bugStats["num"]
@@ -403,6 +404,92 @@ END{
 	bugStats["SPattack"]/=bugStats["num"]
 	bugStats["SPdefense"]/=bugStats["num"]
 	bugStats["speed"]/=bugStats["num"]
+
+	darkStats["total"]/=darkStats["num"]
+	darkStats["HP"]/=darkStats["num"]
+	darkStats["attack"]/=darkStats["num"]
+	darkStats["defense"]/=darkStats["num"]
+	darkStats["SPattack"]/=darkStats["num"]
+	darkStats["SPdefense"]/=darkStats["num"]
+	darkStats["speed"]/=darkStats["num"]
+	bugStats["total"]/=bugStats["num"]
+
+	dragonStats["HP"]/=          dragonStats["num"]
+	dragonStats["attack"]/=      dragonStats["num"]
+	dragonStats["defense"]/=     dragonStats["num"]
+	dragonStats["SPattack"]/=    dragonStats["num"]
+	dragonStats["SPdefense"]/=   dragonStats["num"]
+	dragonStats["speed"]/=       dragonStats["num"]
+
+	electricStats["HP"]/=          electricStats["num"]
+	electricStats["attack"]/=      electricStats["num"]
+	electricStats["defense"]/=     electricStats["num"]
+	electricStats["SPattack"]/=    electricStats["num"]
+	electricStats["SPdefense"]/=   electricStats["num"]
+	electricStats["speed"]/=       electricStats["num"]
+
+	fairyStats["HP"]/=          fairyStats["num"]
+	fairyStats["attack"]/=      fairyStats["num"]
+	fairyStats["defense"]/=     fairyStats["num"]
+	fairyStats["SPattack"]/=    fairyStats["num"]
+	fairyStats["SPdefense"]/=   fairyStats["num"]
+	fairyStats["speed"]/=       fairyStats["num"]
+
+	fightingStats["HP"]/=          fightingStats["num"]
+	fightingStats["attack"]/=      fightingStats["num"]
+	fightingStats["defense"]/=     fightingStats["num"]
+	fightingStats["SPattack"]/=    fightingStats["num"]
+	fightingStats["SPdefense"]/=   fightingStats["num"]
+	fightingStats["speed"]/=       fightingStats["num"]
+
+	fireStats["HP"]/=          fireStats["num"]
+	fireStats["attack"]/=      fireStats["num"]
+	fireStats["defense"]/=     fireStats["num"]
+	fireStats["SPattack"]/=    fireStats["num"]
+	fireStats["SPdefense"]/=   fireStats["num"]
+	fireStats["speed"]/=       fireStats["num"]
+
+	flyingStats["HP"]/=          flyingStats["num"]
+	flyingStats["attack"]/=      flyingStats["num"]
+	flyingStats["defense"]/=     flyingStats["num"]
+	flyingStats["SPattack"]/=    flyingStats["num"]
+	flyingStats["SPdefense"]/=   flyingStats["num"]
+	flyingStats["speed"]/=       flyingStats["num"]
+
+	ghostStats["HP"]/=          ghostStats["num"]
+	ghostStats["attack"]/=      ghostStats["num"]
+	ghostStats["defense"]/=     ghostStats["num"]
+	ghostStats["SPattack"]/=    ghostStats["num"]
+	ghostStats["SPdefense"]/=   ghostStats["num"]
+	ghostStats["speed"]/=       ghostStats["num"]
+
+	grassStats["HP"]/=          grassStats["num"]
+	grassStats["attack"]/=      grassStats["num"]
+	grassStats["defense"]/=     grassStats["num"]
+	grassStats["SPattack"]/=    grassStats["num"]
+	grassStats["SPdefense"]/=   grassStats["num"]
+	grassStats["speed"]/=       grassStats["num"]
+
+	groundStats["HP"]/=          groundStats["num"]
+	groundStats["attack"]/=      groundStats["num"]
+	groundStats["defense"]/=     groundStats["num"]
+	groundStats["SPattack"]/=    groundStats["num"]
+	groundStats["SPdefense"]/=   groundStats["num"]
+	groundStats["speed"]/=       groundStats["num"]
+
+	iceStats["HP"]/=          iceStats["num"]
+	iceStats["attack"]/=      iceStats["num"]
+	iceStats["defense"]/=     iceStats["num"]
+	iceStats["SPattack"]/=    iceStats["num"]
+	iceStats["SPdefense"]/=   iceStats["num"]
+	iceStats["speed"]/=       iceStats["num"]
+
+	normalStats["HP"]/=          normalStats["num"]
+	normalStats["attack"]/=      normalStats["num"]
+	normalStats["defense"]/=     normalStats["num"]
+	normalStats["SPattack"]/=    normalStats["num"]
+	normalStats["SPdefense"]/=   normalStats["num"]
+	normalStats["speed"]/=       normalStats["num"]
 	print "---------------------------------------------------------------"
 	print "Most Powerful Pokemon- Stat Total of " strongestTotal
 	print strongestName
