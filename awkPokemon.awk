@@ -127,6 +127,14 @@ waterTotal = 0
 		}
 	}
 	if($3 == "Dark" ||  $4 == "Dark" ){
+		darkStats["total"]+=$5
+		darkStats["HP"]+=$6
+		darkStats["attack"]+=$7
+		darkStats["defense"]+=$8
+		darkStats["SPattack"]+=$9
+		darkStats["SPdefense"]+=$10
+		darkStats["speed"]+=$11
+		darkStats["num"]+=1
 		if(darkTotal<$5){
 			darkTotal = $5
 			powDark = $2
@@ -136,6 +144,14 @@ waterTotal = 0
 		}
 	 }
 	 if($3 == "Dragon" ||  $4 == "Dragon" ){
+		 dragonStats["total"]+=$5
+		 dragonStats["HP"]+=$6
+		 dragonStats["attack"]+=$7
+		 dragonStats["defense"]+=$8
+		 dragonStats["SPattack"]+=$9
+		 dragonStats["SPdefense"]+=$10
+		 dragonStats["speed"]+=$11
+		 dragonStats["num"]+=1
 		 if(dragonTotal<$5){
 			 dragonTotal = $5
 			 powDragon = $2
@@ -146,6 +162,14 @@ waterTotal = 0
 	 
 	 }
 	 if($3 == "Electric" ||  $4 == "Electric" ){
+		 electricStats["total"]+=$5
+		 electricStats["HP"]+=$6
+		 electricStats["attack"]+=$7
+		 electricStats["defense"]+=$8
+		 electricStats["SPattack"]+=$9
+		 electricStats["SPdefense"]+=$10
+		 electricStats["speed"]+=$11
+	         electricStats["num"]+=1
 
 		 if(electricTotal<$5){
 
@@ -163,6 +187,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Fairy" ||  $4 == "Fairy" ){
+		fairyStats["total"]+=$5
+		fairyStats["HP"]+=$6
+		fairyStats["attack"]+=$7
+		fairyStats["defense"]+=$8
+		fairyStats["SPattack"]+=$9
+		fairyStats["SPdefense"]+=$10
+		fairyStats["speed"]+=$11
+		fairyStats["num"]+=1
 
 		if(fairyTotal<$5){
 
@@ -180,6 +212,14 @@ waterTotal = 0
 
 		        }
 	if($3 == "Fighting" ||  $4 == "Fighting" ){
+		fightingStats["total"]+=$5
+		fightingStats["HP"]+=$6
+		fightingStats["attack"]+=$7
+		fightingStats["defense"]+=$8
+		fightingStats["SPattack"]+=$9
+		fightingStats["SPdefense"]+=$10
+		fightingStats["speed"]+=$11
+		fightingStats["num"]+=1
 
 		if(fightingTotal<$5){
 
@@ -197,6 +237,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Fire" ||  $4 == "Fire" ){
+		fireStats["total"]+=$5
+		fireStats["HP"]+=$6
+		fireStats["attack"]+=$7
+		fireStats["defense"]+=$8
+		fireStats["SPattack"]+=$9
+		fireStats["SPdefense"]+=$10
+		fireStats["speed"]+=$11
+		fireStats["num"]+=1
 
 		if(fireTotal<$5){
 
@@ -214,6 +262,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Flying" ||  $4 == "Flying" ){
+		flyingStats["total"]+=$5
+		flyingStats["HP"]+=$6
+		flyingStats["attack"]+=$7
+		flyingStats["defense"]+=$8
+		flyingStats["SPattack"]+=$9
+		flyingStats["SPdefense"]+=$10
+		flyingStats["speed"]+=$11
+		flyingStats["num"]+=1
 		if(flyingTotal<$5){
 			flyingTotal = $5
 			powFlying = $2
@@ -223,6 +279,14 @@ waterTotal = 0
 		}
 	}
 	if($3 == "Ghost" ||  $4 == "Ghost" ){
+		ghostStats["total"]+=$5
+		ghostStats["HP"]+=$6
+		ghostStats["attack"]+=$7
+		ghostStats["defense"]+=$8
+		ghostStats["SPattack"]+=$9
+		ghostStats["SPdefense"]+=$10
+		ghostStats["speed"]+=$11
+		ghostStats["num"]+=1
 		if(ghostTotal<$5){
 			ghostTotal = $5
 			powGhost = $2
@@ -232,7 +296,14 @@ waterTotal = 0
 		}
 	}
 	if($3 == "Grass" ||  $4 == "Grass" ){
-
+		grassStats["total"]+=$5
+		grassStats["HP"]+=$6
+		grassStats["attack"]+=$7
+		grassStats["defense"]+=$8
+		grassStats["SPattack"]+=$9
+		grassStats["SPdefense"]+=$10
+		grassStats["speed"]+=$11
+		grassStats["num"]+=1
 		if(grassTotal<$5){
 
 			grassTotal = $5
@@ -240,15 +311,21 @@ waterTotal = 0
 			powGrass = $2
 
 		}
-
 		else if (grassTotal == $5){
 
 			powGrass = powGrass ", " $2
 
 		}
-
 	}
 	if($3 == "Ground" ||  $4 == "Ground" ){
+		groundStats["total"]+=$5
+		groundStats["HP"]+=$6
+		groundStats["attack"]+=$7
+		groundStats["defense"]+=$8
+		groundStats["SPattack"]+=$9
+		groundStats["SPdefense"]+=$10
+		groundStats["speed"]+=$11
+		groundStats["num"]+=1
 
 		if(groundTotal<$5){
 
@@ -266,6 +343,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Ice" ||  $4 == "Ice" ){
+		iceStats["total"]+=$5
+		iceStats["HP"]+=$6
+		iceStats["attack"]+=$7
+		iceStats["defense"]+=$8
+		iceStats["SPattack"]+=$9
+		iceStats["SPdefense"]+=$10
+		iceStats["speed"]+=$11
+		iceStats["num"]+=1
 
 		if(iceTotal<$5){
 
@@ -283,6 +368,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Normal" ||  $4 == "Normal" ){
+		normalStats["total"]+=$5
+		normalStats["HP"]+=$6
+		normalStats["attack"]+=$7
+		normalStats["defense"]+=$8
+		normalStats["SPattack"]+=$9
+		normalStats["SPdefense"]+=$10
+		normalStats["speed"]+=$11
+		normalStats["num"]+=1
 
 		if(normalTotal<$5){
 
@@ -300,6 +393,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Poison" ||  $4 == "Poison" ){
+		poisonStats["total"]+=$5
+		poisonStats["HP"]+=$6
+		poisonStats["attack"]+=$7
+		poisonStats["defense"]+=$8
+		poisonStats["SPattack"]+=$9
+		poisonStats["SPdefense"]+=$10
+		poisonStats["speed"]+=$11
+		poisonStats["num"]+=1
 
 		if(poisonTotal<$5){
 
@@ -317,6 +418,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Psychic" ||  $4 == "Psychic" ){
+		psychicStats["total"]+=$5
+		psychicStats["HP"]+=$6
+		psychicStats["attack"]+=$7
+		psychicStats["defense"]+=$8
+		psychicStats["SPattack"]+=$9
+		psychicStats["SPdefense"]+=$10
+		psychicStats["speed"]+=$11
+		psychicStats["num"]+=1
 
 		if(psychicTotal<$5){
 
@@ -334,6 +443,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Rock" ||  $4 == "Rock" ){
+		rockStats["total"]+=$5
+		rockStats["HP"]+=$6
+		rockStats["attack"]+=$7
+		rockStats["defense"]+=$8
+		rockStats["SPattack"]+=$9
+		rockStats["SPdefense"]+=$10
+		rockStats["speed"]+=$11
+		rockStats["num"]+=1
 
 	if(rockTotal<$5){
 
@@ -351,6 +468,14 @@ waterTotal = 0
 
 	}
 	if($3 == "Steel" ||  $4 == "Steel" ){
+		steelStats["total"]+=$5
+		steelStats["HP"]+=$6
+		steelStats["attack"]+=$7
+		steelStats["defense"]+=$8
+		steelStats["SPattack"]+=$9
+		steelStats["SPdefense"]+=$10
+		steelStats["speed"]+=$11
+		steelStats["num"]+=1
 
 		if(steelTotal<$5){
 
@@ -367,8 +492,15 @@ waterTotal = 0
 	}
 	}
 
-	
 	if($3 == "Water" ||  $4 == "Water" ){
+		waterStats["total"]+=$5
+		waterStats["HP"]+=$6
+		waterStats["attack"]+=$7
+		waterStats["defense"]+=$8
+		waterStats["SPattack"]+=$9
+		waterStats["SPdefense"]+=$10
+		waterStats["speed"]+=$11
+		waterStats["num"]+=1
 
 		if(waterTotal<$5){
 
@@ -412,8 +544,8 @@ END{
 	darkStats["SPattack"]/=darkStats["num"]
 	darkStats["SPdefense"]/=darkStats["num"]
 	darkStats["speed"]/=darkStats["num"]
-	bugStats["total"]/=bugStats["num"]
-
+	
+	dragonStats["total"]/=       dragonStats["num"]
 	dragonStats["HP"]/=          dragonStats["num"]
 	dragonStats["attack"]/=      dragonStats["num"]
 	dragonStats["defense"]/=     dragonStats["num"]
@@ -421,6 +553,7 @@ END{
 	dragonStats["SPdefense"]/=   dragonStats["num"]
 	dragonStats["speed"]/=       dragonStats["num"]
 
+	electricStats["total"]/=       electricStats["num"]
 	electricStats["HP"]/=          electricStats["num"]
 	electricStats["attack"]/=      electricStats["num"]
 	electricStats["defense"]/=     electricStats["num"]
@@ -428,6 +561,7 @@ END{
 	electricStats["SPdefense"]/=   electricStats["num"]
 	electricStats["speed"]/=       electricStats["num"]
 
+	fairyStats["total"]/=       fairyStats["num"]
 	fairyStats["HP"]/=          fairyStats["num"]
 	fairyStats["attack"]/=      fairyStats["num"]
 	fairyStats["defense"]/=     fairyStats["num"]
@@ -435,6 +569,7 @@ END{
 	fairyStats["SPdefense"]/=   fairyStats["num"]
 	fairyStats["speed"]/=       fairyStats["num"]
 
+	fightingStats["total"]/=       fightingStats["num"]
 	fightingStats["HP"]/=          fightingStats["num"]
 	fightingStats["attack"]/=      fightingStats["num"]
 	fightingStats["defense"]/=     fightingStats["num"]
@@ -442,6 +577,7 @@ END{
 	fightingStats["SPdefense"]/=   fightingStats["num"]
 	fightingStats["speed"]/=       fightingStats["num"]
 
+	fireStats["total"]/=       fireStats["num"]
 	fireStats["HP"]/=          fireStats["num"]
 	fireStats["attack"]/=      fireStats["num"]
 	fireStats["defense"]/=     fireStats["num"]
@@ -449,6 +585,7 @@ END{
 	fireStats["SPdefense"]/=   fireStats["num"]
 	fireStats["speed"]/=       fireStats["num"]
 
+	flyingStats["total"]/=       flyingStats["num"]
 	flyingStats["HP"]/=          flyingStats["num"]
 	flyingStats["attack"]/=      flyingStats["num"]
 	flyingStats["defense"]/=     flyingStats["num"]
@@ -456,6 +593,7 @@ END{
 	flyingStats["SPdefense"]/=   flyingStats["num"]
 	flyingStats["speed"]/=       flyingStats["num"]
 
+	ghostStats["total"]/=       ghostStats["num"]
 	ghostStats["HP"]/=          ghostStats["num"]
 	ghostStats["attack"]/=      ghostStats["num"]
 	ghostStats["defense"]/=     ghostStats["num"]
@@ -463,6 +601,7 @@ END{
 	ghostStats["SPdefense"]/=   ghostStats["num"]
 	ghostStats["speed"]/=       ghostStats["num"]
 
+	grassStats["total"]/=       grassStats["num"]
 	grassStats["HP"]/=          grassStats["num"]
 	grassStats["attack"]/=      grassStats["num"]
 	grassStats["defense"]/=     grassStats["num"]
@@ -470,6 +609,7 @@ END{
 	grassStats["SPdefense"]/=   grassStats["num"]
 	grassStats["speed"]/=       grassStats["num"]
 
+	groundStats["total"]/=       groundStats["num"]
 	groundStats["HP"]/=          groundStats["num"]
 	groundStats["attack"]/=      groundStats["num"]
 	groundStats["defense"]/=     groundStats["num"]
@@ -477,6 +617,7 @@ END{
 	groundStats["SPdefense"]/=   groundStats["num"]
 	groundStats["speed"]/=       groundStats["num"]
 
+	iceStats["total"]/=       iceStats["num"]
 	iceStats["HP"]/=          iceStats["num"]
 	iceStats["attack"]/=      iceStats["num"]
 	iceStats["defense"]/=     iceStats["num"]
@@ -484,12 +625,53 @@ END{
 	iceStats["SPdefense"]/=   iceStats["num"]
 	iceStats["speed"]/=       iceStats["num"]
 
+	normalStats["total"]/=       normalStats["num"]
 	normalStats["HP"]/=          normalStats["num"]
 	normalStats["attack"]/=      normalStats["num"]
 	normalStats["defense"]/=     normalStats["num"]
 	normalStats["SPattack"]/=    normalStats["num"]
 	normalStats["SPdefense"]/=   normalStats["num"]
 	normalStats["speed"]/=       normalStats["num"]
+
+	poisonStats["total"]/=       poisonStats["num"]
+	poisonStats["HP"]/=          poisonStats["num"]
+	poisonStats["attack"]/=      poisonStats["num"]
+	poisonStats["defense"]/=     poisonStats["num"]
+	poisonStats["SPattack"]/=    poisonStats["num"]
+	poisonStats["SPdefense"]/=   poisonStats["num"]
+	poisonStats["speed"]/=       poisonStats["num"]
+
+	psychicStats["total"]/=       psychicStats["num"]
+	psychicStats["HP"]/=          psychicStats["num"]
+	psychicStats["attack"]/=      psychicStats["num"]
+	psychicStats["defense"]/=     psychicStats["num"]
+	psychicStats["SPattack"]/=    psychicStats["num"]
+	psychicStats["SPdefense"]/=   psychicStats["num"]
+	psychicStats["speed"]/=       psychicStats["num"]
+
+	rockStats["total"]/=       rockStats["num"]
+	rockStats["HP"]/=          rockStats["num"]
+	rockStats["attack"]/=      rockStats["num"]
+	rockStats["defense"]/=     rockStats["num"]
+	rockStats["SPattack"]/=    rockStats["num"]
+	rockStats["SPdefense"]/=   rockStats["num"]
+	rockStats["speed"]/=       rockStats["num"]
+
+	steelStats["total"]/=       steelStats["num"]
+	steelStats["HP"]/=          steelStats["num"]
+	steelStats["attack"]/=      steelStats["num"]
+	steelStats["defense"]/=     steelStats["num"]
+	steelStats["SPattack"]/=    steelStats["num"]
+	steelStats["SPdefense"]/=   steelStats["num"]
+	steelStats["speed"]/=       steelStats["num"]
+
+	waterStats["total"]/=       waterStats["num"]
+	waterStats["HP"]/=          waterStats["num"]
+	waterStats["attack"]/=      waterStats["num"]
+	waterStats["defense"]/=     waterStats["num"]
+	waterStats["SPattack"]/=    waterStats["num"]
+	waterStats["SPdefense"]/=   waterStats["num"]
+	waterStats["speed"]/=       waterStats["num"]
 	print "---------------------------------------------------------------"
 	print "Most Powerful Pokemon- Stat Total of " strongestTotal
 	print strongestName
@@ -543,7 +725,7 @@ END{
 	print "Dragon:     " 
 	print "      " "Total -      " dragonStats["total"]
 	print "      " "HP -          " dragonStats["HP"]
-	print "      " "Attack -      " dragonStats["attack"]
+	print "      " "Attack -     " dragonStats["attack"]
 	print "      " "Defense -     " dragonStats["defense"]
 	print "      " "SP Attack -   " dragonStats["SPattack"]
 	print "      " "SP Defense -  " dragonStats["SPdefense"]
@@ -567,7 +749,7 @@ END{
 	print "Fighting:   " 
 	print "      " "Total -      " fightingStats["total"]
 	print "      " "HP -          " fightingStats["HP"]
-	print "      " "Attack -      " fightingStats["attack"]
+	print "      " "Attack -     " fightingStats["attack"]
 	print "      " "Defense -     " fightingStats["defense"]
 	print "      " "SP Attack -   " fightingStats["SPattack"]
 	print "      " "SP Defense -  " fightingStats["SPdefense"]
@@ -648,7 +830,7 @@ END{
 	print "      " "Total -      " rockStats["total"]
 	print "      " "HP -          " rockStats["HP"]
 	print "      " "Attack -      " rockStats["attack"]
-	print "      " "Defense -     " rockStats["defense"]
+	print "      " "Defense -    " rockStats["defense"]
 	print "      " "SP Attack -   " rockStats["SPattack"]
 	print "      " "SP Defense -  " rockStats["SPdefense"]
 	print "      " "Speed -       " rockStats["speed"]
@@ -656,7 +838,7 @@ END{
 	print "      " "Total -      " steelStats["total"]
 	print "      " "HP -          " steelStats["HP"]
 	print "      " "Attack -      " steelStats["attack"]
-	print "      " "Defense -     " steelStats["defense"]
+	print "      " "Defense -    " steelStats["defense"]
 	print "      " "SP Attack -   " steelStats["SPattack"]
 	print "      " "SP Defense -  " steelStats["SPdefense"]
 	print "      " "Speed -       " steelStats["speed"]
