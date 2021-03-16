@@ -98,26 +98,104 @@ waterTotal = 0
 		$2=$2" Giratina"
        	}
 
-{
-	if (strongestTotal < $5 && $2!= "Name"){
-		strongestTotal = $5
-		strongestName=$2
-		}
-	else if (strongestTotal == $5 && $2!= "Name"){
-		strongestName= strongestName "\n"
-		strongestName= strongestName $2
-		}
+/Speed Forme/{
+	while(substr($2,0,5)!~"Speed"){
+		$2=substr($2,2)
+	}
+	$2=$2" Deoxys"
 }
 
 {
 	if (strongestTotal < $5 && $2!= "Name"){
 		strongestTotal = $5
 		strongestName=$2
-	}
+		}
 	else if (strongestTotal == $5 && $2!= "Name"){
-		strongestName= strongestName "\n"
-		strongestName= strongestName $2
+		strongestName= strongestName ", " $2
+		}
+}
+
+{
+	if (highestHP < $6 && $2!= "Name"){
+		highestHP = $6
+		HPname=$2
 	}
+	else if (highestHP == $6 && $2!= "Name"){
+		HPname= HPname ", " $2
+	}
+}
+
+{
+	if (highestAttack < $7 && $2!= "Name"){
+		highestAttack = $7
+		attackName=$2
+	}
+	else if (highestAttack == $7 && $2!= "Name"){
+		attackName= attackName ", " $2
+}
+}
+{
+	if (highestDefense < $8 && $2!= "Name"){
+		highestDefense = $8
+		defenseName=$2
+	}
+	else if (highestDefense == $8 && $2!= "Name"){
+		defenseName= defenseName ", " $2
+}
+}
+
+{
+
+	if (highestSPattack < $9 && $2!= "Name"){
+
+		highestSPattack = $9
+
+		SPattackName=$2
+
+	}
+
+	else if (highestSPattack == $9 && $2!= "Name"){
+
+		SPattackName= SPattackName ", " $2
+
+	}
+
+}
+
+{
+
+	if (highestSPdefense < $10 && $2!= "Name"){
+
+		highestSPdefense = $10
+
+		SPdefenseName=$2
+
+	}
+
+	else if (highestSPdefense == $10 && $2!= "Name"){
+
+		SPdefenseName= SPdefenseName ", " $2
+
+	}
+
+}
+
+{
+
+	if (highestSpeed < $11 && $2!= "Name"){
+
+		highestSpeed = $11
+
+		speedName=$2
+
+	}
+
+	else if (highestSpeed == $11 && $2!= "Name"){
+
+		speedName= speedName ", " $2
+
+	}
+
 }
 
 {
@@ -695,11 +773,11 @@ END{
 	waterStats["SPattack"]/=    waterStats["num"]
 	waterStats["SPdefense"]/=   waterStats["num"]
 	waterStats["speed"]/=       waterStats["num"]
-	print "---------------------------------------------------------------"
-	print "Most Powerful Pokemon- Stat Total of " strongestTotal
-	print strongestName
-	print "---------------------------------------------------------------"
-	print "Most Powerful Pokemon of Each Type:"
+	print "------------------------------------------------------------------"
+	print "Most Powerful Pokemon:\n"
+	print "Stat Total of " strongestTotal " - " strongestName
+	print "------------------------------------------------------------------"
+	print "Most Powerful Pokemon of Each Type:\n"
 	print "Bug:        " powBug
 	print "Dark:       " powDark 
 	print "Dragon:     " powDragon
@@ -718,16 +796,16 @@ END{
 	print "Rock:       " powRock
 	print "Steel:      " powSteel
 	print "Water:      " powWater
-	print "---------------------------------------------------------------"
-	print "Pokemon With Highest Stats:"
-	print "HP: "
-	print "Attack: "
-	print "Defense: "
-	print "SP Attack: "
-	print "SP Defense: "
-	print "Speed: "
-	print "---------------------------------------------------------------"
-	print "Average Stats Of All Pokemon:"
+	print "------------------------------------------------------------------"
+	print "Pokemon With Highest Stats:\n"
+	print "HP Stat of " highestHP ":           " HPname
+	print "Attack Stat of " highestAttack ":       " attackName
+	print "Defense Stat of " highestDefense ":      " defenseName
+	print "SP Attack Stat of " highestSPattack ":    " SPattackName
+	print "SP Defense Stat of " highestSPdefense ":   " SPdefenseName
+	print "Speed Stat of " highestSpeed ":        " speedName
+	print "------------------------------------------------------------------"
+	print "Average Stats Of All Pokemon:\n"
 	print "Total:      " avgTotal
 	print "HP:          " avgHP
 	print "Attack:      " avgAttack
@@ -735,8 +813,8 @@ END{
 	print "SP Attack:   " avgSPAttack
 	print "SP Defense:  " avgSPDefense
 	print "Speed:       " avgSpeed
-	print "---------------------------------------------------------------"
-	print "Average Stats of All Types:"
+	print "------------------------------------------------------------------"
+	print "Average Stats of All Types:\n"
 	print "Bug:        "
 	print "      " "Total -      " bugStats["total"]
 	print "      " "HP -          " bugStats["HP"]
@@ -881,5 +959,5 @@ END{
 	print "      " "SP Attack -   " waterStats["SPattack"]
 	print "      " "SP Defense -  " waterStats["SPdefense"]
 	print "      " "Speed -       " waterStats["speed"]
-	print "---------------------------------------------------------------"
+	print "------------------------------------------------------------------"
 }
