@@ -2,6 +2,18 @@ BEGIN{
 FS =","
 strongestTotal = 0
 strongestName = ""
+highestHP = 0
+HPname = ""
+highestAttack = 0
+attackName = ""
+highestDefense = 0
+defenseName = 0
+highestSPattack = 0
+SPattackName = ""
+highestSPdefense = 0
+SPdefenseName = ""
+highestSpeed = 0
+speedName = ""
 avgTotal=0
 avgHP=0
 avgAttack=0
@@ -95,6 +107,17 @@ waterTotal = 0
 		strongestName= strongestName "\n"
 		strongestName= strongestName $2
 		}
+}
+
+{
+	if (strongestTotal < $5 && $2!= "Name"){
+		strongestTotal = $5
+		strongestName=$2
+	}
+	else if (strongestTotal == $5 && $2!= "Name"){
+		strongestName= strongestName "\n"
+		strongestName= strongestName $2
+	}
 }
 
 {
@@ -676,15 +699,6 @@ END{
 	print "Most Powerful Pokemon- Stat Total of " strongestTotal
 	print strongestName
 	print "---------------------------------------------------------------"
-	print "Average Stats Of All Pokemon:"
-	print "Total:      " avgTotal
-	print "HP:          " avgHP
-	print "Attack:      " avgAttack
-	print "Defense:     " avgDefense
-	print "SP Attack:   " avgSPAttack
-	print "SP Defense:  " avgSPDefense
-	print "Speed:       " avgSpeed
-	print "---------------------------------------------------------------"
 	print "Most Powerful Pokemon of Each Type:"
 	print "Bug:        " powBug
 	print "Dark:       " powDark 
@@ -704,6 +718,23 @@ END{
 	print "Rock:       " powRock
 	print "Steel:      " powSteel
 	print "Water:      " powWater
+	print "---------------------------------------------------------------"
+	print "Pokemon With Highest Stats:"
+	print "HP: "
+	print "Attack: "
+	print "Defense: "
+	print "SP Attack: "
+	print "SP Defense: "
+	print "Speed: "
+	print "---------------------------------------------------------------"
+	print "Average Stats Of All Pokemon:"
+	print "Total:      " avgTotal
+	print "HP:          " avgHP
+	print "Attack:      " avgAttack
+	print "Defense:     " avgDefense
+	print "SP Attack:   " avgSPAttack
+	print "SP Defense:  " avgSPDefense
+	print "Speed:       " avgSpeed
 	print "---------------------------------------------------------------"
 	print "Average Stats of All Types:"
 	print "Bug:        "
