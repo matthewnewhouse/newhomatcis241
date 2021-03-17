@@ -1,0 +1,192 @@
+------------------------------------------------------------------
+Most Powerful Pokemon:
+
+Stat Total of 780 - Mega Mewtwo X, Mega Mewtwo Y, Mega Rayquaza
+------------------------------------------------------------------
+Most Powerful Pokemon of Each Type:
+
+Bug:        Mega Pinsir, Mega Scizor, Mega Heracross, Genesect
+Dark:       Mega Tyranitar
+Dragon:     Mega Rayquaza
+Electric:   Zekrom
+Fairy:      Mega Diancie
+Fighting:   Mega Mewtwo X
+Fire:       Primal Groudon
+Flying:     Mega Rayquaza
+Ghost:      Altered Forme Giratina, Origin Forme Giratina
+Grass:      Mega Sceptile
+Ground:     Primal Groudon
+Ice:        Black Kyurem, White Kyurem
+Normal:     Arceus
+Poison:     Mega Venusaur
+Psychic:    Mega Mewtwo X, Mega Mewtwo Y
+Rock:       Mega Tyranitar, Mega Diancie
+Steel:      Mega Metagross
+Water:      Primal Kyogre
+------------------------------------------------------------------
+Pokemon With Highest Stats:
+
+HP Stat of 255:           Blissey
+Attack Stat of 190:       Mega Mewtwo X
+Defense Stat of 230:      Mega Steelix, Shuckle, Mega Aggron
+SP Attack Stat of 194:    Mega Mewtwo Y
+SP Defense Stat of 230:   Shuckle
+Speed Stat of 180:        Speed Forme Deoxys
+------------------------------------------------------------------
+Average Stats Of All Pokemon:
+
+Total:      482.777
+HP:          76.8474
+Attack:      87.6574
+Defense:     81.9334
+SP Attack:   80.7989
+SP Defense:  79.7809
+Speed:       75.7587
+------------------------------------------------------------------
+Average Stats of All Types:
+
+Bug:        
+      Total -      379.528
+      HP -          56.7361
+      Attack -      71.7639
+      Defense -     71.1111
+      SP Attack -   53.5694
+      SP Defense -  64.6667
+      Speed -       61.6806
+Dark:       
+      Total -      460.902
+      HP -          70.2353
+      Attack -      96.7843
+      Defense -     70.9412
+      SP Attack -   77.451
+      SP Defense -  69.6471
+      Speed -       75.8431
+Dragon:     
+      Total -      541.76
+      HP -          82.9
+      Attack -     105.76
+      Defense -     86.62
+      SP Attack -   97.44
+      SP Defense -  86.9
+      Speed -       82.14
+Electric:   
+      Total -      444.84
+      HP -          63.2
+      Attack -      69.52
+      Defense -     66.54
+      SP Attack -   88.96
+      SP Defense -  73.68
+      Speed -       82.94
+Fairy:      
+      Total -      415.925
+      HP -          68.475
+      Attack -      61.575
+      Defense -     70.4
+      SP Attack -   76.5
+      SP Defense -  83.125
+      Speed -       55.85
+Fighting:   
+      Total -      470.113
+      HP -          74.566
+      Attack -     104.66
+      Defense -     74.0566
+      SP Attack -   66.9245
+      SP Defense -  73.3774
+      Speed -       76.5283
+Fire:       
+      Total -      467.109
+      HP -          70.1562
+      Attack -      84.1094
+      Defense -     70.0938
+      SP Attack -   93
+      SP Defense -  74.3281
+      Speed -       75.4219
+Flying:     
+      Total -      453.832
+      HP -          71.3663
+      Attack -      80.2277
+      Defense -     68.2277
+      SP Attack -   76.3663
+      SP Defense -  71.2574
+      Speed -       86.3861
+Ghost:      
+      Total -      436.87
+      HP -          62.8261
+      Attack -      76.9348
+      Defense -     81.5217
+      SP Attack -   77.4783
+      SP Defense -  76.9565
+      Speed -       61.1522
+Grass:      
+      Total -      417.926
+      HP -          66.0526
+      Attack -      73.4632
+      Defense -     73.2526
+      SP Attack -   72.9368
+      SP Defense -  71.5053
+      Speed -       60.7158
+Ground:     
+      Total -      441.075
+      HP -          75.5821
+      Attack -      92.6716
+      Defense -     87.7015
+      SP Attack -   61.209
+      SP Defense -  64.8358
+      Speed -       59.0746
+Ice:        
+      Total -      467.447
+      HP -          78.6316
+      Attack -      82.0526
+      Defense -     76.6579
+      SP Attack -   83.1053
+      SP Defense -  79.4211
+      Speed -       67.5789
+Normal:     
+      Total -      402.069
+      HP -          76.7353
+      Attack -      72.6569
+      Defense -     59.6078
+      SP Attack -   57.0784
+      SP Defense -  63.7451
+      Speed -       72.2451
+Poison:     
+      Total -      397.694
+      HP -          62.5968
+      Attack -      70.7903
+      Defense -     63.7419
+      SP Attack -   67.8871
+      SP Defense -  67.4194
+      Speed -       65.2581
+Psychic:    
+      Total -      477.089
+      HP -          71.2111
+      Attack -      72.6444
+      Defense -     74.7778
+      SP Attack -   94.6
+      SP Defense -  86.7667
+      Speed -       77.0889
+Rock:       
+      Total -      449.138
+      HP -          66.0172
+      Attack -      90.7241
+      Defense -    107.086
+      SP Attack -   60.3966
+      SP Defense -  73.8103
+      Speed -       51.1034
+Steel:      
+      Total -      486.592
+      HP -          64.9592
+      Attack -      92.6531
+      Defense -    116.612
+      SP Attack -   72.102
+      SP Defense -  83.1633
+      Speed -       57.102
+Water:      
+      Total -      429.095
+      HP -          71.0238
+      Attack -      73.7063
+      Defense -     74.2937
+      SP Attack -   74.7778
+      SP Defense -  70.3095
+      Speed -       64.9841
+------------------------------------------------------------------
