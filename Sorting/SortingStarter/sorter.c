@@ -14,7 +14,7 @@ void sort(char* contents, int size){
 		while(j>=0 && contents[j] > key){
 
 			contents[j+1]= contents[j];
-			j-=1
+			j-=1;
 		}
 		contents[j+1] = key;
 	}

@@ -11,7 +11,12 @@
  */
 
 int main(int argc, char** argv){
-	size_t file = load_file("/home/newhomat/newhomatcis241/SortingStarter/file");
+	char* FILE_TO_READ = argv[1];
+	char* FILE_TO_WRITE = argv[2];
+	char* contents = malloc(sizeof(char) );
+	size_t size = load_file(FILE_TO_READ, &contents);
+
+	size = save_file(FILE_TO_WRITE, contents, size );
 	
 
 	// Sort the file with the function you wrote.
