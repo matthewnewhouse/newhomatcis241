@@ -8,14 +8,15 @@
  * ./a.out FILE_TO_READ FILE_TO_WRITE
  *size_t load_file(char* path, char** contents);
  *size_t save_file(char* path, char* contents, size_t size);
+ *void sort(char** contents, int size)
  */
 
 int main(int argc, char** argv){
 	char* FILE_TO_READ = argv[1];
 	char* FILE_TO_WRITE = argv[2];
-	char* contents = malloc(sizeof(char) );
+	char* contents = malloc(sizeof(char)* (*FILE_TO_READ) );
 	size_t size = load_file(FILE_TO_READ, &contents);
-
+	sort(&contents, size);
 	size = save_file(FILE_TO_WRITE, contents, size );
 	
 
