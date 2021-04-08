@@ -1,24 +1,49 @@
 #include "sorter.h"
+#include <stdio.h>
+#include <string.h>
 
 void sort(char** contents, int size){
 
-	int i;
-	int key;
-	int j;
+	int s = 0;
+	char* p = strtok(*contents,"\n");
 
+	 while(p!=NULL){
+	   p = strtok(NULL, "\n");
+           s++;
+	 }
 
-/**
-	for(i=1; i < size;i++){
-
-		key =(*contents)[i];
-		j = i-1;
-
-		while(j>=0 && (*contents)[j] > key){
-
-			(*contents)[j+1]= (*contents)[j];
-			j-=1;
-		}
-		(*contents)[j+1] = key;
+	printf("SIZE=%d",s);
+	char** array= malloc(sizeof(char*)*s);
+	int i = 0;
+	char* r = strtok(*contents,"\n");
+	while(r!=NULL){
+                array[i++]= r;
+	         r = strtok(NULL, "\n");
 	}
-**/
+
+	printf("\n%s\n","INITIAL");
+	for (int j = 0; j<s; j++){
+		printf("%s\n", array[j]);
+	}
+
+	 int m;
+	 char* key;
+	 int n=0;
+	 for(m=1; m < s;m++){
+
+		key=array[m];
+		n = m-1;
+		while(n>=0 && strcmp(array[n], key)>0){
+			array[n+1]= array[n];
+		 	n-=1;	
+		}
+		array[n+1] = key;
+	}
+
+	printf("\n%s\n","FINAL");
+ 	for (int j = 0; j<s; j++){
+	       printf("%s\n", array[j]);
+	}	 
+ 
+	free(array);	
 }

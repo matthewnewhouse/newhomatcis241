@@ -12,19 +12,23 @@
  */
 
 int main(int argc, char** argv){
-	char* FILE_TO_READ = argv[1];
-	char* FILE_TO_WRITE = argv[2];
-	char* contents = malloc(sizeof(char)* (*FILE_TO_READ) );
-	size_t size = load_file(FILE_TO_READ, &contents);
+	char* contents;
+	size_t size = load_file(argv[1], &contents);
+	printf("%lu: number of bytes from the load file.\n",size);
+	
 	sort(&contents, size);
-	size = save_file(FILE_TO_WRITE, contents, size );
-	
 
-	// Sort the file with the function you wrote.
-	
+	/*	
+	for (size_t i = 0; i<size; ++i){
 
-	// Write out the new file.
+		printf("%c", contents[i]);
+	}
+	*/
 	
+	size = save_file(argv[2], contents, size );
+	printf("%lu: number of bytes from the save file.\n",size);
+
+	return 0;	
 
 }
 
