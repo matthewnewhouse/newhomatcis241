@@ -4,6 +4,7 @@
 
 void sort(char** contents, int size){
 
+	/*
 	int s = 0;
 	char* p = strtok(*contents,"\n");
 
@@ -12,11 +13,15 @@ void sort(char** contents, int size){
            s++;
 	 }
 
-	printf("SIZE=%d",s);
-	char** array= malloc(sizeof(char*)*s);
+	printf("LINES=%d",s);
+	*/
+	int s=3;
+	char** array= (char**)malloc(sizeof(char*)*s);
+
 	int i = 0;
 	char* r = strtok(*contents,"\n");
 	while(r!=NULL){
+		array[i] = (char*)malloc(strlen(r)+1);
                 array[i++]= r;
 	         r = strtok(NULL, "\n");
 	}
