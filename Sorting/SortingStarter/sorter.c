@@ -12,9 +12,24 @@ void sort(char** contents, int size){
 
 	while(r!=NULL){
 		array[i] = (char*)malloc(strlen(r)+2);
-		array[i++] = r;
+		for(int o = 0; o<strlen(r);o++){
+			
+			array[i][o] = r[o];
+		}
+	
+		i++;	
 	         r = strtok(NULL, "\n");
 	}
+
+	/*	
+	printf("\nARRAY AFTER LOAD:%s\n","");
+	for (int w = 0; w<size; w++){
+		for(int u = 0; u<strlen(array[w]); u++){
+
+			printf("%c", (array)[w][u]);
+		}
+	}
+	*/
 
 	 int m;
 	 char* key;
@@ -30,7 +45,7 @@ void sort(char** contents, int size){
 		array[n+1] = key;
 	}
 
-
+	/*
 	printf("\nARRAY AFTER SORT:%s\n","");
 	for (int w = 0; w<size; w++){
 		for(int u = 0; u<2; u++){
@@ -46,7 +61,7 @@ void sort(char** contents, int size){
 			printf("%c", (contents)[0][u]);
 		}
 	}
-
+	*/
 
 	/*
 	contents[0][3] = 'g';
@@ -55,52 +70,46 @@ void sort(char** contents, int size){
 	printf("CONTENTS[0][0]:%c\n",contents[0][3]);
 
 	*/
-	
-	printf("\nTEST:%c\n", array[3][1]);	
+		
 
 	 int z = 0;
-	 int length = 0;
 	for(int x = 0; x<size; x++){
 
-		printf("\nARRAY IN COPY:%s\n","");
-for (int w = 0; w<size; w++){
-for(int u = 0; u<2; u++){
+		for(int y = 0; y<strlen(array[x]) ; y++){
+		/*
+			printf("\nARRAY IN COPY:%s\n","");
+			for (int w = 0; w<size; w++){
+			for(int u = 0; u<2; u++){
 
-printf("%c", (array)[w][u]);
-}
 
-}
-printf("%s", "\n");
-
-	printf("\nCONTENTS IN COPY:%s\n","");
-	for (int w = 0; w<1; w++){
-	for(int u = 0; u<z; u++){
+			printf("%c", (array)[w][u]);}}
+			printf("%s", "\n");
 	
-	printf("%c", (array)[0][u]);
-	}}
 
-		for(int y = 0; y<2 ; y++){
-		
-			char temp = array[x][y];
-			printf("\nTEMP BEFORE:%c\n", temp);	
+			printf("\nCONTENTS IN COPY:%s\n","");
+
+			for (int w = 0; w<1; w++){
+	
+				for(int u = 0; u<z; u++){
+
+		printf("%c", (array)[0][u]);}}
 			printf("CONTENTS MATRIX BEFORE:%c\n", contents[0][z]);
 			printf("CHANGE TO:%c\n", array[x][y]);
 			printf("x=%d\n", x);
 			printf("y=%d\n", y);
+			*/
 			contents[0][z] = array[x][y];
-			printf("TEMP AFTER:%c\n", temp);
-			array[x][y] = temp;
-			printf("CONTENTS MATRIX AFTER:%c\n", contents[0][z]);
+			//printf("CONTENTS MATRIX AFTER:%c\n", contents[0][z]);
 			z++;
 		}
-		printf("CONTENTS MATRIX BEFORE:%c\n", contents[0][z]);
-		contents[0][z] = 'n';
-		printf("CONTENTS MATRIX AFTER:%c\n", contents[0][z]);
+		//printf("CONTENTS MATRIX BEFORE:%c\n", contents[0][z]);
+		contents[0][z] = '\n';
+		//printf("CONTENTS MATRIX AFTER:%c\n", contents[0][z]);
 		z++;
-		printf("\nEND OF LOOP:%d\n", x);
+		//printf("\nEND OF LOOP:%d\n", x);
 	}
 
-	printf("BYTES:%d\n", z);
+	//printf("BYTES:%d\n", z);
 
 	free(array);
 }

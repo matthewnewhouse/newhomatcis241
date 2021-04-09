@@ -25,21 +25,24 @@ int main(int argc, char** argv){
 		}
 	}
 
+	/*
 	printf("\nLINES=%d\n",s);
 
 	printf("\nCONTENTS IN MAIN BEFORE SORT:%s\n","");
 	for (int w = 0; w<size; w++){
 		printf("%c", (contents)[w]);
 	}
+	*/
 
 	sort(&contents, s);
 
 	save_file(argv[2],contents, size );
-	
+	/*
 	printf("\nCONTENTS IN MAIN AFTER SORT:%s\n","");
 	for (int w = 0; w<size; w++){
 		printf("%c", (contents)[w]);
 	}
+	*/
 
 	free(contents);
 
