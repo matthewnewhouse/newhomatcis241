@@ -22,7 +22,7 @@ void sort(char** contents, int size){
 	}
 
 	/*	
-	printf("\nARRAY AFTER LOAD:%s\n","");
+	prntf("\nARRAY AFTER LOAD:%s\n","");
 	for (int w = 0; w<size; w++){
 		for(int u = 0; u<strlen(array[w]); u++){
 

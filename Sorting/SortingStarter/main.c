@@ -12,10 +12,13 @@
  */
 
 int main(int argc, char** argv){
+
+	//Load File Into Contents
 	char* contents;
 	size_t size = load_file(argv[1], &contents);
 	printf("%lu: number of bytes from the load file.\n",size);
 
+	//Find Number Of Lines
 	int s = 0;
 
 	for(int z=0; (contents)[z]!=4;z++){
@@ -25,34 +28,17 @@ int main(int argc, char** argv){
 		}
 	}
 
-	/*
-	printf("\nLINES=%d\n",s);
-
-	printf("\nCONTENTS IN MAIN BEFORE SORT:%s\n","");
-	for (int w = 0; w<size; w++){
-		printf("%c", (contents)[w]);
-	}
-	*/
-
+	//Sort Contents
 	sort(&contents, s);
 
+	//Save Contents To File
 	save_file(argv[2],contents, size );
-	/*
-	printf("\nCONTENTS IN MAIN AFTER SORT:%s\n","");
-	for (int w = 0; w<size; w++){
-		printf("%c", (contents)[w]);
-	}
-	*/
 
+	//Free Contents Memory
 	free(contents);
+
+	printf("\n%s\n", "FINISHED!");
 
 	return 0;	
 
 }
-
-// You can see if your file worked correctly by using the
-// command:
-//
-// diff ORIGINAL_FILE NEW_FILE
-//
-// If the command returns ANYTHING the files are different.
