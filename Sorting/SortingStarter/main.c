@@ -15,29 +15,28 @@ int main(int argc, char** argv){
 
 	//Load File Into Contents
 	char* contents;
-	size_t size = load_file(argv[1], &contents);
-	printf("%lu: number of bytes from the load file.\n",size);
+	size_t bytes = load_file(argv[1], &contents);
+	printf("Loaded %lu bytes from \"%s\".\n", bytes, argv[1]);
 
 	//Find Number Of Lines
-	int s = 0;
+	int lines = 0;
 
-	for(int z=0; (contents)[z]!=4;z++){
-		if((contents)[z]==10){
-
-			s++;
+	for(int i = 0; contents[i]!=4;i++){
+		if(contents[i]==10){
+			lines++;
 		}
 	}
 
 	//Sort Contents
-	sort(&contents, s);
+	sort(&contents, lines);
 
 	//Save Contents To File
-	save_file(argv[2],contents, size );
+	save_file(argv[2],contents, bytes);
 
 	//Free Contents Memory
 	free(contents);
 
-	printf("\n%s\n", "FINISHED!");
+	printf("Finished sorting \"%s\" and saved the contents to \"%s\".\n", argv[1],argv[2]);
 
 	return 0;	
 
