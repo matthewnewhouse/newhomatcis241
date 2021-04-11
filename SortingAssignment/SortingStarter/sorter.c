@@ -31,10 +31,10 @@ void sort(char** contents, int size){
 	//Used to hold individual strings within contents.
 	char* str = strtok(*contents,"\n");
 	
-	//Makes an array Of strings from the file contents.
+	//Makes an array of strings from the file contents.
 	for(int i = 0;str!=NULL; i++){
 
-		array[i] = (char*)malloc(strlen(str)+2);
+		array[i] = (char*)malloc(strlen(str)+sizeof(char));
 		for(int j = 0; j<strlen(str); j++){	
 
 			array[i][j] = str[j];
@@ -66,6 +66,7 @@ void sort(char** contents, int size){
 		}
 		contents[0][chars] = '\n';
 		chars++;
+
 	}
 
 	//Frees the memory from array.
