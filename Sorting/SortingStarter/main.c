@@ -2,42 +2,49 @@
 #include "sorter.h"
 #include <stdio.h>
 	
-/*
- * Read the file from the command-line.
- * Usage:
- * ./a.out FILE_TO_READ FILE_TO_WRITE
- *size_t load_file(char* path, char** contents);
- *size_t save_file(char* path, char* contents, size_t size);
- *void sort(char** contents, int size)
- */
+/*****************************************************************
+*Loads a file of strings, sorts the contents, and saves the file.
+* 
+*Usage: ./a.out FILE_TO_READ FILE_TO_WRITE
+*
+*@author Matthew Newhouse
+*@version April 2021
+*************************************************************** */
 
 int main(int argc, char** argv){
 
-	//Load File Into Contents
+	//Holds the contents of the file in an array of characters.
 	char* contents;
-	size_t bytes = load_file(argv[1], &contents);
-	printf("Loaded %lu bytes from \"%s\".\n", bytes, argv[1]);
 
-	//Find Number Of Lines
+	//Holds the number of lines in the lines in the file.
 	int lines = 0;
 
-	for(int i = 0; contents[i]!=4;i++){
+	//Holds the number of bytes from the load file.
+	size_t bytes = 0;
+
+	//Loads the file into a single string in contents.
+	bytes = load_file(argv[1], &contents);
+	printf("Loaded %lu bytes from \"%s\".\n", bytes, argv[1]);
+
+	//Finds the number of lines in the loaded file.
+	for(int i = 0; contents[i]!=4; i++)
+	{
 		if(contents[i]==10){
+		
 			lines++;
 		}
 	}
 
-	//Sort Contents
+	//Sorts the contents from the loaded file.
 	sort(&contents, lines);
 
-	//Save Contents To File
+	//Saves the sorted contents to the given file name.
 	save_file(argv[2],contents, bytes);
 
-	//Free Contents Memory
+	//Frees the memory in contents.
 	free(contents);
 
 	printf("Finished sorting \"%s\" and saved the contents to \"%s\".\n", argv[1],argv[2]);
 
 	return 0;	
-
 }
