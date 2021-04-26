@@ -133,9 +133,10 @@ Student* six(){
  */
 void seven(Student** students){
 	
-	(*students) = (Student*) malloc(sizeof(student)*10);
+	*students = (Student*) malloc(sizeof(student)*10);
 
 	static Student t;
+
 	t.first_name = "Luigi";
 	t.last_name = "Mario";
 	t.g_number = 2;
