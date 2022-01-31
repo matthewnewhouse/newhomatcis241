@@ -4,9 +4,19 @@
 #include <string.h>
 
 lite_vector* lv_new_vec(size_t type_size){
+	lite_vector vec;
+	vec->length=0;
+	vec->max_capacity=1;
+	vec->type_size=type_size;
+	vec->data = malloc(sizeof(void**));
+	return &vec;
 }
 
 void lv_cleanup(lite_vector* vec){
+	for(i=0;i<vec->max_capacity;i++){
+		free(vec->data[i]);
+	}
+	free (vec->data);
 }
 
 size_t lv_get_length(lite_vector* vec){
