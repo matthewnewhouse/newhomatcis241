@@ -5,27 +5,35 @@
 
 lite_vector* lv_new_vec(size_t type_size){
 	lite_vector vec;
-	vec->length=0;
-	vec->max_capacity=1;
-	vec->type_size=type_size;
-	vec->data = malloc(sizeof(void**));
+	vec.length=0;
+	vec.max_capacity=1;
+	vec.type_size=type_size;
+	vec.data = malloc(sizeof(void**));
 	return &vec;
 }
 
 void lv_cleanup(lite_vector* vec){
-	for(i=0;i<vec->max_capacity;i++){
+	for(int i=0;i<vec->max_capacity;i++){
 		free(vec->data[i]);
 	}
 	free (vec->data);
+	return;
 }
 
 size_t lv_get_length(lite_vector* vec){
+	size_t len = sizeof(vec->data)/sizeof(vec->data[0]);
+	return len;
 }
 
 bool lv_clear(lite_vector* vec){
+	for(int i=0; i<vec->length;i++){
+		vec->data[i]= NULL;
+	}
+	return true;
 }
 
 void* lv_get(lite_vector* vec, size_t index){
+	return vec->data[index];
 }
 
 /**
@@ -42,4 +50,12 @@ static bool lv_resize(lite_vector* vec){
 }
 
 bool lv_append(lite_vector* vec, void* element){
+	if(vec->length = vec->max_capacity){
+		
+	}
+	else{
+		vec->data[length]=element;
+	}
+	length++;
+	return true;
 }
