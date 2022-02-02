@@ -4,31 +4,28 @@
 #include <string.h>
 
 lite_vector* lv_new_vec(size_t type_size){
-	lite_vector vec;
-	vec.length=0;
-	vec.max_capacity=1;
-	vec.type_size=type_size;
-	vec.data = malloc(sizeof(void**));
-	return &vec;
+	lite_vector* vec = malloc(sizeof(lite_vector));
+	vec->length=0;
+	vec->max_capacity=10;
+	vec->type_size=type_size;
+	vec->data = (void**)malloc(10*sizeof(void*));
+	return vec;
 }
 
 void lv_cleanup(lite_vector* vec){
-	for(int i=0;i<vec->max_capacity;i++){
-		free(vec->data[i]);
-	}
 	free (vec->data);
 	return;
 }
 
 size_t lv_get_length(lite_vector* vec){
-	size_t len = sizeof(vec->data)/sizeof(vec->data[0]);
-	return len;
+	return vec->length;
 }
 
 bool lv_clear(lite_vector* vec){
 	for(int i=0; i<vec->length;i++){
 		vec->data[i]= NULL;
 	}
+	vec->length=0;
 	return true;
 }
 
@@ -47,15 +44,26 @@ void* lv_get(lite_vector* vec, size_t index){
  * must remain unaffected.
  */
 static bool lv_resize(lite_vector* vec){
+	size_t max = (int)(vec->max_capacity*1.5);
+	
+	void**tmp = (void**) malloc((max*sizeof(void*)));
+	memcpy(tmp,vec->data,vec->length*sizeof(void*));
+	
+	free(vec->data);
+	vec->data = tmp;
+	vec->max_capacity = max;
+
+	return true;
 }
 
 bool lv_append(lite_vector* vec, void* element){
-	if(vec->length = vec->max_capacity){
-		
+	
+	if(vec->length  == vec->max_capacity){
+		lv_resize(vec);	
 	}
-	else{
-		vec->data[length]=element;
-	}
-	length++;
+
+	vec->data[vec->length]=element;	
+	
+	vec->length++;
 	return true;
 }
