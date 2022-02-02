@@ -14,6 +14,7 @@ lite_vector* lv_new_vec(size_t type_size){
 
 void lv_cleanup(lite_vector* vec){
 	free (vec->data);
+	free (vec);
 	return;
 }
 
