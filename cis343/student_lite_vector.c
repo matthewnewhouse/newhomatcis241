@@ -34,7 +34,8 @@ lite_vector* lv_new_vec(size_t type_size){
 
 	//Mallocs enough memory for 10 of the given
 	//data type. Data will point to this memory.
-	vec->data = (void**)malloc(10*sizeof(void*));
+	vec->data = malloc(10*sizeof(void*));
+
 	return vec;
 }
 
@@ -49,6 +50,7 @@ void lv_cleanup(lite_vector* vec){
 
 	//Frees the lite vector's data.
 	free (vec->data);
+
 	//Frees the lite vector.
 	free (vec);
 
@@ -97,6 +99,7 @@ void* lv_get(lite_vector* vec, size_t index){
 	if(index<0){
 		return NULL;
 	}
+
 	//If the vector is NULL,
 	//NULL is returned.
 	if(!vec){
@@ -120,7 +123,10 @@ void* lv_get(lite_vector* vec, size_t index){
  */
 
 
+//Resizes the vector by increasing the max capacity.
 static bool lv_resize(lite_vector* vec){
+
+	//If the vector is NULL, return false.
 	if(!vec){
 		return false;
 	}
