@@ -3,6 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 
+/****************************************************************
+	Matthew Newhouse
+	CIS 343
+	Winter 2022
+****************************************************************/
+
 //Creates a new lite vector from the given size of the data type.
 lite_vector* lv_new_vec(size_t type_size){
 
