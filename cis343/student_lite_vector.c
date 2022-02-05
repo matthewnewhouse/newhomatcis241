@@ -6,6 +6,11 @@
 //Creates a new lite vector from the given size of the data type.
 lite_vector* lv_new_vec(size_t type_size){
 
+	//If the type_size is NULL, return NULL.
+	if(!type_size){
+		return NULL;
+	}
+
 	//Size of the type should be greater than 0.
 	//Otherwise, a null is returned.
 	if(type_size<=0){
@@ -36,6 +41,11 @@ lite_vector* lv_new_vec(size_t type_size){
 
 //Frees up all malloc'd memory in the lite vector.
 void lv_cleanup(lite_vector* vec){
+
+	//If the vector is NULL, return NULL.
+	if(!vec){
+		return;
+	}
 
 	//Frees the lite vector's data.
 	free (vec->data);
@@ -153,14 +163,28 @@ static bool lv_resize(lite_vector* vec){
 //An element is appened to the end of the lite vector.
 bool lv_append(lite_vector* vec, void* element){
 	
+	//If the the vector is NULL, return false.
+	if(!vec){
+		return false;
+	}
 
+	//If the given element is NULL, return false.
+	if(!element){
+		return false;
+	}
 
+	//If the number of elements equals the max
+	//capacity, resize the vector.
 	if(vec->length  == vec->max_capacity){
 		lv_resize(vec);	
 	}
 
+	//The element is appended to the end of the vector.
 	vec->data[vec->length]=element;	
 	
+	//The vector's length is increased by 1.
 	vec->length++;
+
+	//The element was successfully appended.
 	return true;
 }
