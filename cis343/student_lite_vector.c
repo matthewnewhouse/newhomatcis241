@@ -139,7 +139,7 @@ static bool lv_resize(lite_vector* vec){
 	
 	//TMP (temp) will hold the memory for the new data,
 	//which has a larger max capacity.
-	void**tmp = (void**) malloc((max*sizeof(void*)));
+	void**tmp = malloc((max*sizeof(void*)));
 
 	//If tmp is NULL due to a failed Malloc, the
 	//function will return false.
