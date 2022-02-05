@@ -166,7 +166,7 @@ static bool lv_resize(lite_vector* vec){
 	return true;
 }
 
-//An element is appened to the end of the lite vector.
+//An element is appended to the end of the lite vector.
 bool lv_append(lite_vector* vec, void* element){
 	
 	//If the the vector is NULL, return false.
