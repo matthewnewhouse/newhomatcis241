@@ -1,0 +1,143 @@
+SQL> --
+SQL> -- Author: Matthew Newhouse
+SQL> --
+SQL> -- IMPORTANT: use the names IC-1, IC-2, etc. as given below.
+SQL> -- --------------------------------------------------------------------
+SQL> /*The following DROP command is inserted for convenience so that if you need
+SQL> to recompile your code, it will drop the table (if it already exists).
+SQL> */
+SQL> DROP TABLE Orders CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> DROP TABLE OrderLine CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> --
+SQL> CREATE TABLE Orders
+  2  (
+  3  orderNum INTEGER PRIMARY KEY,
+  4  priority CHAR(10) NOT NULL,
+  5  cost INTEGER NOT NULL,
+  6  --IC1: The priority is one of: high, medium, or low
+  7  CONSTRAINT IC1 CHECK (priority = 'high' OR priority = 'medium' OR priority = 'low'),
+  8  --IC2: The cost of a high priority order is above 2000.
+  9  CONSTRAINT IC2 CHECK (NOT (priority = 'high' AND cost <= 2000)),
+ 10  --IC3: The cost of a medium priority order is between 800 and 2200 (inclusive).
+ 11  CONSTRAINT IC3 CHECK (NOT(priority = 'medium' and (cost < 800 or cost > 2200))),
+ 12  --IC4: The cost of a low priority order is less than 1000.
+ 13  CONSTRAINT IC4 CHECK (NOT (priority = 'low' AND cost >= 1000))
+ 14  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> CREATE TABLE OrderLine
+  2  (
+  3  orderNum INTEGER,
+  4  lineNum INTEGER,
+  5  item CHAR (10) NOT NULL,
+  6  quantity INTEGER,
+  7  PRIMARY KEY (orderNum, lineNum),
+  8  --
+  9  --IC5: Every order line must belong to an order in the Order table.
+ 10  CONSTRAINT IC5 FOREIGN KEY (orderNum) REFERENCES Orders(orderNum) ON DELETE CASCADE
+ 11  );
+
+Table created.
+
+SQL> --
+SQL> -- ----------------------------------------------------------------
+SQL> -- TESTING THE SCHEMA
+SQL> -- ----------------------------------------------------------------
+SQL> INSERT INTO Orders VALUES (10, 'high', 2400);
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (20, 'high', 1900);
+INSERT INTO Orders VALUES (20, 'high', 1900)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.IC2) violated 
+
+
+SQL> INSERT INTO Orders VALUES (30, 'high', 2100);
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (40, 'medium', 700);
+INSERT INTO Orders VALUES (40, 'medium', 700)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.IC3) violated 
+
+
+SQL> INSERT INTO Orders VALUES (50, 'low', 1100);
+INSERT INTO Orders VALUES (50, 'low', 1100)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.IC4) violated 
+
+
+SQL> INSERT INTO Orders VALUES (60, 'low', 900);
+
+1 row created.
+
+SQL> SELECT * from Orders;
+
+  ORDERNUM PRIORITY         COST                                                
+---------- ---------- ----------                                                
+        10 high             2400                                                
+        30 high             2100                                                
+        60 low               900                                                
+
+SQL> -- ----------------------------------------------------------------
+SQL> INSERT INTO OrderLine VALUES (10, 1, 'AAA', 200);
+
+1 row created.
+
+SQL> INSERT INTO OrderLine VALUES (10, 2, 'BBB', 300);
+
+1 row created.
+
+SQL> INSERT INTO OrderLine VALUES (60, 1, 'CCC', 5);
+
+1 row created.
+
+SQL> INSERT INTO OrderLine VALUES (15, 1, 'AAA', 7);
+INSERT INTO OrderLine VALUES (15, 1, 'AAA', 7)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.IC5) violated - parent key not found 
+
+
+SQL> SELECT * FROM OrderLine;
+
+  ORDERNUM    LINENUM ITEM         QUANTITY                                     
+---------- ---------- ---------- ----------                                     
+        10          1 AAA               200                                     
+        10          2 BBB               300                                     
+        60          1 CCC                 5                                     
+
+SQL> --
+SQL> DELETE FROM Orders WHERE orderNum = 10;
+
+1 row deleted.
+
+SQL> SELECT * From Orders;
+
+  ORDERNUM PRIORITY         COST                                                
+---------- ---------- ----------                                                
+        30 high             2100                                                
+        60 low               900                                                
+
+SQL> SELECT * FROM OrderLine;
+
+  ORDERNUM    LINENUM ITEM         QUANTITY                                     
+---------- ---------- ---------- ----------                                     
+        60          1 CCC                 5                                     
+
+SQL> --
+SQL> SET ECHO OFF
