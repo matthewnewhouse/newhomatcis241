@@ -44,7 +44,7 @@ For every employee who works more than 30 hours on any project: Find the ssn, ln
 SELECT E.ssn, E.lname, P.pnumber, P.pname, W.hours
 FROM EMPLOYEE E, WORKS_ON W, PROJECT P
 WHERE E.ssn = W.essn and W.pno = P.pnumber and W.hours>30
-ORDER BY SSN;
+ORDER BY E.SSN;
 --
 -- JOINING 3 TABLES ---------------------------
 --
@@ -52,14 +52,20 @@ ORDER BY SSN;
 Write a query that consists of one block only.
 For every employee who works on a project that is not controlled by the department they work for: Find the employee's lname, the department they works for, the project number that they work on, and the number of the department that controls that project. Sort the results by lname.
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT E.lname, E.dno, P.pnumber, P.dnum
+FROM EMPLOYEE E, PROJECT P, WORKS_ON W 
+WHERE W.pno = P.pnumber and P.dnum!=E.dno and W.essn = E.ssn
+ORDER BY E.lname;
 --
 -- JOINING 4 TABLES -------------------------
 --
 /*(13A)
 For every employee who works for more than 20 hours on any project that is located in the same location as their department: Find the ssn, lname, project number, project location, department number, and department location. Sort the results by lname
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT E.ssn, E.lname, W.pno, P.plocation, P.dnum, L.dlocation
+FROM WORKS_ON W, EMPLOYEE E, DEPT_LOCATIONS L, PROJECT P
+WHERE W.hours>20 and P.plocation = L.dlocation and W.pno = P.pnumber and E.ssn = W.essn and E.dno = L.dnumber
+ORDER BY E.lname;
 --
 -- SELF JOIN -------------------------------------------
 -- 
@@ -67,14 +73,20 @@ For every employee who works for more than 20 hours on any project that is locat
 Write a query that consists of one block only.
 For every employee whose salary is less than 70% of his/her immediate supervisor's salary: Find that employee's ssn, lname, salary; and their supervisor's ssn, lname, and salary. Sort the results by ssn.  
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT E1.ssn, E1.lname, E1.salary, E1.super_ssn, E2.ssn, E2.lname, E2.salary
+FROM EMPLOYEE E1, EMPLOYEE E2
+WHERE E1.salary < E2.salary * .70 and E1.super_ssn = E2.ssn
+ORDER BY E1.SSN;
 --
 -- USING MORE THAN ONE RANGE VARIABLE ON ONE TABLE -------------------
 --
 /*(15A)
 For projects located in Houston: Find pairs of last names such that the two employees in the pair work on the same project. Remove duplicates. Sort the result by the lname in the left column in the result. 
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT E1.lname,  E2.lname, P.pnumber, P.plocation
+FROM PROJECT P, EMPLOYEE E1, EMPLOYEE E2, WORKS_ON W1, WORKS_ON W2
+WHERE W1.essn = E1.ssn and W2.essn = E2.ssn and W1.pno = P.pnumber and W2.pno = P.pnumber and P.plocation = 'Houston' and E1.ssn < E2.ssn
+ORDER BY E1.lname;
 --
 ------------------------------------
 --
