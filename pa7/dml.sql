@@ -29,8 +29,8 @@ SET ECHO ON
 Find the ssn, lname, and the total number of hours worked on projects for every employee whose total is less than 40 hours. Sort the result by lname
 */ 
 SELECT E.ssn, E.lname, sum (W.hours)
-FROM EMPLOYEE E, WORKS_ON W, PROJECT P
-WHERE E.ssn = W.essn and P.pnumber = W.pno
+FROM EMPLOYEE E, WORKS_ON W
+WHERE E.ssn = W.essn
 GROUP BY E.ssn, E.lname
 HAVING sum (W.hours) < 40
 ORDER BY E.lname;
