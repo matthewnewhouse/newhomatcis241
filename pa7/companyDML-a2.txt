@@ -1,0 +1,50 @@
+SQL> -- ---------------------------------------------------------------
+SQL> --
+SQL> -- Name: Matthew Newhouse
+SQL> --
+SQL> -- ------------------------------------------------------------
+SQL> --
+SQL> /*(16A) Hint: A NULL in the hours column should be considered as zero hours.
+SQL> Find the ssn, lname, and the total number of hours worked on projects for every employee whose total is less than 40 hours. Sort the result by lname
+SQL> */
+SQL> SELECT E.ssn, E.lname, sum (W.hours)
+  2  FROM EMPLOYEE E, WORKS_ON W, PROJECT P
+  3  WHERE E.ssn = W.essn and P.pnumber = W.pno
+  4  GROUP BY E.ssn, E.lname
+  5  HAVING sum (W.hours) < 40
+  6  ORDER BY E.lname;
+
+SSN       LNAME           SUM(W.HOURS)                                          
+--------- --------------- ------------                                          
+987654321 Wallace                   35                                          
+
+SQL> --
+SQL> ------------------------------------
+SQL> --
+SQL> /*(17A)
+SQL> For every project that has more than 2 employees working on it: Find the project number, project name, number of employees working on it, and the total number of hours worked by all employees on that project. Sort the results by project number.
+SQL> */
+SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> --
+SQL> -- CORRELATED SUBQUERY --------------------------------
+SQL> --
+SQL> /*(18A)
+SQL> For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
+SQL> */
+SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> --
+SQL> -- NON-CORRELATED SUBQUERY -------------------------------
+SQL> --
+SQL> /*(19A)
+SQL> For every employee who does not work on any project that is located in Houston: Find the ssn and lname. Sort the results by lname
+SQL> */
+SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> --
+SQL> -- DIVISION ---------------------------------------------
+SQL> --
+SQL> /*(20A) Hint: This is a DIVISION query
+SQL> For every employee who works on every project that is located in Stafford: Find the ssn and lname. Sort the results by lname
+SQL> */
+SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> --
+SQL> SET ECHO OFF

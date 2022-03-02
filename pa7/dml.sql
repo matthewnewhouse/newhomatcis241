@@ -21,14 +21,19 @@ SPOOL companyDML-a2.txt
 SET ECHO ON
 -- ---------------------------------------------------------------
 -- 
--- Name: < ***** ENTER YOUR NAME HERE ***** >
+-- Name: Matthew Newhouse
 --
 -- ------------------------------------------------------------
 --
 /*(16A) Hint: A NULL in the hours column should be considered as zero hours.
 Find the ssn, lname, and the total number of hours worked on projects for every employee whose total is less than 40 hours. Sort the result by lname
 */ 
--- <<< Your SQL code replaces this whole line>>>
+SELECT E.ssn, E.lname, sum (W.hours)
+FROM EMPLOYEE E, WORKS_ON W, PROJECT P
+WHERE E.ssn = W.essn and P.pnumber = W.pno
+GROUP BY E.ssn, E.lname
+HAVING sum (W.hours) < 40
+ORDER BY E.lname;
 --
 ------------------------------------
 -- 
