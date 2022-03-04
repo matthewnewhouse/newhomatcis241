@@ -52,7 +52,9 @@ ORDER BY P.pnumber;
 /*(18A)
 For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT E.dno, E.ssn, E.lname, E.salary
+FROM EMPLOYEE E
+ORDER BY E.dno;
 --
 -- NON-CORRELATED SUBQUERY -------------------------------
 --

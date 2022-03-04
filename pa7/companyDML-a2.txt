@@ -45,7 +45,23 @@ SQL> --
 SQL> /*(18A)
 SQL> For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 SQL> */
-SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> SELECT E.dno, E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  ORDER BY E.dno;
+
+       DNO SSN       LNAME               SALARY                                 
+---------- --------- --------------- ----------                                 
+         1 888665555 Borg                 55000                                 
+         4 987654321 Wallace              43000                                 
+         4 987987987 Jabbar               25000                                 
+         4 999887777 Zelaya               25000                                 
+         5 666884444 Narayan              38000                                 
+         5 123456789 Smith                30000                                 
+         5 453453453 English              25000                                 
+         5 333445555 Wong                 40000                                 
+
+8 rows selected.
+
 SQL> --
 SQL> -- NON-CORRELATED SUBQUERY -------------------------------
 SQL> --
