@@ -52,16 +52,23 @@ ORDER BY P.pnumber;
 /*(18A)
 For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 */
-SELECT E.dno, E.ssn, E.lname, E.salary
-FROM EMPLOYEE E
+/*
+SELECT  E.dno, E.ssn, E.lname, max(E.salary)
+FROM EMPLOYEE E, DEPARTMENT D
+WHERE E.dno = D.dnumber
 ORDER BY E.dno;
+*/
 --
 -- NON-CORRELATED SUBQUERY -------------------------------
 --
 /*(19A)
 For every employee who does not work on any project that is located in Houston: Find the ssn and lname. Sort the results by lname
 */
--- <<< Your SQL code replaces this whole line>>>
+SELECT DISTINCT E.ssn, E.lname
+FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+WHERE E.ssn = W.essn and W.pno = P.pnumber and E.ssn  NOT IN (SELECT E.ssn FROM EMPLOYEE E, PROJECT P, WORKS_ON W 
+	WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
+ORDER BY E.lname;
 --
 -- DIVISION ---------------------------------------------
 --

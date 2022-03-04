@@ -45,30 +45,36 @@ SQL> --
 SQL> /*(18A)
 SQL> For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 SQL> */
-SQL> SELECT E.dno, E.ssn, E.lname, E.salary
-  2  FROM EMPLOYEE E
-  3  ORDER BY E.dno;
-
-       DNO SSN       LNAME               SALARY                                 
----------- --------- --------------- ----------                                 
-         1 888665555 Borg                 55000                                 
-         4 987654321 Wallace              43000                                 
-         4 987987987 Jabbar               25000                                 
-         4 999887777 Zelaya               25000                                 
-         5 666884444 Narayan              38000                                 
-         5 123456789 Smith                30000                                 
-         5 453453453 English              25000                                 
-         5 333445555 Wong                 40000                                 
-
-8 rows selected.
-
+SQL> /*
+SQL> SELECT  E.dno, E.ssn, E.lname, max(E.salary)
+SQL> FROM EMPLOYEE E, DEPARTMENT D
+SQL> WHERE E.dno = D.dnumber
+SQL> ORDER BY E.dno;
+SQL> */
 SQL> --
 SQL> -- NON-CORRELATED SUBQUERY -------------------------------
 SQL> --
 SQL> /*(19A)
 SQL> For every employee who does not work on any project that is located in Houston: Find the ssn and lname. Sort the results by lname
 SQL> */
-SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> SELECT DISTINCT E.ssn, E.lname
+  2  FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+  3  WHERE E.ssn = W.essn and W.pno = P.pnumber and E.ssn  NOT IN (SELECT E.ssn FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+  4  	     WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
+  5  ORDER BY E.lname;
+
+SSN       LNAME                                                                 
+--------- ---------------                                                       
+453453453 English                                                               
+987987987 Jabbar                                                                
+123456789 Smith                                                                 
+999887777 Zelaya                                                                
+
+SQL> /*
+SQL> SELECT E.ssn, E.lname
+SQL> FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+SQL> WHERE P.plocation = 'Houston' and W.essn = E.ssn and W.pno = P.pnumber ;
+SQL> */
 SQL> --
 SQL> -- DIVISION ---------------------------------------------
 SQL> --
