@@ -32,7 +32,7 @@ SELECT E.ssn, E.lname, sum (W.hours)
 FROM EMPLOYEE E, WORKS_ON W
 WHERE E.ssn = W.essn
 GROUP BY E.ssn, E.lname
-HAVING sum (W.hours) < 40
+HAVING sum (W.hours) < 40 or sum(W.hours) IS NULL
 ORDER BY E.lname;
 --
 ------------------------------------
@@ -40,7 +40,12 @@ ORDER BY E.lname;
 /*(17A)
 For every project that has more than 2 employees working on it: Find the project number, project name, number of employees working on it, and the total number of hours worked by all employees on that project. Sort the results by project number.
 */ 
--- <<< Your SQL code replaces this whole line>>>
+SELECT P.pnumber, P.pname,count(W.pno), sum(W.hours)
+FROM Project P, WORKS_ON W, EMPLOYEE E
+WHERE E.ssn=W.essn and W.pno = P.pnumber
+GROUP BY P.pnumber, P.pname
+HAVING count(W.pno) > 2
+ORDER BY P.pnumber;
 -- 
 -- CORRELATED SUBQUERY --------------------------------
 --
