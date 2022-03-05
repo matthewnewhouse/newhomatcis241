@@ -85,17 +85,20 @@ SQL> --
 SQL> /*(20A) Hint: This is a DIVISION query
 SQL> For every employee who works on every project that is located in Stafford: Find the ssn and lname. Sort the results by lname
 SQL> */
-SQL> 
-SQL> SELECT DISTINCT E.ssn, E.lname
-  2  FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-  3  WHERE P.plocation = 'Stafford' and E.ssn=W.essn and W.pno = P.pnumber
-  4  ORDER BY E.lname;
+SQL> SELECT E.ssn, E.lname
+  2  FROM EMPLOYEE E
+  3  WHERE NOT EXISTS((SELECT P.pnumber
+  4  		       FROM PROJECT P
+  5  		       WHERE P.plocation = 'Stafford')
+  6  		       MINUS
+  7  		      (SELECT W.pno
+  8  		       FROM  WORKS_ON W
+  9  		       WHERE E.ssn=W.essn))
+ 10  ORDER BY E.lname;
 
 SSN       LNAME                                                                 
 --------- ---------------                                                       
 987987987 Jabbar                                                                
-987654321 Wallace                                                               
-333445555 Wong                                                                  
 999887777 Zelaya                                                                
 
 SQL> --

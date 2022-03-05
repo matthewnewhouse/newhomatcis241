@@ -77,10 +77,15 @@ ORDER BY E.lname;
 /*(20A) Hint: This is a DIVISION query
 For every employee who works on every project that is located in Stafford: Find the ssn and lname. Sort the results by lname
 */
-
-SELECT DISTINCT E.ssn, E.lname
-FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-WHERE P.plocation = 'Stafford' and E.ssn=W.essn and W.pno = P.pnumber
+SELECT E.ssn, E.lname
+FROM EMPLOYEE E
+WHERE NOT EXISTS((SELECT P.pnumber
+		  FROM PROJECT P
+		  WHERE P.plocation = 'Stafford')
+		  MINUS
+		 (SELECT W.pno
+		  FROM  WORKS_ON W
+		  WHERE E.ssn=W.essn))
 ORDER BY E.lname;
 --
 SET ECHO OFF
