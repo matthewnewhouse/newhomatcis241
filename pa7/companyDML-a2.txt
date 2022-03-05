@@ -70,11 +70,6 @@ SSN       LNAME
 123456789 Smith                                                                 
 999887777 Zelaya                                                                
 
-SQL> /*
-SQL> SELECT E.ssn, E.lname
-SQL> FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-SQL> WHERE P.plocation = 'Houston' and W.essn = E.ssn and W.pno = P.pnumber ;
-SQL> */
 SQL> --
 SQL> -- DIVISION ---------------------------------------------
 SQL> --
