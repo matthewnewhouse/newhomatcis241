@@ -65,10 +65,12 @@ SQL> /*(19A)
 SQL> For every employee who does not work on any project that is located in Houston: Find the ssn and lname. Sort the results by lname
 SQL> */
 SQL> SELECT DISTINCT E.ssn, E.lname
-  2  FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-  3  WHERE E.ssn = W.essn and W.pno = P.pnumber and E.ssn  NOT IN (SELECT E.ssn FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-  4  	     WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
-  5  ORDER BY E.lname;
+  2  FROM EMPLOYEE E, WORKS_ON W
+  3  WHERE E.ssn = W.essn and E.ssn
+  4  	     NOT IN (SELECT E.ssn
+  5  		     FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+  6  		     WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
+  7  ORDER BY E.lname;
 
 SSN       LNAME                                                                 
 --------- ---------------                                                       

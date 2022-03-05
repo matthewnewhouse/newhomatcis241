@@ -65,9 +65,11 @@ ORDER BY E.dno;
 For every employee who does not work on any project that is located in Houston: Find the ssn and lname. Sort the results by lname
 */
 SELECT DISTINCT E.ssn, E.lname
-FROM EMPLOYEE E, PROJECT P, WORKS_ON W
-WHERE E.ssn = W.essn and W.pno = P.pnumber and E.ssn  NOT IN (SELECT E.ssn FROM EMPLOYEE E, PROJECT P, WORKS_ON W 
-	WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
+FROM EMPLOYEE E, WORKS_ON W
+WHERE E.ssn = W.essn and E.ssn 
+	NOT IN (SELECT E.ssn 
+		FROM EMPLOYEE E, PROJECT P, WORKS_ON W 
+		WHERE P.plocation= 'Houston' and W.essn = E.ssn and W.pno = P.pnumber)
 ORDER BY E.lname;
 --
 -- DIVISION ---------------------------------------------
