@@ -75,7 +75,11 @@ ORDER BY E.lname;
 /*(20A) Hint: This is a DIVISION query
 For every employee who works on every project that is located in Stafford: Find the ssn and lname. Sort the results by lname
 */
--- <<< Your SQL code replaces this whole line>>>
+
+SELECT DISTINCT E.ssn, E.lname
+FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+WHERE P.plocation = 'Stafford' and E.ssn=W.essn and W.pno = P.pnumber
+ORDER BY E.lname;
 --
 SET ECHO OFF
 SPOOL OFF

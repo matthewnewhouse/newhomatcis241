@@ -76,6 +76,18 @@ SQL> --
 SQL> /*(20A) Hint: This is a DIVISION query
 SQL> For every employee who works on every project that is located in Stafford: Find the ssn and lname. Sort the results by lname
 SQL> */
-SQL> -- <<< Your SQL code replaces this whole line>>>
+SQL> 
+SQL> SELECT DISTINCT E.ssn, E.lname
+  2  FROM EMPLOYEE E, PROJECT P, WORKS_ON W
+  3  WHERE P.plocation = 'Stafford' and E.ssn=W.essn and W.pno = P.pnumber
+  4  ORDER BY E.lname;
+
+SSN       LNAME                                                                 
+--------- ---------------                                                       
+987987987 Jabbar                                                                
+987654321 Wallace                                                               
+333445555 Wong                                                                  
+999887777 Zelaya                                                                
+
 SQL> --
 SQL> SET ECHO OFF
