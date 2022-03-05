@@ -45,12 +45,22 @@ SQL> --
 SQL> /*(18A)
 SQL> For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 SQL> */
-SQL> /*
-SQL> SELECT  E.dno, E.ssn, E.lname, max(E.salary)
-SQL> FROM EMPLOYEE E, DEPARTMENT D
-SQL> WHERE E.dno = D.dnumber
-SQL> ORDER BY E.dno;
-SQL> */
+SQL> SELECT E.dno, E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  WHERE (E.dno, E.salary) IN(
+  4  SELECT E.dno,  max(E.salary)
+  5  FROM EMPLOYEE E
+  6  GROUP BY E.dno
+  7  )
+  8  ORDER BY E.dno;
+
+       DNO SSN       LNAME               SALARY                                 
+---------- --------- --------------- ----------                                 
+         1 888665555 Borg                 55000                                 
+         4 987654321 Wallace              43000                                 
+         5 333445555 Wong                 40000                                 
+
+SQL> 
 SQL> --
 SQL> -- NON-CORRELATED SUBQUERY -------------------------------
 SQL> --

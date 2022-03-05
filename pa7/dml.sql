@@ -52,12 +52,15 @@ ORDER BY P.pnumber;
 /*(18A)
 For every employee who has the highest salary in their department: Find the dno, ssn, lname, and salary. Sort the results by department number.
 */
-/*
-SELECT  E.dno, E.ssn, E.lname, max(E.salary)
-FROM EMPLOYEE E, DEPARTMENT D
-WHERE E.dno = D.dnumber
+SELECT E.dno, E.ssn, E.lname, E.salary
+FROM EMPLOYEE E
+WHERE (E.dno, E.salary) IN(
+SELECT E.dno,  max(E.salary) 
+FROM EMPLOYEE E 
+GROUP BY E.dno
+)
 ORDER BY E.dno;
-*/
+
 --
 -- NON-CORRELATED SUBQUERY -------------------------------
 --
