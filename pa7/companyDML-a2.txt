@@ -47,12 +47,10 @@ SQL> For every employee who has the highest salary in their department: Find the
 SQL> */
 SQL> SELECT E.dno, E.ssn, E.lname, E.salary
   2  FROM EMPLOYEE E
-  3  WHERE (E.dno, E.salary) IN(
-  4  SELECT E.dno,  max(E.salary)
-  5  FROM EMPLOYEE E
-  6  GROUP BY E.dno
-  7  )
-  8  ORDER BY E.dno;
+  3  WHERE (E.dno, E.salary) IN(SELECT E.dno,  max(E.salary)
+  4  				FROM EMPLOYEE E
+  5  				GROUP BY E.dno)
+  6  ORDER BY E.dno;
 
        DNO SSN       LNAME               SALARY                                 
 ---------- --------- --------------- ----------                                 
@@ -60,7 +58,6 @@ SQL> SELECT E.dno, E.ssn, E.lname, E.salary
          4 987654321 Wallace              43000                                 
          5 333445555 Wong                 40000                                 
 
-SQL> 
 SQL> --
 SQL> -- NON-CORRELATED SUBQUERY -------------------------------
 SQL> --
