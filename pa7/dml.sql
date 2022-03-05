@@ -54,13 +54,10 @@ For every employee who has the highest salary in their department: Find the dno,
 */
 SELECT E.dno, E.ssn, E.lname, E.salary
 FROM EMPLOYEE E
-WHERE (E.dno, E.salary) IN(
-SELECT E.dno,  max(E.salary) 
-FROM EMPLOYEE E 
-GROUP BY E.dno
-)
+WHERE (E.dno, E.salary) IN(SELECT E.dno,  max(E.salary) 
+			   FROM EMPLOYEE E 
+			   GROUP BY E.dno)
 ORDER BY E.dno;
-
 --
 -- NON-CORRELATED SUBQUERY -------------------------------
 --
