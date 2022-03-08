@@ -17,6 +17,7 @@ Board::~Board(){
 }
 
 void Board::setVisible(bool v){
+	this->visible = v;
 }
 
 int& Board::Internal::operator[](int index){

@@ -9,12 +9,20 @@
  * Constructor will create the ships vector and add ships to it.
  */
 Game::Game(){
+	ships.insert(new Ship(5,"Carrier",67);
+	ships.insert(new Ship(4,"Battleship",66);
+	ships.insert(new Ship(3,"Destroyer",68);
+	ships.insert(new Ship(3,"Submarine",83);
+	ships.insert(new Ship(2,"Patrol Boat",80);	
 }
 
 /**
  * Begin Game let's user and then computer setup boards then calls run()
  */
 void Game::beginGame(){
+	placeShips();
+	PlaceShipsPC();
+	run();
 }
 
 /**
@@ -40,6 +48,8 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  * Call human turn/computer turn until someone wins.
  */
 void Game::run(){
+	humanTurn();
+	computerTurn();
 }
 
 void Game::humanTurn(){
