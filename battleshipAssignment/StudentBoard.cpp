@@ -6,19 +6,16 @@
 
 Board::Board(){
 	this->visible = false;
-	this->grid = new int[HEIGHT];
-	for(int i = 0 ; i<HEIGHT;i++){
-		this->grid[i] = new int[WIDTH];
-	}
+	this->grid = new int[HEIGHT*WIDTH];
 }
 
 Board::Board(const Board& other){
 	this->visible = other.visible;
-	this->grid = new int[HEIGHT][WIDTH];
+	this->grid = new int[HEIGHT*WIDTH];
 
 	for(int i = 0; i<HEIGHT;i++){
 		for(int j = 0; j<WIDTH; j++){
-			this->grid[i][j] = other.grid[i][j]
+			this->grid[i*j] = other.grid[i*j];
 		}
 	}
 }
@@ -53,10 +50,25 @@ Board::Internal Board::operator[](int index){
 }
 
 std::ostream& operator<<(std::ostream& os, Board const& b){
-
+	os << "|-----------------------------------YOUR BOARD-----------------------------------|\n";
+	for(int i = 0; i<WIDTH;i++){
+		os<< "\t" << i;
+	}
+	os<<"\n----------------------------------------------------------------------------------\n";
+	for(int i = 0; i <HEIGHT;i++){
+		os<<i<<" |\t";
+		for(int j = 0; j<WIDTH;j++){
+			if(b.grid[i*j]==EMPTY){
+				os << i*j<<"\t";
+			}
+		}
+		os << "\n";
+	}
+	return os;
 }
 
 int Board::count() const{
+	return HEIGHT*WIDTH;
 }
 
 bool Board::operator< (const Board& other){
