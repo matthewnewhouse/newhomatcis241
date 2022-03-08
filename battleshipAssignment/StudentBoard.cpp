@@ -50,6 +50,7 @@ Board::Internal Board::operator[](int index){
 }
 
 std::ostream& operator<<(std::ostream& os, Board const& b){
+	int val = -1;
 	os << "|-----------------------------------YOUR BOARD-----------------------------------|\n";
 	for(int i = 0; i<WIDTH;i++){
 		os<< "\t" << i;
@@ -58,8 +59,31 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 	for(int i = 0; i <HEIGHT;i++){
 		os<<i<<" |\t";
 		for(int j = 0; j<WIDTH;j++){
-			if(b.grid[i*j]==EMPTY){
-				os << i*j<<"\t";
+			Board temp(b);
+			val = temp[j][i];	
+			if(val==EMPTY){
+				os << "+"<<"\t";
+			}
+			else if(val==CARRIER){
+				os << "C" << "\t";
+			}
+			else if(val==BATTLESHIP){
+				os << "B" << "\t";
+			}
+			else if(val==DESTROYER){
+				os << "D" << "\t";
+			}
+			else if(val==SUBMARINE){
+				os << "S" << "\t";
+			}
+			else if(val==PATROLBOAT){
+				os << "P" << "\t";
+			}
+			else if(val==MISS){
+				os << "-" << "\t";
+			}
+			else{
+				os << "*" << "\t";
 			}
 		}
 		os << "\n";

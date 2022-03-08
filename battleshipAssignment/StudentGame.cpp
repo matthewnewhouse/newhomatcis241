@@ -12,9 +12,9 @@ Game::Game(){
 	this->player = *(new Board());
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
-	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));
-	i = ships.insert(i,*(new Ship(3,"Submarine",83)));
-	i = ships.insert(i,*(new Ship(3,"Destroyer",68)));
+//	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));
+//	i = ships.insert(i,*(new Ship(3,"Submarine",83)));
+//	i = ships.insert(i,*(new Ship(3,"Destroyer",68)));
 	i = ships.insert(i,*(new Ship(4,"Battleship",66)));
 	i = ships.insert(i,*(new Ship(5,"Carrier",67)));	
 }
@@ -80,11 +80,23 @@ void Game::placeShips(){
 			i--;
 		}
 		else{
+			int length = ships.at(i).getSpaces();
 			if(dir == HORIZONTAL){
+				for(int k = 0; k<length;k++){
+					player[col][row] = ships.at(i).getChr();
+					col++;
+				}
+			}
+			else{
+				for(int k = 0; k<length;k++){
+					player[col][row] = ships.at(i).getChr();
+					row++;
+				}
 				
 			}
 		}
 	}
+	std::cout << player << std::endl;
 }
 
 /**
