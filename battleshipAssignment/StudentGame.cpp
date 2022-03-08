@@ -9,11 +9,13 @@
  * Constructor will create the ships vector and add ships to it.
  */
 Game::Game(){
-	ships.insert(new Ship(5,"Carrier",67);
-	ships.insert(new Ship(4,"Battleship",66);
-	ships.insert(new Ship(3,"Destroyer",68);
-	ships.insert(new Ship(3,"Submarine",83);
-	ships.insert(new Ship(2,"Patrol Boat",80);	
+	std::vector<Ship>::iterator i;
+	i = ships.begin();
+	i = ships.insert(i,*(new Ship(5,"Carrier",67)));
+	i = ships.insert(i,*(new Ship(4,"Battleship",66)));
+	i = ships.insert(i,*(new Ship(3,"Destroyer",68)));
+	i = ships.insert(i,*(new Ship(3,"Submarine",83)));
+	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));	
 }
 
 /**
@@ -21,7 +23,7 @@ Game::Game(){
  */
 void Game::beginGame(){
 	placeShips();
-	PlaceShipsPC();
+	placeShipsPC();
 	run();
 }
 
@@ -29,12 +31,14 @@ void Game::beginGame(){
  * Handle the human placing ships.
  */
 void Game::placeShips(){
+	this->player = *(new Board());
 }
 
 /**
  * Handle the computer placing ships.
  */
 void Game::placeShipsPC(){
+	this->computer = *(new Board());
 }
 
 /**
@@ -48,8 +52,16 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  * Call human turn/computer turn until someone wins.
  */
 void Game::run(){
+	while(true){
 	humanTurn();
+	if(computer.count()==0){
+		return;
+	}
 	computerTurn();
+	if(player.count()==0){
+		return;
+	}
+   }
 }
 
 void Game::humanTurn(){

@@ -5,15 +5,33 @@
 #include <iostream>
 
 Board::Board(){
+	this->visible = false;
+	this->grid = new int[HEIGHT];
+	for(int i = 0 ; i<HEIGHT;i++){
+		this->grid[i] = new int[WIDTH];
+	}
 }
 
 Board::Board(const Board& other){
+	this->visible = other.visible;
+	this->grid = new int[HEIGHT][WIDTH];
+
+	for(int i = 0; i<HEIGHT;i++){
+		for(int j = 0; j<WIDTH; j++){
+			this->grid[i][j] = other.grid[i][j]
+		}
+	}
 }
 
 Board& Board::operator=(const Board& other){
+	Board temp(other);
+	std::swap(this->visible, temp.visible);
+	std::swap(this->grid, temp.grid);
+	return *this;
 }
 
 Board::~Board(){
+	delete this->grid;
 }
 
 void Board::setVisible(bool v){
@@ -35,10 +53,15 @@ Board::Internal Board::operator[](int index){
 }
 
 std::ostream& operator<<(std::ostream& os, Board const& b){
+
 }
 
 int Board::count() const{
 }
 
 bool Board::operator< (const Board& other){
+	if(count()<other.count()){
+		return true;
+	}
+	return false;
 }
