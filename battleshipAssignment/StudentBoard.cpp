@@ -13,10 +13,8 @@ Board::Board(const Board& other){
 	this->visible = other.visible;
 	this->grid = new int[HEIGHT*WIDTH];
 
-	for(int i = 0; i<HEIGHT;i++){
-		for(int j = 0; j<WIDTH; j++){
-			this->grid[i*j] = other.grid[i*j];
-		}
+	for(int i = 0; i<(HEIGHT*WIDTH);i++){
+			this->grid[i] = other.grid[i];
 	}
 }
 
@@ -60,9 +58,9 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 		os<<i<<" |\t";
 		for(int j = 0; j<WIDTH;j++){
 			Board temp(b);
-			val = temp[j][i];	
+			val = temp[i][j];	
 			if(val==EMPTY){
-				os << "+"<<"\t";
+				os << " "<<"\t";
 			}
 			else if(val==CARRIER){
 				os << "C" << "\t";
