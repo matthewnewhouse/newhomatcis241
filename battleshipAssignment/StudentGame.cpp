@@ -10,6 +10,7 @@
  */
 Game::Game(){
 	this->player = *(new Board());
+	this->computer = *(new Board());
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
 	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));
@@ -63,11 +64,11 @@ void Game::placeShips(){
 		}
 
 		std::cout << "" << std::endl;
-		if(row < 0 or row>HEIGHT){
+		if(row < 0 or row>=HEIGHT){
 			std::cout << "The given row value is outside of the bounds of the board. Try again.\n" << std::endl;
 			i--;
 		}
-		else if(col < 0 or col>WIDTH){
+		else if(col < 0 or col>=WIDTH){
 			std::cout << "The given column value is outside of the bounds of the board. Try again\n." << std::endl;
 			i--;
 		}
@@ -76,26 +77,33 @@ void Game::placeShips(){
 			i--;
 		}
 		else if(!place(row,col,dir,ships.at(i),player)){
-			std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
 			i--;
 		}
 		else{
 			int length = ships.at(i).getSpaces();
 			if(dir == HORIZONTAL){
-				for(int k = 0; k<length;k++){
-					player[row][col] = ships.at(i).getChr();
-					col++;
+				for(int k = col; k<(length+col);k++){
+					player[row][k] = ships.at(i).getChr();
 				}
 			}
 			else{
-				for(int k = 0; k<length;k++){
-					player[row][col] = ships.at(i).getChr();
-					row++;
+				for(int k = row; k<(length+row);k++){
+					player[k][col] = ships.at(i).getChr();
 				}
 				
 			}
+			
+			if(dir == HORIZONTAL){
+				std::cout << "The " << ships.at(i).getName() << " has been successfully placed at (" << row << "," << col 
+					<< ") horizontally.\n" <<std::endl;
+			}
+			else{
+				std::cout << "The " << ships.at(i).getName() << " has been successfully placed at (" << row << "," << col 
+					<< ") vertically.\n" <<std::endl;	
+			}
 		}
 	}
+	std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
 	std::cout << player << std::endl;
 }
 
@@ -103,7 +111,7 @@ void Game::placeShips(){
  * Handle the computer placing ships.
  */
 void Game::placeShipsPC(){
-	this->computer = *(new Board());
+	
 }
 
 /**
@@ -111,6 +119,35 @@ void Game::placeShipsPC(){
  * at a particular spot with a particular direction.
  */
 bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& b){
+	int length = s.getSpaces();
+	int endRow = x + length;
+	int endCol = y + length;
+	if(d == HORIZONTAL){
+		if(endCol>WIDTH){
+			std::cout << "This direction would place the ship outside of the bounds of the board. Try again.\n" << std::endl;
+			return false;
+		}
+		for(int i = y; i<endCol; i++){
+			if(player[x][i] != EMPTY){
+				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+				return false;
+			}
+		}
+	}
+	else{
+		if(endRow>HEIGHT){
+			std::cout << "This direction would place the ship outside of the bounds of the board. Try again.\n" << std::endl;
+			return false;
+		}
+		for(int i = x; i<endRow; i++){
+			if(player[i][y] != EMPTY){	
+				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+				return false;
+			}
+		}
+		
+	}
+
 	return true;
 }
 

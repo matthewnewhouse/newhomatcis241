@@ -49,7 +49,6 @@ Board::Internal Board::operator[](int index){
 
 std::ostream& operator<<(std::ostream& os, Board const& b){
 	int val = -1;
-	os << "|-----------------------------------YOUR BOARD-----------------------------------|\n";
 	for(int i = 0; i<WIDTH;i++){
 		os<< "\t" << i;
 	}
