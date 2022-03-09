@@ -16,7 +16,7 @@ Game::Game(){
 	this->player = *(new Board());
 	player.setVisible(true);
 	this->computer = *(new Board());
-	computer.setVisible(true);
+	computer.setVisible(false);
 
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
@@ -56,6 +56,10 @@ void Game::placeShips(){
 	int d;
 	Direction dir;
 	for(int i = 0; i<ships.size();i++){
+
+		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
+		std::cout << player << std::endl;
+
 		row = -100;
 		col = -100;
 		d = -100;
