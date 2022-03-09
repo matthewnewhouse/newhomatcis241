@@ -225,12 +225,17 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 }
 
 /*Prints current score. */
-void printScore(int turnCount, Board p, Board c){
+void printScore(int turnCount, Board p, Board c, bool playerTurn){
 	std::cout<<"\nPLAYER VS. THE ADMIRAL" << std::endl;
-	std::cout << "----------------------"<<std::endl;
-	std::cout << "       TURN " << turnCount << std::endl;
-	std::cout << "----------------------"<<std::endl;
-	std::cout << "   " << p.count() << "   VS.   " << c.count() << "\n" << std::endl;	
+	std::cout << "------------------------"<<std::endl;
+	if(playerTurn){
+		std::cout << "ROUND " << turnCount+1 << " - PLAYER'S TURN" << std::endl;
+	}
+	else{
+		std::cout << "ROUND " << turnCount+1 << " - ADMIRAL'S TURN" << std::endl; 
+	}
+	std::cout << "------------------------"<<std::endl;
+	std::cout << "   " << p.count() << "HP   VS.   " << c.count() << "HP\n" << std::endl;	
 }
 
 /**
@@ -240,14 +245,14 @@ void Game::run(){
 	int turnCount = 0;
 	while(player.count()!=0){
 
-		printScore(turnCount, player, computer);
+		printScore(turnCount, player, computer, true);
 
 		humanTurn();
 		
 		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
 		std::cout << computer << std::endl;		
 
-		printScore(turnCount, player, computer);
+		printScore(turnCount, player, computer, false);
 
 		if(computer.count()==0){
 			std::cout << "You beat The ADMIRAL! Congratulations!" << std::endl;
@@ -263,13 +268,36 @@ void Game::run(){
 		turnCount++;
    	}
 
-	printScore(turnCount, player, computer);
+	printScore(turnCount, player, computer, true);
 
 	std::cout << "THE ADMIRAL wins!" << std::endl;
 	return;
 }
 
 void Game::humanTurn(){
+	bool finished = false;
+	int row = -1;
+	int col = -1;
+	while(!finished){
+		std::cout<<"Where would you like to shoot?"<<std::endl;
+		std::cout << "Row: ";
+		std::cin  >> row;
+		std::cout << "Column: ";
+		std::cin  >> col;
+		if(computer[row][col] != HIT and computer[row][col] != MISS){
+			std::cout << "\nYou shoot at (" << row << "," << col << ")." << std::endl;
+			if(computer[row][col] == EMPTY){
+				computer[row][col] = MISS;
+				std::cout << "You missed!\n" << std::endl;
+			}
+			else{
+				computer[row][col] = HIT;
+				std::cout << "You hit one of THE ADMIRAL'S ships!\n" << std::endl;
+			}
+			finished = true;
+		}
+	}
+
 }
 
 void Game::computerTurn(){
@@ -280,11 +308,14 @@ void Game::computerTurn(){
 		row = getRandomInt(0, HEIGHT-1);
 		col = getRandomInt(0, WIDTH-1);
 		if(player[row][col] != HIT and player[row][col] != MISS){
+			std::cout<<"THE ADMIRAL shoots at (" << row << "," << col << ")."  << std::endl;
 			if(player[row][col] == EMPTY){
 				player[row][col] = MISS;
+				std::cout << "THE ADMIRAL missed!\n" << std::endl;
 			}
 			else{
 				player[row][col] = HIT;
+				std::cout << "THE ADMIRAL hit one of your ships!\n" << std::endl;
 			}
 			finished = true;
 		}
