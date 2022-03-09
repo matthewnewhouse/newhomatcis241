@@ -112,7 +112,13 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 }
 
 int Board::count() const{
-	return HEIGHT*WIDTH;
+	int count = 0;
+	for(int i = 0; i<(HEIGHT*WIDTH);i++){
+		if(this->grid[i]!=EMPTY or this->grid[i]!=HIT or this->grid[i]!=MISS){
+			count++;
+		}
+	}
+	return count;
 }
 
 bool Board::operator< (const Board& other){

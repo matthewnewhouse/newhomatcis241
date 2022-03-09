@@ -31,16 +31,16 @@ Game::Game(){
  */
 void Game::beginGame(){
 	std::cout<< "|-----------------------------------BATTLESHIP-----------------------------------|" <<std::endl;
-	std::cout<< "\nYou will play versus THE ADMIRAL, the greatest BATTLESHIP AI ever!" << std::endl;
-	std::cout<< "\nIn BATTLESHIP, the pieces are as follows: " <<std::endl;
+	std::cout<< "\nYou will play against THE ADMIRAL, the greatest BATTLESHIP AI ever!" << std::endl;
+	std::cout<< "\nIn BATTLESHIP, the ships are as follows: " <<std::endl;
 	for(int i = 0; i<ships.size();i++){
 		std::cout<<"\t"<<ships.at(i)<<std::endl;
 	}
 	std::cout<<""<<std::endl;
 	
-//	placeShips();
+	placeShips();
 	placeShipsPC();
-	//run();
+	run();
 }
 
 /**
@@ -197,7 +197,9 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 		}
 		for(int i = y; i<endCol; i++){
 			if(b[x][i] != EMPTY){
-				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+				if(!(b<player) && !(player<b)){
+					std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+				}
 				return false;
 			}
 		}
@@ -208,8 +210,10 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 			return false;
 		}
 		for(int i = x; i<endRow; i++){
-			if(b[i][y] != EMPTY){	
-				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+			if(b[i][y] != EMPTY){
+				if(!(b<player) && !(player<b)){
+					std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
+				}
 				return false;
 			}
 		}
@@ -223,22 +227,47 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  * Call human turn/computer turn until someone wins.
  */
 void Game::run(){
-	while(true){
-	humanTurn();
-	if(computer.count()==0){
-		return;
-	}
-	computerTurn();
-	if(player.count()==0){
-		return;
-	}
-   }
+	while(player.count()!=0){
+		std::cout<<"\nPlayer vs. THE ADMIRAL" << std::endl;
+		std::cout << "----------------------"<<std::endl;
+		std::cout<<"   "<<player.count()<<"vs.   " << computer.count() << std::endl;
+
+		humanTurn();
+		if(computer.count()==0){
+			std::cout << "You beat The ADMIRAL! Congratulations!" << std::endl;
+			return;
+		}
+		
+		std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
+		std::cout << "----------------------" << std::endl;
+		std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
+
+		computerTurn();
+   	}
+
+	std::cout << "THE ADMIRAL wins!" << std::endl;
+	return;
 }
 
 void Game::humanTurn(){
 }
 
 void Game::computerTurn(){
+	bool finished = false;
+	while(!finished){
+		int row = getRandomInt(0, HEIGHT-1);
+		int col = getRandomInt(0, WIDTH-1);
+		if(player[row][col] != HIT or player[row][col] != MISS){
+			if(player[row][col] == EMPTY){
+				player[row][col] = MISS;
+			}
+			else{
+				player[row][col] = HIT;
+			}
+			finished = true;
+		}
+	}
+
 }
 
 /**
