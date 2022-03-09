@@ -228,22 +228,39 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  */
 void Game::run(){
 	while(player.count()!=0){
+
 		std::cout<<"\nPlayer vs. THE ADMIRAL" << std::endl;
 		std::cout << "----------------------"<<std::endl;
-		std::cout<<"   "<<player.count()<<"vs.   " << computer.count() << std::endl;
+		std::cout<<"   " << player.count()<<"   vs.   " << computer.count() << std::endl;
 
 		humanTurn();
+		
+		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
+		std::cout << player << std::endl;
+		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
+		std::cout << computer << std::endl;		
+
+		std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
+		std::cout << "----------------------" << std::endl;
+		std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
+
 		if(computer.count()==0){
 			std::cout << "You beat The ADMIRAL! Congratulations!" << std::endl;
 			return;
 		}
 		
-		std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
-		std::cout << "----------------------" << std::endl;
-		std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
 
 		computerTurn();
+
+		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
+		std::cout << player << std::endl;
+		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
+		std::cout << computer << std::endl;
    	}
+
+	std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
+	std::cout << "----------------------" << std::endl;
+	std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
 
 	std::cout << "THE ADMIRAL wins!" << std::endl;
 	return;
@@ -254,10 +271,12 @@ void Game::humanTurn(){
 
 void Game::computerTurn(){
 	bool finished = false;
+	int row = -1;
+	int col = -1;
 	while(!finished){
-		int row = getRandomInt(0, HEIGHT-1);
-		int col = getRandomInt(0, WIDTH-1);
-		if(player[row][col] != HIT or player[row][col] != MISS){
+		row = getRandomInt(0, HEIGHT-1);
+		col = getRandomInt(0, WIDTH-1);
+		if(player[row][col] != HIT and player[row][col] != MISS){
 			if(player[row][col] == EMPTY){
 				player[row][col] = MISS;
 			}
@@ -267,6 +286,8 @@ void Game::computerTurn(){
 			finished = true;
 		}
 	}
+
+	std::cout << "Computer shoots at (" << row << "," << col << ")." << std::endl;
 
 }
 

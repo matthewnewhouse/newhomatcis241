@@ -108,13 +108,16 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 		os<< "\n";
 		}
 	}
+
+	os<<"\n----------------------------------------------------------------------------------\n";
+
 	return os;
 }
 
 int Board::count() const{
 	int count = 0;
 	for(int i = 0; i<(HEIGHT*WIDTH);i++){
-		if(this->grid[i]!=EMPTY or this->grid[i]!=HIT or this->grid[i]!=MISS){
+		if(this->grid[i]!=EMPTY and this->grid[i]!=HIT and this->grid[i]!=MISS){
 			count++;
 		}
 	}
