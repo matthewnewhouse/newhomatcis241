@@ -243,14 +243,12 @@ void printScore(int turnCount, Board p, Board c, bool playerTurn){
  */
 void Game::run(){
 	int turnCount = 0;
+
 	while(player.count()!=0){
 
 		printScore(turnCount, player, computer, true);
 
 		humanTurn();
-		
-		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
-		std::cout << computer << std::endl;		
 
 		printScore(turnCount, player, computer, false);
 
@@ -264,6 +262,9 @@ void Game::run(){
 
 		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
 		std::cout << player << std::endl;
+		
+		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
+		std::cout << computer << std::endl;
 
 		turnCount++;
    	}
@@ -284,17 +285,28 @@ void Game::humanTurn(){
 		std::cin  >> row;
 		std::cout << "Column: ";
 		std::cin  >> col;
-		if(computer[row][col] != HIT and computer[row][col] != MISS){
-			std::cout << "\nYou shoot at (" << row << "," << col << ")." << std::endl;
+		
+
+		if(row < 0 or row>=HEIGHT){
+			std::cout << "\nThe given row value is outside of the bounds of the board. Try again.\n" << std::endl;
+		}
+		else if(col < 0 or col>=WIDTH){
+			std::cout << "\nThe given column value is outside of the bounds of the board. Try again\n." << std::endl;
+		}
+		else if(computer[row][col] != HIT and computer[row][col] != MISS){
+			std::cout << "\nYou shot at (" << row << "," << col << ")." << std::endl;
 			if(computer[row][col] == EMPTY){
 				computer[row][col] = MISS;
-				std::cout << "You missed!\n" << std::endl;
+				std::cout << "You missed!" << std::endl;
 			}
 			else{
 				computer[row][col] = HIT;
-				std::cout << "You hit one of THE ADMIRAL'S ships!\n" << std::endl;
+				std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
 			}
 			finished = true;
+		}
+		else{
+			std::cout << "\nYou have already shot there. Try somwehere else.\n" << std::endl;
 		}
 	}
 
