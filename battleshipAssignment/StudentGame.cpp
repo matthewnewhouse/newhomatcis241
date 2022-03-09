@@ -5,6 +5,9 @@
 #include <iostream>
 #include <random>
 
+
+int getRandomInt(int from, int to);
+
 /**
  * Constructor will create the ships vector and add ships to it.
  */
@@ -35,7 +38,7 @@ void Game::beginGame(){
 	}
 	std::cout<<""<<std::endl;
 	
-	placeShips();
+//	placeShips();
 	placeShipsPC();
 	//run();
 }
@@ -107,8 +110,64 @@ void Game::placeShips(){
  */
 void Game::placeShipsPC(){
 
+	int d = -1;
+	Direction dir;
+	int row = -1;
+	int col = -1;
+	int length = -1;
+
+	for(int i = 0; i<ships.size();i++){
+		
+		length = ships.at(i).getSpaces();
+
+		d = getRandomInt(0,1);
+
+		if(d==0){
+			dir = HORIZONTAL;
+		}
+		else{
+			dir = VERTICAL;
+		}
+		
+		if(dir==HORIZONTAL){
+			row = getRandomInt(0, HEIGHT-1);
+			col = getRandomInt(0, (WIDTH - 1)-length);
+		}
+		else{
+			row = getRandomInt(0, (HEIGHT-1)-length);
+			col = getRandomInt(0, WIDTH-1);
+		}
+		
+		if(!place(row,col,dir,ships.at(i),computer)){
+			i--;
+		}
+		else{
+			if(dir == HORIZONTAL){
+				for(int k = col; k<(length+col);k++){
+					computer[row][k] = ships.at(i).getChr();
+				}
+			}
+			else{
+				for(int k = row; k<(length+row);k++){
+					computer[k][col] = ships.at(i).getChr();
+				}
+
+			}
+		}
+
+	}
+
 	std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
 	std::cout << computer << std::endl;
+}
+
+
+/*Get random int in between given values.*/
+int getRandomInt(int from, int to) {
+	std::random_device rand_dev;
+	std::mt19937 generator(rand_dev());
+	std::uniform_int_distribution<int> distr(from, to);
+	return distr(generator);
 }
 
 /**
@@ -137,7 +196,7 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 			return false;
 		}
 		for(int i = y; i<endCol; i++){
-			if(player[x][i] != EMPTY){
+			if(b[x][i] != EMPTY){
 				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
 				return false;
 			}
@@ -149,7 +208,7 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 			return false;
 		}
 		for(int i = x; i<endRow; i++){
-			if(player[i][y] != EMPTY){	
+			if(b[i][y] != EMPTY){	
 				std::cout << "The coordinates you selected intersect with another ship. Try again.\n" << std::endl;
 				return false;
 			}
