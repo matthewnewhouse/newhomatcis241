@@ -235,7 +235,20 @@ void printScore(int turnCount, Board p, Board c, bool playerTurn){
 		std::cout << "ROUND " << turnCount+1 << " - ADMIRAL'S TURN" << std::endl; 
 	}
 	std::cout << "------------------------"<<std::endl;
-	std::cout << "   " << p.count() << "HP   VS.   " << c.count() << "HP\n" << std::endl;	
+	std::cout << p.count() << "HP VS. " << c.count() << "HP" << std::endl;	
+
+	if(p.count() == c.count()){
+		std::cout << "------------------------"<<std::endl;
+		std::cout << "TIED GAME\n" << std::endl;
+	}
+	else if(p.count() < c.count()){
+		std::cout << "------------------------"<<std::endl;
+		std::cout << "THE ADMIRAL IS WINNING\n" << std::endl;
+	}
+	else{
+		std::cout << "------------------------"<<std::endl;
+		std::cout << "PLAYER IS WINNING\n" << std::endl;
+	}
 }
 
 /**
