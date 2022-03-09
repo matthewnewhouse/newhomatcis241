@@ -48,21 +48,64 @@ void Game::beginGame(){
  * Handle the human placing ships.
  */
 void Game::placeShips(){
+	std::string inputRow;
+	std::string inputCol;
+	std::string inputDir;
 	int row;
 	int col;
 	int d;
 	Direction dir;
 	for(int i = 0; i<ships.size();i++){
+		row = -100;
+		col = -100;
+		d = -100;
 		std::cout<<"Where would you like to place The " << ships.at(i)<<"?"<<std::endl;
+		
 		std::cout << "Row: ";
-		std::cin  >> row;
+		std::cin  >> inputRow;
+
 		std::cout << "Column: ";
-		std::cin  >> col;
+		std::cin  >> inputCol;
+
 		std::cout << "Would you like to place The " << ships.at(i) << " HORIZONTALLY or VERTICALLY? (Input 0 or 1)" << std::endl;
 		std::cout << "Direction: ";
-		std::cin  >> d;
+		std::cin  >> inputDir;
 		std::cout << "" << std::endl;	
-		
+	
+
+		for(char c : inputRow){
+			if(!isdigit(c)){
+				row = -1;	
+			}
+		}
+		if(row!=-1){
+			row = stoi(inputRow);
+		}
+
+
+
+		for(char c : inputCol){
+			if(!isdigit(c)){
+				col = -1;
+			}
+		}
+		if(col!=-1){
+			col = stoi(inputCol);
+		}
+
+
+
+		for(char c : inputDir){
+			if(!isdigit(c)){
+				d = -1;
+			}
+		}
+		if(d!=-1){
+			d = stoi(inputDir);
+		}
+
+
+
 		if(d == 0){
 			dir = HORIZONTAL;
 		}
@@ -186,7 +229,7 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 		return false;
 	}
 	else if(y < 0 or y>=WIDTH){
-		std::cout << "The given column value is outside of the bounds of the board. Try again\n." << std::endl;
+		std::cout << "The given column value is outside of the bounds of the board. Try again.\n" << std::endl;
 		return false;
 	}
 
@@ -289,22 +332,44 @@ void Game::run(){
 }
 
 void Game::humanTurn(){
+	std::string inputRow;
+	std::string inputCol;
 	bool finished = false;
-	int row = -1;
-	int col = -1;
+	int row;
+	int col;
 	while(!finished){
+		row = -100;
+		col = -100;
 		std::cout<<"Where would you like to shoot?"<<std::endl;
 		std::cout << "Row: ";
-		std::cin  >> row;
+		std::cin  >> inputRow;
 		std::cout << "Column: ";
-		std::cin  >> col;
+		std::cin  >> inputCol;
 		
+
+		for(char c : inputRow){
+			if(!isdigit(c)){
+				row = -1;
+			}
+		}
+		if(row != -1){
+			row = stoi(inputRow);
+		}
+
+		for(char c : inputCol){
+			if(!isdigit(c)){
+				col = -1;
+			}
+		}
+		if(col != -1){
+			col = stoi(inputCol);
+		}
 
 		if(row < 0 or row>=HEIGHT){
 			std::cout << "\nThe given row value is outside of the bounds of the board. Try again.\n" << std::endl;
 		}
 		else if(col < 0 or col>=WIDTH){
-			std::cout << "\nThe given column value is outside of the bounds of the board. Try again\n." << std::endl;
+			std::cout << "\nThe given column value is outside of the bounds of the board. Try again.\n" << std::endl;
 		}
 		else if(computer[row][col] != HIT and computer[row][col] != MISS){
 			std::cout << "\nYou shot at (" << row << "," << col << ")." << std::endl;
