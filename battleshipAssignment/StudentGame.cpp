@@ -7,6 +7,7 @@
 
 
 int getRandomInt(int from, int to);
+void printScore(int turnCount, Board p, Board c);
 
 /**
  * Constructor will create the ships vector and add ships to it.
@@ -223,26 +224,30 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 	return true;
 }
 
+/*Prints current score. */
+void printScore(int turnCount, Board p, Board c){
+	std::cout<<"\nPLAYER VS. THE ADMIRAL" << std::endl;
+	std::cout << "----------------------"<<std::endl;
+	std::cout << "       TURN " << turnCount << std::endl;
+	std::cout << "----------------------"<<std::endl;
+	std::cout << "   " << p.count() << "   VS.   " << c.count() << "\n" << std::endl;	
+}
+
 /**
  * Call human turn/computer turn until someone wins.
  */
 void Game::run(){
+	int turnCount = 0;
 	while(player.count()!=0){
 
-		std::cout<<"\nPlayer vs. THE ADMIRAL" << std::endl;
-		std::cout << "----------------------"<<std::endl;
-		std::cout<<"   " << player.count()<<"   vs.   " << computer.count() << std::endl;
+		printScore(turnCount, player, computer);
 
 		humanTurn();
 		
-		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
-		std::cout << player << std::endl;
 		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
 		std::cout << computer << std::endl;		
 
-		std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
-		std::cout << "----------------------" << std::endl;
-		std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
+		printScore(turnCount, player, computer);
 
 		if(computer.count()==0){
 			std::cout << "You beat The ADMIRAL! Congratulations!" << std::endl;
@@ -254,13 +259,11 @@ void Game::run(){
 
 		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
 		std::cout << player << std::endl;
-		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
-		std::cout << computer << std::endl;
+
+		turnCount++;
    	}
 
-	std::cout << "\nPlayer vs. THE ADMIRAL" << std::endl;
-	std::cout << "----------------------" << std::endl;
-	std::cout << "   " << player.count() << "   vs.   " << computer.count() << std::endl;
+	printScore(turnCount, player, computer);
 
 	std::cout << "THE ADMIRAL wins!" << std::endl;
 	return;
@@ -286,9 +289,6 @@ void Game::computerTurn(){
 			finished = true;
 		}
 	}
-
-	std::cout << "Computer shoots at (" << row << "," << col << ")." << std::endl;
-
 }
 
 /**
