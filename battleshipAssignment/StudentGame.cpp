@@ -10,7 +10,10 @@
  */
 Game::Game(){
 	this->player = *(new Board());
+	player.setVisible(true);
 	this->computer = *(new Board());
+	computer.setVisible(true);
+
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
 	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));
@@ -34,7 +37,7 @@ void Game::beginGame(){
 	
 	placeShips();
 	placeShipsPC();
-	run();
+	//run();
 }
 
 /**
@@ -54,25 +57,17 @@ void Game::placeShips(){
 		std::cout << "Would you like to place The " << ships.at(i) << " HORIZONTALLY or VERTICALLY? (Input 0 or 1)" << std::endl;
 		std::cout << "Direction: ";
 		std::cin  >> d;
+		std::cout << "" << std::endl;	
 		
 		if(d == 0){
 			dir = HORIZONTAL;
 		}
-		
+
 		if(d == 1){
 			dir = VERTICAL;
 		}
 
-		std::cout << "" << std::endl;
-		if(row < 0 or row>=HEIGHT){
-			std::cout << "The given row value is outside of the bounds of the board. Try again.\n" << std::endl;
-			i--;
-		}
-		else if(col < 0 or col>=WIDTH){
-			std::cout << "The given column value is outside of the bounds of the board. Try again\n." << std::endl;
-			i--;
-		}
-		else if(d!=0 and d!=1){
+		if(d!=0 and d!=1){
 			std::cout << "The given direction value was not 0 or 1. Try again.\n" << std::endl;
 			i--;
 		}
@@ -102,16 +97,18 @@ void Game::placeShips(){
 					<< ") vertically.\n" <<std::endl;	
 			}
 		}
-	}
-	std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
-	std::cout << player << std::endl;
+	}	
+		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
+		std::cout << player << std::endl;
 }
 
 /**
  * Handle the computer placing ships.
  */
 void Game::placeShipsPC(){
-	
+
+	std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
+	std::cout << computer << std::endl;
 }
 
 /**
@@ -122,6 +119,18 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 	int length = s.getSpaces();
 	int endRow = x + length;
 	int endCol = y + length;
+
+	
+	if(x < 0 or x>=HEIGHT){
+		std::cout << "The given row value is outside of the bounds of the board. Try again.\n" << std::endl;
+		return false;
+	}
+	else if(y < 0 or y>=WIDTH){
+		std::cout << "The given column value is outside of the bounds of the board. Try again\n." << std::endl;
+		return false;
+	}
+
+
 	if(d == HORIZONTAL){
 		if(endCol>WIDTH){
 			std::cout << "This direction would place the ship outside of the bounds of the board. Try again.\n" << std::endl;

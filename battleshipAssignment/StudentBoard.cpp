@@ -53,6 +53,8 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 		os<< "\t" << i;
 	}
 	os<<"\n----------------------------------------------------------------------------------\n";
+	
+	if(b.visible){
 	for(int i = 0; i <HEIGHT;i++){
 		os<<i<<" |\t";
 		for(int j = 0; j<WIDTH;j++){
@@ -84,6 +86,27 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 			}
 		}
 		os << "\n";
+	}
+	}
+	else{
+		for(int i = 0; i <HEIGHT;i++){
+		os<<i<<" |\t";
+		for(int j = 0; j<WIDTH;j++){
+			Board temp(b);
+			val = temp[i][j];
+			if(val==MISS){
+				os << "-" << "\t";
+			}
+			else if(val==HIT){
+				os << "*" << "\t";
+			}
+			else{
+				os << " " << "\t";
+			}
+
+		}
+		os<< "\n";
+		}
 	}
 	return os;
 }
