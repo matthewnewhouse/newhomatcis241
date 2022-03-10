@@ -498,20 +498,51 @@ void Game::computerTurn(){
 			}
 			else{
 				if(player[row][col] == CARRIER){
-					std::cout << "THE ADMIRAL hit your carrier!\n" << std::endl;
+					std::cout << "THE ADMIRAL hit your carrier!" << std::endl;
+					try{
+						playerShips.at(0).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "THE ADMIRAL sank your carrier!" << std::endl;
+					}
 				}
 				else if(player[row][col] == BATTLESHIP){
-					std::cout << "THE ADMIRAL hit your battleship!\n" << std::endl;
+					std::cout << "THE ADMIRAL hit your battleship!" << std::endl;
+					try{
+						playerShips.at(1).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "THE ADMIRAL sank your battleship!" << std::endl;
+					}
 				}
 				else if(player[row][col] == DESTROYER){
-					std::cout << "THE ADMIRAL hit your destroyer!\n" << std::endl;
+					std::cout << "THE ADMIRAL hit your destroyer!" << std::endl;
+					try{
+						playerShips.at(2).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "THE ADMIRAL sank your destroyer!" << std::endl;
+					}
 				}
 				else if(player[row][col] == SUBMARINE){
-					std::cout << "THE ADMIRAL hit your submarine!\n" << std::endl;
+					std::cout << "THE ADMIRAL hit your submarine!" << std::endl;
+					try{
+						playerShips.at(3).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "THE ADMIRAL sank your submarine!" << std::endl;
+					}
 				}
 				else if(player[row][col] == PATROLBOAT){
-					std::cout << "THE ADMIRAL hit your patrol boat!\n" << std::endl;
+					std::cout << "THE ADMIRAL hit your patrol boat!" << std::endl;
+					try{
+						playerShips.at(4).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "THE ADMIRAL sank your patrol boat!" << std::endl;
+					}
 				}
+				std::cout << "" << std::endl;
 				player[row][col] = HIT;
 			}
 			finished = true;
