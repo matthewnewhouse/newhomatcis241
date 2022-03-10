@@ -9,41 +9,45 @@ int getPlayerShipCount();
 int getComputerShipCount();
 int getRandomInt(int from, int to);
 void printScore(int turnCount, Board p, Board c);
-std::vector<Ship> playerShips;
-std::vector<Ship> computerShips;
+std::vector<Ship> playerShips{};
+std::vector<Ship> computerShips{};
 
 /**
  * Constructor will create the ships vector and add ships to it.
  */
 Game::Game(){
-	this->player = *(new Board());
+	Board* playerBoard = new Board();
+	player = *(playerBoard);
 	player.setVisible(true);
-	this->computer = *(new Board());
-	computer.setVisible(false);
+
+	Board* computerBoard = new Board();
+	computer = *(computerBoard);
+	computer.setVisible(true);
+
+	Ship* Carrier = new Ship(5,"Carrier",67);
+	Ship* Battleship = new Ship(4,"Battleship",66);
+	Ship* Destroyer = new Ship(3,"Destroyer",68);
+	Ship* Submarine = new Ship(3,"Submarine",83);
+	Ship* PatrolBoat = new Ship(2,"Patrol Boat",80);
 
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
-	i = ships.insert(i,*(new Ship(2,"Patrol Boat",80)));
-	i = ships.insert(i,*(new Ship(3,"Submarine",83)));
-	i = ships.insert(i,*(new Ship(3,"Destroyer",68)));
-	i = ships.insert(i,*(new Ship(4,"Battleship",66)));
-	i = ships.insert(i,*(new Ship(5,"Carrier",67)));
+	i = ships.insert(i,*PatrolBoat);
+	i = ships.insert(i,*Submarine);
+	i = ships.insert(i,*Destroyer);
+	i = ships.insert(i,*Battleship);
+	i = ships.insert(i, *Carrier);
 
-	std::vector<Ship>::iterator j;
-	j = playerShips.begin();
-	j = playerShips.insert(j,*(new Ship(2,"Patrol Boat",80)));
-	j = playerShips.insert(j,*(new Ship(3,"Submarine",83)));
-	j = playerShips.insert(j,*(new Ship(3,"Destroyer",68)));
-	j = playerShips.insert(j,*(new Ship(4,"Battleship",66)));
-	j = playerShips.insert(j,*(new Ship(5,"Carrier",67)));
-
-	std::vector<Ship>::iterator k;
-	k = computerShips.begin();
-	k = computerShips.insert(k,*(new Ship(2,"Patrol Boat",80)));
-	k = computerShips.insert(k,*(new Ship(3,"Submarine",83)));
-	k = computerShips.insert(k,*(new Ship(3,"Destroyer",68)));
-	k = computerShips.insert(k,*(new Ship(4,"Battleship",66)));
-	k = computerShips.insert(k,*(new Ship(5,"Carrier",67)));
+	playerShips = std::vector<Ship>(ships);
+	computerShips = std::vector<Ship>(ships);
+	
+	delete Carrier;
+	delete Battleship;
+	delete Destroyer;
+	delete Submarine;
+	delete PatrolBoat;
+	delete playerBoard;
+	delete computerBoard;
 }
 
 /**
@@ -484,20 +488,28 @@ void Game::humanTurn(){
 }
 
 void Game::computerTurn(){
+
 	bool finished = false;
 	int row = -1;
 	int col = -1;
+
 	while(!finished){
+
 		row = getRandomInt(0, HEIGHT-1);
 		col = getRandomInt(0, WIDTH-1);
+		
 		if(player[row][col] != HIT and player[row][col] != MISS){
+			
 			std::cout<<"THE ADMIRAL shoots at (" << row << "," << col << ")."  << std::endl;
+			
 			if(player[row][col] == EMPTY){
+			
 				player[row][col] = MISS;
 				std::cout << "THE ADMIRAL missed!\n" << std::endl;
 			}
 			else{
 				if(player[row][col] == CARRIER){
+					
 					std::cout << "THE ADMIRAL hit your carrier!" << std::endl;
 					try{
 						playerShips.at(0).addHit();
@@ -507,6 +519,7 @@ void Game::computerTurn(){
 					}
 				}
 				else if(player[row][col] == BATTLESHIP){
+					
 					std::cout << "THE ADMIRAL hit your battleship!" << std::endl;
 					try{
 						playerShips.at(1).addHit();
@@ -516,6 +529,7 @@ void Game::computerTurn(){
 					}
 				}
 				else if(player[row][col] == DESTROYER){
+					
 					std::cout << "THE ADMIRAL hit your destroyer!" << std::endl;
 					try{
 						playerShips.at(2).addHit();
@@ -525,6 +539,7 @@ void Game::computerTurn(){
 					}
 				}
 				else if(player[row][col] == SUBMARINE){
+					
 					std::cout << "THE ADMIRAL hit your submarine!" << std::endl;
 					try{
 						playerShips.at(3).addHit();
@@ -534,6 +549,7 @@ void Game::computerTurn(){
 					}
 				}
 				else if(player[row][col] == PATROLBOAT){
+					
 					std::cout << "THE ADMIRAL hit your patrol boat!" << std::endl;
 					try{
 						playerShips.at(4).addHit();
@@ -542,9 +558,11 @@ void Game::computerTurn(){
 						std::cout << "THE ADMIRAL sank your patrol boat!" << std::endl;
 					}
 				}
+
 				std::cout << "" << std::endl;
 				player[row][col] = HIT;
 			}
+
 			finished = true;
 		}
 	}

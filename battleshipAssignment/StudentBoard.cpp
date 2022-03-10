@@ -6,12 +6,12 @@
 
 Board::Board(){
 	this->visible = false;
-	this->grid = new int[HEIGHT*WIDTH];
+	this->grid = new int[HEIGHT*WIDTH]{0};
 }
 
 Board::Board(const Board& other){
 	this->visible = other.visible;
-	this->grid = new int[HEIGHT*WIDTH];
+	this->grid = new int[HEIGHT*WIDTH]{0};
 
 	for(int i = 0; i<(HEIGHT*WIDTH);i++){
 			this->grid[i] = other.grid[i];
@@ -26,7 +26,7 @@ Board& Board::operator=(const Board& other){
 }
 
 Board::~Board(){
-	delete this->grid;
+	delete[] this->grid;
 }
 
 void Board::setVisible(bool v){
@@ -48,64 +48,77 @@ Board::Internal Board::operator[](int index){
 }
 
 std::ostream& operator<<(std::ostream& os, Board const& b){
+	Board temp(b);
 	int val = -1;
+
 	for(int i = 0; i<WIDTH;i++){
 		os<< "\t" << i;
 	}
+
 	os<<"\n----------------------------------------------------------------------------------\n";
 	
-	if(b.visible){
-	for(int i = 0; i <HEIGHT;i++){
-		os<<i<<" |\t";
-		for(int j = 0; j<WIDTH;j++){
-			Board temp(b);
-			val = temp[i][j];	
-			if(val==EMPTY){
-				os << " "<<"\t";
+	if(temp.visible){
+
+		for(int i = 0; i <HEIGHT;i++){
+
+			os<<i<<" |\t";
+			
+			for(int j = 0; j<WIDTH;j++){
+			
+				val = temp[i][j];	
+			
+				if(val==EMPTY){
+					os << " "<<"\t";
+				}
+				else if(val==CARRIER){
+					os << "C" << "\t";
+				}
+				else if(val==BATTLESHIP){
+					os << "B" << "\t";
+				}
+				else if(val==DESTROYER){
+					os << "D" << "\t";
+				}
+				else if(val==SUBMARINE){
+					os << "S" << "\t";
+				}
+				else if(val==PATROLBOAT){
+					os << "P" << "\t";
+				}
+				else if(val==MISS){
+					os << "-" << "\t";
+				}
+				else{
+					os << "*" << "\t";
+				}
 			}
-			else if(val==CARRIER){
-				os << "C" << "\t";
-			}
-			else if(val==BATTLESHIP){
-				os << "B" << "\t";
-			}
-			else if(val==DESTROYER){
-				os << "D" << "\t";
-			}
-			else if(val==SUBMARINE){
-				os << "S" << "\t";
-			}
-			else if(val==PATROLBOAT){
-				os << "P" << "\t";
-			}
-			else if(val==MISS){
-				os << "-" << "\t";
-			}
-			else{
-				os << "*" << "\t";
-			}
+			
+			os << "\n";
 		}
-		os << "\n";
-	}
 	}
 	else{
-		for(int i = 0; i <HEIGHT;i++){
-		os<<i<<" |\t";
-		for(int j = 0; j<WIDTH;j++){
-			Board temp(b);
-			val = temp[i][j];
-			if(val==MISS){
-				os << "-" << "\t";
-			}
-			else if(val==HIT){
-				os << "*" << "\t";
-			}
-			else{
-				os << " " << "\t";
-			}
 
-		}
-		os<< "\n";
+		for(int i = 0; i <HEIGHT;i++){
+		
+			os<<i<<" |\t";
+		
+			for(int j = 0; j<WIDTH;j++){
+		
+				val = temp[i][j];
+		
+				if(val==MISS){
+					os << "-" << "\t";
+				}
+				else if(val==HIT){
+					os << "*" << "\t";
+				}
+				else{
+					os << " " << "\t";
+				}
+
+			}
+		
+			os<< "\n";
 		}
 	}
 
@@ -115,18 +128,20 @@ std::ostream& operator<<(std::ostream& os, Board const& b){
 }
 
 int Board::count() const{
+	
 	int count = 0;
 	for(int i = 0; i<(HEIGHT*WIDTH);i++){
+		
 		if(this->grid[i]!=EMPTY and this->grid[i]!=HIT and this->grid[i]!=MISS){
+		
 			count++;
 		}
 	}
+
 	return count;
 }
 
 bool Board::operator< (const Board& other){
-	if(count()<other.count()){
-		return true;
-	}
-	return false;
+	
+	return count()<other.count();
 }
