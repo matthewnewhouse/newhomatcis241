@@ -13,7 +13,7 @@ class SunkShipException : public std::exception {
 
 class Ship {
 	public:
-		Ship(int _spaces, std::string _name, int _chr) : spaces{_spaces}, name(_name), chr{_chr} { }
+		Ship(int _spaces, std::string _name, int _chr, int _hits) : spaces{_spaces}, name(_name), chr{_chr}, hits{_hits} { }
 		int getChr() const { return chr; }
 		int getSpaces() const { return spaces; }
 		int getHits() const { return hits; }

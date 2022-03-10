@@ -12,8 +12,8 @@ void printScore(int turnCount, Board p, Board c);
 std::vector<Ship> playerShips{};
 std::vector<Ship> computerShips{};
 
-/**
- * Constructor will create the ships vector and add ships to it.
+/*
+ *Create ships vector and adds ships to it.
  */
 Game::Game(){
 	Board* playerBoard = new Board();
@@ -22,13 +22,13 @@ Game::Game(){
 
 	Board* computerBoard = new Board();
 	computer = *(computerBoard);
-	computer.setVisible(true);
+	computer.setVisible(false);
 
-	Ship* Carrier = new Ship(5,"Carrier",67);
-	Ship* Battleship = new Ship(4,"Battleship",66);
-	Ship* Destroyer = new Ship(3,"Destroyer",68);
-	Ship* Submarine = new Ship(3,"Submarine",83);
-	Ship* PatrolBoat = new Ship(2,"Patrol Boat",80);
+	Ship* Carrier = new Ship(5,"Carrier",67,0);
+	Ship* Battleship = new Ship(4,"Battleship",66,0);
+	Ship* Destroyer = new Ship(3,"Destroyer",68,0);
+	Ship* Submarine = new Ship(3,"Submarine",83,0);
+	Ship* PatrolBoat = new Ship(2,"Patrol Boat",80,0);
 
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
