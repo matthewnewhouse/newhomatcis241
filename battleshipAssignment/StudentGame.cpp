@@ -5,9 +5,12 @@
 #include <iostream>
 #include <random>
 
-
+int getPlayerShipCount();
+int getComputerShipCount();
 int getRandomInt(int from, int to);
 void printScore(int turnCount, Board p, Board c);
+std::vector<Ship> playerShips;
+std::vector<Ship> computerShips;
 
 /**
  * Constructor will create the ships vector and add ships to it.
@@ -16,7 +19,7 @@ Game::Game(){
 	this->player = *(new Board());
 	player.setVisible(true);
 	this->computer = *(new Board());
-	computer.setVisible(false);
+	computer.setVisible(true);
 
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
@@ -24,7 +27,23 @@ Game::Game(){
 	i = ships.insert(i,*(new Ship(3,"Submarine",83)));
 	i = ships.insert(i,*(new Ship(3,"Destroyer",68)));
 	i = ships.insert(i,*(new Ship(4,"Battleship",66)));
-	i = ships.insert(i,*(new Ship(5,"Carrier",67)));	
+	i = ships.insert(i,*(new Ship(5,"Carrier",67)));
+
+	std::vector<Ship>::iterator j;
+	j = playerShips.begin();
+	j = playerShips.insert(j,*(new Ship(2,"Patrol Boat",80)));
+	j = playerShips.insert(j,*(new Ship(3,"Submarine",83)));
+	j = playerShips.insert(j,*(new Ship(3,"Destroyer",68)));
+	j = playerShips.insert(j,*(new Ship(4,"Battleship",66)));
+	j = playerShips.insert(j,*(new Ship(5,"Carrier",67)));
+
+	std::vector<Ship>::iterator k;
+	k = computerShips.begin();
+	k = computerShips.insert(k,*(new Ship(2,"Patrol Boat",80)));
+	k = computerShips.insert(k,*(new Ship(3,"Submarine",83)));
+	k = computerShips.insert(k,*(new Ship(3,"Destroyer",68)));
+	k = computerShips.insert(k,*(new Ship(4,"Battleship",66)));
+	k = computerShips.insert(k,*(new Ship(5,"Carrier",67)));
 }
 
 /**
@@ -271,29 +290,52 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
 	return true;
 }
 
+int getPlayerShipCount(){
+	int count = playerShips.size();
+	for(int i = 0; i<playerShips.size();i++){
+		if(playerShips.at(i).getHits() == playerShips.at(i).getSpaces()){
+			count --;
+		}
+	}
+	return count;
+}
+
+int getComputerShipCount(){
+	int count = computerShips.size();
+	for(int i = 0; i<computerShips.size();i++){
+		if(computerShips.at(i).getHits() == computerShips.at(i).getSpaces()){
+			count --;
+		}
+	}
+
+	return count;
+}
+
 /*Prints current score. */
 void printScore(int turnCount, Board p, Board c, bool playerTurn){
 	std::cout<<"\nPLAYER VS. THE ADMIRAL" << std::endl;
-	std::cout << "------------------------"<<std::endl;
+	std::cout << "--------------------------"<<std::endl;
 	if(playerTurn){
 		std::cout << "ROUND " << turnCount+1 << " - PLAYER'S TURN" << std::endl;
 	}
 	else{
 		std::cout << "ROUND " << turnCount+1 << " - ADMIRAL'S TURN" << std::endl; 
 	}
-	std::cout << "------------------------"<<std::endl;
-	std::cout << p.count() << "HP VS. " << c.count() << "HP" << std::endl;	
+	std::cout << "--------------------------"<<std::endl;
+	std::cout << p.count() << "HP VS. " << c.count() << "HP" << std::endl;
+	std::cout << "--------------------------"<<std::endl;
+	std::cout << getPlayerShipCount() << " SHIPS VS. " << getComputerShipCount() << " SHIPS" << std::endl;	
 
 	if(p.count() == c.count()){
-		std::cout << "------------------------"<<std::endl;
+		std::cout << "--------------------------"<<std::endl;
 		std::cout << "TIED GAME\n" << std::endl;
 	}
 	else if(p.count() < c.count()){
-		std::cout << "------------------------"<<std::endl;
+		std::cout << "--------------------------"<<std::endl;
 		std::cout << "THE ADMIRAL IS WINNING\n" << std::endl;
 	}
 	else{
-		std::cout << "------------------------"<<std::endl;
+		std::cout << "--------------------------"<<std::endl;
 		std::cout << "PLAYER IS WINNING\n" << std::endl;
 	}
 }
@@ -382,9 +424,56 @@ void Game::humanTurn(){
 				std::cout << "You missed!" << std::endl;
 			}
 			else{
+				if(computer[row][col] == CARRIER){
+					
+					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
+					try{
+					computerShips.at(0).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "You sank THE ADMIRAL'S carrier!" << std::endl;
+					}
+				}
+				else if(computer[row][col] == BATTLESHIP){
+					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
+					try{
+						computerShips.at(1).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "You sank THE ADMIRAL'S battleship!" << std::endl;
+					}
+				}
+				else if(computer[row][col] == DESTROYER){
+					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
+					try{
+						computerShips.at(2).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "You sank THE ADMIRAL'S destroyer!" << std::endl;
+					}
+				}
+				else if(computer[row][col] == SUBMARINE){
+					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
+					try{
+						computerShips.at(3).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "You sank THE ADMIRAL'S submarine!" << std::endl;
+					}
+				}
+				else if(computer[row][col] == PATROLBOAT){
+					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
+					try{
+						computerShips.at(4).addHit();
+					}
+					catch(SunkShipException e){
+						std::cout << "You sank THE ADMIRAL'S patrol boat!" << std::endl;
+					}
+				}
+
 				computer[row][col] = HIT;
-				std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
 			}
+
 			finished = true;
 		}
 		else{
@@ -408,8 +497,22 @@ void Game::computerTurn(){
 				std::cout << "THE ADMIRAL missed!\n" << std::endl;
 			}
 			else{
+				if(player[row][col] == CARRIER){
+					std::cout << "THE ADMIRAL hit your carrier!\n" << std::endl;
+				}
+				else if(player[row][col] == BATTLESHIP){
+					std::cout << "THE ADMIRAL hit your battleship!\n" << std::endl;
+				}
+				else if(player[row][col] == DESTROYER){
+					std::cout << "THE ADMIRAL hit your destroyer!\n" << std::endl;
+				}
+				else if(player[row][col] == SUBMARINE){
+					std::cout << "THE ADMIRAL hit your submarine!\n" << std::endl;
+				}
+				else if(player[row][col] == PATROLBOAT){
+					std::cout << "THE ADMIRAL hit your patrol boat!\n" << std::endl;
+				}
 				player[row][col] = HIT;
-				std::cout << "THE ADMIRAL hit one of your ships!\n" << std::endl;
 			}
 			finished = true;
 		}
