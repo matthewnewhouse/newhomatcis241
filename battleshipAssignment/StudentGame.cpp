@@ -55,7 +55,7 @@ Game::Game(){
  */
 void Game::beginGame(){
 	std::cout<< "|-----------------------------------BATTLESHIP-----------------------------------|" <<std::endl;
-	std::cout<< "\nYou will play against THE ADMIRAL, the greatest BATTLESHIP AI ever!" << std::endl;
+	std::cout<< "\nYou will play against THE ADMIRAL, the greatest computer player ever!" << std::endl;
 	std::cout<< "\nIn BATTLESHIP, the ships are as follows: " <<std::endl;
 	for(int i = 0; i<ships.size();i++){
 		std::cout<<"\t"<<ships.at(i)<<std::endl;
