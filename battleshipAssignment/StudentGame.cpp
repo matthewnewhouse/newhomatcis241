@@ -19,7 +19,7 @@ Game::Game(){
 	this->player = *(new Board());
 	player.setVisible(true);
 	this->computer = *(new Board());
-	computer.setVisible(true);
+	computer.setVisible(false);
 
 	std::vector<Ship>::iterator i;
 	i = ships.begin();
