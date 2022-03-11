@@ -274,12 +274,26 @@ void Game::placeShipsPC(){
 		//random row and column values are found.
 		//Ship length is taken into account.
 		if(dir==HORIZONTAL){
-			row = getRandomInt(0, HEIGHT-1);
-			col = getRandomInt(0, (WIDTH - 1)-length);
+
+			//This takes into account small board widths.
+			if(WIDTH<=length){
+				col = 0;
+			}
+			else{	
+				col = getRandomInt(0, (WIDTH - 1) - length);
+			}
+			row = getRandomInt(0, HEIGHT - 1);
 		}
 		else{
-			row = getRandomInt(0, (HEIGHT-1)-length);
-			col = getRandomInt(0, WIDTH-1);
+
+			//This takes into account small board heights.
+			if(HEIGHT<=length){
+				row = 0;
+			}
+			else{
+				row = getRandomInt(0, (HEIGHT - 1) - length);
+			}
+			col = getRandomInt(0, WIDTH - 1);
 		}
 		
 		//Checks if the placement is valid.
