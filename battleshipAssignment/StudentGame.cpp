@@ -698,7 +698,7 @@ void Game::computerTurn(){
 				player[row][col] = MISS;
 				std::cout << "THE ADMIRAL missed!\n" << std::endl;
 			}
-			//Otherwise, a ship was hit on the player;s board.
+			//Otherwise, a ship was hit on the player's board.
 			else{
 
 				//This conditional strucutre will notify the player which
