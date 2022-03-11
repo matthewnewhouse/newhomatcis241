@@ -132,16 +132,22 @@ void Game::placeShips(){
 	
 
 		//Checks if the given row is valid.
+		//isDigit(c) is from the C++ standard library
+		//and is used to check if each character from the input is
+		//a number.
 		for(char c : inputRow){
 			if(!isdigit(c)){
 				row = -1;	
 			}
 		}
+
+		//If the row is a valid number,
+		//then stoi is used (also from the
+		//standard library) to get the number out
+		//of the user input string.
 		if(row!=-1){
 			row = stoi(inputRow);
 		}
-
-
 
 		//Checks if the given column is valid.
 		for(char c : inputCol){
@@ -152,8 +158,6 @@ void Game::placeShips(){
 		if(col!=-1){
 			col = stoi(inputCol);
 		}
-
-
 
 		//Checks if the given direction is valid.
 		for(char c : inputDir){
@@ -177,7 +181,7 @@ void Game::placeShips(){
 
 		//This conditional structure checks if all given values are within the bounds of the board.
 		//If so, then the ship is placed.
-		//This is statement checks if the direction is HORIZONTAL or VERTICAL
+		//This if statement checks if the direction is HORIZONTAL or VERTICAL
 		if(d!=0 and d!=1){
 			std::cout << "The given direction value was not 0 or 1. Try again.\n" << std::endl;
 			i--;
@@ -215,13 +219,13 @@ void Game::placeShips(){
 			}
 		}
 	}	
-		printPlayerBoard();
+	printPlayerBoard();
 }
 
 /********************************************************
  * A helper method I added to print the player's board.
  *******************************************************/
-void Game::printPlayerBoard(){
+void Game::printPlayerBoard() const{
 	std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
 	std::cout << player << std::endl;
 }
@@ -229,7 +233,7 @@ void Game::printPlayerBoard(){
 /********************************************************
  * A helper method I added to print the computer's board.
  *******************************************************/
-void Game::printComputerBoard(){
+void Game::printComputerBoard() const{
 	std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
 	std::cout << computer << std::endl;
 }
@@ -299,10 +303,8 @@ void Game::placeShipsPC(){
 		}
 
 	}
-
 	printComputerBoard();
 }
-
 
 /********************************************************
  * A helper method I added to get a random integer.
@@ -314,7 +316,7 @@ void Game::placeShipsPC(){
  * @return a random integer in between (and including)
  * the minimum and maximum value.
  *******************************************************/
-int Game::getRandomInt(int minVal, int maxVal) {
+int Game::getRandomInt(int minVal, int maxVal) const{
 	std::random_device rand_dev;
 	std::mt19937 generator(rand_dev());
 	std::uniform_int_distribution<int> distr(minVal, maxVal);
@@ -325,7 +327,7 @@ int Game::getRandomInt(int minVal, int maxVal) {
  * A helper method to find if a ships' placement will
  * be valid.
  *
- * @param x,y,d,s,b. Coordinates, direction, ship,
+ * @param x,y,d,s,b. The coordinate, direction, ship,
  * and board are needed to determing if placement is
  * valid.
  * @return bool. True or false if placement of ship
@@ -399,13 +401,13 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  *
  * @return number of ships the player has left.
  *******************************************************/
-int Game::getPlayerShipCount(){
+int Game::getPlayerShipCount() const{
 	int count = playerShips.size();
 	
 	//Loops through all of the player's ships.
 	for(int i = 0; i<playerShips.size();i++){
 
-		//Subtracts ships that are sunk.
+		//Subtracts ships that are sunk from count.
 		if(playerShips.at(i).getHits() == playerShips.at(i).getSpaces()){
 			count --;
 		}
@@ -419,7 +421,7 @@ int Game::getPlayerShipCount(){
  *
  * @return number of ships the computer has left.
  *******************************************************/
-int Game::getComputerShipCount(){
+int Game::getComputerShipCount() const{
 	int count = computerShips.size();
 
 	//Loops through all of the computer's ships.
@@ -442,7 +444,7 @@ int Game::getComputerShipCount(){
  * to know what turn it is, the infor from both boards,
  * and if it is currently the player's turn.
  *******************************************************/
-void Game::printScore(int turnCount, Board p, Board c, bool playerTurn){
+void Game::printScore(int turnCount, Board p, Board c, bool playerTurn) const{
 	
 	//Prints the top of the score board.
 	std::cout<<"\nPLAYER VS. THE ADMIRAL" << std::endl;
@@ -694,7 +696,7 @@ void Game::computerTurn(){
 			//Otherwise, a ship was hit on the player's board.
 			else{
 
-				//This conditional strucutre will notify the player which
+				//This conditional structure will notify the player which
 				//of their ships was hit and if any ships were sunk.
 				if(player[row][col] == CARRIER){
 					
@@ -760,7 +762,7 @@ void Game::computerTurn(){
 /********************************************************
  * Creates the game and begins it.
  *
- * @ param argc, argv. Normal parameters for a main
+ * @param argc, argv. Normal parameters for a main
  * function.
  * @return 0
  *******************************************************/

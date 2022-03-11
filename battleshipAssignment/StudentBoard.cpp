@@ -16,7 +16,7 @@
 /*********************************************************
 * Constructor creates a board that defaults to not
 * visible and has a grid with a predetermined height
-* and weight.
+* and width.
 *********************************************************/
 Board::Board(){
 	this->visible = false;
@@ -62,7 +62,7 @@ Board::~Board(){
  * Sets the visibiltiy of the board to true or false.
  *
  * @param v is a boolean variable.
- * ***************************************************/
+ *****************************************************/
 void Board::setVisible(bool v){
 	this->visible = v;
 }
@@ -88,7 +88,7 @@ int& Board::Internal::operator[](int index){
  *
  * @param index is used to access a specfic location
  * in the grid.
- * @return an internal class object with a grid.
+ * @return an internal class object.
  *****************************************************/
 Board::Internal Board::operator[](int index){
         if(index >= HEIGHT){

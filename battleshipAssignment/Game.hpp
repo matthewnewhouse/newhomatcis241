@@ -19,12 +19,12 @@ class Game {
 		bool place(const int& x, const int& y, Direction d, const Ship& s, Board& b);
 		
 		//Helper methods I added.
-		void printPlayerBoard();
-		void printComputerBoard();
-		int getPlayerShipCount();
-		int getComputerShipCount();
-		int getRandomInt(int from, int to);
-		void printScore(int turnCount, Board p, Board c, bool playerTurn);
+		void printPlayerBoard() const;
+		void printComputerBoard() const;
+		int getPlayerShipCount() const;
+		int getComputerShipCount() const;
+		int getRandomInt(int minVal, int maxVal) const;
+		void printScore(int turnCount, Board p, Board c, bool playerTurn) const;
 
 	private:
 		Board player;
