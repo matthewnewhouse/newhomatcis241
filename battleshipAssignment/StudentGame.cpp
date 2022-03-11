@@ -486,12 +486,16 @@ void printScore(int turnCount, Board p, Board c, bool playerTurn){
 	}
 }
 
-/**
- * Call human turn/computer turn until someone wins.
- */
+/********************************************************
+ * The main logic of the game. Alternates between
+ * human and computer turns until someone wins.
+ *******************************************************/
 void Game::run(){
+
+	//Counts the number of turns of the game so far.
 	int turnCount = 0;
 
+	//As long as the player has at least one ship left, the game will continue.
 	while(player.count()!=0){
 
 		printScore(turnCount, player, computer, true);
@@ -500,6 +504,7 @@ void Game::run(){
 
 		printScore(turnCount, player, computer, false);
 
+		//If the player beats the computer, the game ends.
 		if(computer.count()==0){
 			std::cout << "You beat The ADMIRAL! Congratulations!" << std::endl;
 			return;
@@ -508,30 +513,46 @@ void Game::run(){
 
 		computerTurn();
 
-		std::cout << "|-----------------------------------YOUR BOARD-----------------------------------|\n" << std::endl;
-		std::cout << player << std::endl;
+		printPlayerBoard();
 		
-		std::cout << "|---------------------------------COMPUTER BOARD---------------------------------|\n" << std::endl;
-		std::cout << computer << std::endl;
+		printComputerBoard();
 
 		turnCount++;
    	}
 
+	//If the while loop is exited, the player has lost.
 	printScore(turnCount, player, computer, true);
 
 	std::cout << "THE ADMIRAL wins!" << std::endl;
 	return;
 }
 
+/********************************************************
+ * Simulates the player's turn.
+ * Input is needed to know which coordinate to attack,
+ * so it must be validated.
+ *******************************************************/
 void Game::humanTurn(){
+
+	//Used for input validation.
 	std::string inputRow;
 	std::string inputCol;
+
+	//Used to check if a valid coordinate has been found.
 	bool finished = false;
+
+	//The coordinate used for the attack.
 	int row;
 	int col;
+
+	//Exits once a proper coordinate is found.
 	while(!finished){
+
+		//Row and column values must be input be the user.
 		row = -100;
 		col = -100;
+
+		//Asks player for row and column values.
 		std::cout<<"Where would you like to shoot?"<<std::endl;
 		std::cout << "Row: ";
 		std::cin  >> inputRow;
@@ -539,6 +560,7 @@ void Game::humanTurn(){
 		std::cin  >> inputCol;
 		
 
+		//Validates row input.
 		for(char c : inputRow){
 			if(!isdigit(c)){
 				row = -1;
@@ -548,6 +570,7 @@ void Game::humanTurn(){
 			row = stoi(inputRow);
 		}
 
+		//Validates column input.
 		for(char c : inputCol){
 			if(!isdigit(c)){
 				col = -1;
@@ -557,19 +580,30 @@ void Game::humanTurn(){
 			col = stoi(inputCol);
 		}
 
+		//Checks if row is within the bounds of the board.
 		if(row < 0 or row>=HEIGHT){
 			std::cout << "\nThe given row value is outside of the bounds of the board. Try again.\n" << std::endl;
 		}
+		//Checks if the column is within the bounds of the board.
 		else if(col < 0 or col>=WIDTH){
 			std::cout << "\nThe given column value is outside of the bounds of the board. Try again.\n" << std::endl;
 		}
+		//Checks to make sure the player hasn't already chosen this coordinate before.
 		else if(computer[row][col] != HIT and computer[row][col] != MISS){
+			
+			//Lets the user know there coordinate was acceptable.
 			std::cout << "\nYou shot at (" << row << "," << col << ")." << std::endl;
+			
+			//If the spot the player shot is empty, they missed.
 			if(computer[row][col] == EMPTY){
 				computer[row][col] = MISS;
 				std::cout << "You missed!" << std::endl;
 			}
+			//Otherwise, they hit a ship.
 			else{
+				//This conditional structure finds the ship that was hit and
+				//adds a hit onto the proper ship. It is possible the player
+				//may sink a ship.
 				if(computer[row][col] == CARRIER){
 					
 					std::cout << "You hit one of THE ADMIRAL'S ships!" << std::endl;
@@ -620,8 +654,11 @@ void Game::humanTurn(){
 				computer[row][col] = HIT;
 			}
 
+			//The turn is finished once a spot on the computer's board has been hit.
 			finished = true;
 		}
+
+		//The player has already shot at this coordinate, so they must choose a new one.
 		else{
 			std::cout << "\nYou have already shot there. Try somwehere else.\n" << std::endl;
 		}
@@ -629,27 +666,43 @@ void Game::humanTurn(){
 
 }
 
+/********************************************************
+ * Used to simulate the computer's turn. The computer
+ * will choose a coordinate randomly.
+ *******************************************************/
 void Game::computerTurn(){
 
+	//Tracks if the computer is finished with their turn.
 	bool finished = false;
+
+	//Tracks the random coordinate.
 	int row = -1;
 	int col = -1;
 
+	//Exits this while loop once a spot on the player's board has been hit.
 	while(!finished){
 
+		//Uses helper method to get random coordinate from a uniform distribution.
 		row = getRandomInt(0, HEIGHT-1);
 		col = getRandomInt(0, WIDTH-1);
 		
+		//If this coordinate hasn't been randomly selected before, it is either a hit or a miss.
 		if(player[row][col] != HIT and player[row][col] != MISS){
 			
+			//Lets the player know where the computer shot at.
 			std::cout<<"THE ADMIRAL shoots at (" << row << "," << col << ")."  << std::endl;
 			
+			//If the computer missed, they player is notified.
 			if(player[row][col] == EMPTY){
 			
 				player[row][col] = MISS;
 				std::cout << "THE ADMIRAL missed!\n" << std::endl;
 			}
+			//Otherwise, a ship was hit on the player;s board.
 			else{
+
+				//This conditional strucutre will notify the player which
+				//of their ships was hit and if any ships were sunk.
 				if(player[row][col] == CARRIER){
 					
 					std::cout << "THE ADMIRAL hit your carrier!" << std::endl;
@@ -705,14 +758,19 @@ void Game::computerTurn(){
 				player[row][col] = HIT;
 			}
 
+			//The computer's turn is finished.
 			finished = true;
 		}
 	}
 }
 
-/**
- * Create a game instance and start.
- */
+/********************************************************
+ * Creates the game and begins it.
+ *
+ * @ param argc, argv. Normal parameters for a main
+ * funciton.
+ * @return 0
+ *******************************************************/
 int main(int argc, char** argv){
 	(void)argc;
 	(void)argv;
