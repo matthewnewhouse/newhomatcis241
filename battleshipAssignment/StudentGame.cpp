@@ -15,13 +15,6 @@
  * @version Winter 2022
  ********************************************************/
 
-int getPlayerShipCount();
-int getComputerShipCount();
-int getRandomInt(int from, int to);
-void printScore(int turnCount, Board p, Board c);
-std::vector<Ship> playerShips{};
-std::vector<Ship> computerShips{};
-
 /********************************************************
  * Constructor creates the player and computer boards,
  * sets their visibilites, and creates the ships
@@ -321,7 +314,7 @@ void Game::placeShipsPC(){
  * @return a random integer in between (and including)
  * the minimum and maximum value.
  *******************************************************/
-int getRandomInt(int minVal, int maxVal) {
+int Game::getRandomInt(int minVal, int maxVal) {
 	std::random_device rand_dev;
 	std::mt19937 generator(rand_dev());
 	std::uniform_int_distribution<int> distr(minVal, maxVal);
@@ -406,7 +399,7 @@ bool Game::place(const int& x, const int& y, Direction d, const Ship& s, Board& 
  *
  * @return number of ships the player has left.
  *******************************************************/
-int getPlayerShipCount(){
+int Game::getPlayerShipCount(){
 	int count = playerShips.size();
 	
 	//Loops through all of the player's ships.
@@ -426,7 +419,7 @@ int getPlayerShipCount(){
  *
  * @return number of ships the computer has left.
  *******************************************************/
-int getComputerShipCount(){
+int Game::getComputerShipCount(){
 	int count = computerShips.size();
 
 	//Loops through all of the computer's ships.
@@ -449,7 +442,7 @@ int getComputerShipCount(){
  * to know what turn it is, the infor from both boards,
  * and if it is currently the player's turn.
  *******************************************************/
-void printScore(int turnCount, Board p, Board c, bool playerTurn){
+void Game::printScore(int turnCount, Board p, Board c, bool playerTurn){
 	
 	//Prints the top of the score board.
 	std::cout<<"\nPLAYER VS. THE ADMIRAL" << std::endl;

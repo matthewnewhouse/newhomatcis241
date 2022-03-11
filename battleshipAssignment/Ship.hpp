@@ -13,7 +13,9 @@ class SunkShipException : public std::exception {
 
 class Ship {
 	public:
+		//Changed ship constructor to also take hits so that the hits wouldn't be uninitialized and cause errors.
 		Ship(int _spaces, std::string _name, int _chr, int _hits) : spaces{_spaces}, name(_name), chr{_chr}, hits{_hits} { }
+
 		int getChr() const { return chr; }
 		int getSpaces() const { return spaces; }
 		int getHits() const { return hits; }

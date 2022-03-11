@@ -17,13 +17,23 @@ class Game {
 		void humanTurn();
 		void computerTurn();
 		bool place(const int& x, const int& y, Direction d, const Ship& s, Board& b);
+		
+		//Helper methods I added.
 		void printPlayerBoard();
 		void printComputerBoard();
+		int getPlayerShipCount();
+		int getComputerShipCount();
+		int getRandomInt(int from, int to);
+		void printScore(int turnCount, Board p, Board c, bool playerTurn);
 
 	private:
 		Board player;
 		Board computer;
 		std::vector<Ship> ships;
+
+		//Extra variables to keep track of the player's and computer's ships.
+		std::vector<Ship> playerShips{};
+		std::vector<Ship> computerShips{};
 };
 
 #endif
