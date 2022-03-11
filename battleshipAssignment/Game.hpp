@@ -17,6 +17,8 @@ class Game {
 		void humanTurn();
 		void computerTurn();
 		bool place(const int& x, const int& y, Direction d, const Ship& s, Board& b);
+		void printPlayerBoard();
+		void printComputerBoard();
 
 	private:
 		Board player;
