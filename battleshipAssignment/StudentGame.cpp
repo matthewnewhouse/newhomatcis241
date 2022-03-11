@@ -768,7 +768,7 @@ void Game::computerTurn(){
  * Creates the game and begins it.
  *
  * @ param argc, argv. Normal parameters for a main
- * funciton.
+ * function.
  * @return 0
  *******************************************************/
 int main(int argc, char** argv){
