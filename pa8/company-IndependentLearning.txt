@@ -107,12 +107,24 @@ SQL> --
 SQL> /*(145) DENSE RANK query
 SQL> Find the dense rank of the salary 30000 among all salaries. Hint: The dense ranks in our database are 1 for 25000, 2 for 30000, 3 for 38000, and so on.
 SQL> */
-SQL> -- <<Insert your SQL code after this line>>>
+SQL> SELECT DENSE_RANK(30000) WITHIN GROUP (ORDER BY E.salary ASC) "RANK OF $30,000"
+  2  FROM EMPLOYEE E;
+
+RANK OF $30,000                                                                 
+---------------                                                                 
+              2                                                                 
+
 SQL> --
 SQL> /*(150) DENSE RANK query ... compare with the previous query.
 SQL> Find the dense rank of the salary 31000 among all salaries. Hint: The dense ranks in our database are 1 for 25000, 2 for 30000, 3 for 38000, and so on.
 SQL> */
-SQL> -- <<Insert your SQL code after this line>>>
+SQL> SELECT DENSE_RANK(31000) WITHIN GROUP (ORDER BY E.salary ASC) "RANK OF $31,000"
+  2  FROM EMPLOYEE E;
+
+RANK OF $31,000                                                                 
+---------------                                                                 
+              3                                                                 
+
 SQL> --
 SQL> /*(155)HIERARCHICAL query (uses START WITH and CONNECT BY PRIOR)
 SQL> Find pairs of SSN's such that the first SSN in the pair is that of an employee while the second SSN in the pair is that of his/her supervisor. Start with SSN 453453453.
@@ -122,6 +134,16 @@ SQL> 453453453	     333445555
 SQL> 333445555	     888665555
 SQL> 888665555	     -
 SQL> */
-SQL> -- <<Insert your SQL code after this line>>>
+SQL> SELECT E.ssn, E.Super_ssn
+  2  FROM EMPLOYEE E
+  3  START WITH E.ssn = 453453453
+  4  CONNECT BY PRIOR E.Super_ssn = E.ssn;
+
+SSN       SUPER_SSN                                                             
+--------- ---------                                                             
+453453453 333445555                                                             
+333445555 888665555                                                             
+888665555                                                                       
+
 SQL> ---------------------------------------------------------------
 SQL> SET ECHO OFF
