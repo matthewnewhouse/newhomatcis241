@@ -1,0 +1,127 @@
+SQL> -- ---------------------------------------------------------------
+SQL> --
+SQL> -- Name: Matthew Newhouse
+SQL> --
+SQL> /*(110) Using ROWNUM to limit the size of the result. (Notice that SQL and some systems use the LIMIT or TOP clauses. Oracle uses ROENUM to accomplish similar tasks.)
+SQL> Find the ssn, lname, and salary of only four employees.
+SQL> */
+SQL> SELECT E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  WHERE ROWNUM < 5;
+
+SSN       LNAME               SALARY                                            
+--------- --------------- ----------                                            
+123456789 Smith                30000                                            
+333445555 Wong                 40000                                            
+999887777 Zelaya               25000                                            
+987654321 Wallace              43000                                            
+
+SQL> --
+SQL> /*(115) TOP-N query.
+SQL> Find the ssn, lname, and salary of the four highest paid employees.
+SQL> */
+SQL> SELECT E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  ORDER BY E.salary DESC
+  4  FETCH FIRST 4 ROWS ONLY;
+
+SSN       LNAME               SALARY                                            
+--------- --------------- ----------                                            
+888665555 Borg                 55000                                            
+987654321 Wallace              43000                                            
+333445555 Wong                 40000                                            
+666884444 Narayan              38000                                            
+
+SQL> --
+SQL> /*(120) TOP-N query.
+SQL> Find the ssn, lname, and salary of the four lowest paid employees
+SQL> */
+SQL> SELECT E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  ORDER BY E.salary ASC
+  4  FETCH FIRST 4 ROWS ONLY;
+
+SSN       LNAME               SALARY                                            
+--------- --------------- ----------                                            
+999887777 Zelaya               25000                                            
+987987987 Jabbar               25000                                            
+453453453 English              25000                                            
+123456789 Smith                30000                                            
+
+SQL> --
+SQL> /*(125) TOP-N query.
+SQL> Find the lowest two salaries in the company.(Notice that in our database, the two lowest salaries are 25K and 30K.)
+SQL> */
+SQL> SELECT DISTINCT E.salary
+  2  FROM EMPLOYEE E
+  3  ORDER BY E.salary ASC
+  4  FETCH FIRST 2 ROWS ONLY;
+
+    SALARY                                                                      
+----------                                                                      
+     25000                                                                      
+     30000                                                                      
+
+SQL> --
+SQL> /*(130) TOP-N query.
+SQL> For every employee whose salary is equal to one of the two lowest salaries, Find the ssn, lname, and salary.
+SQL> */
+SQL> SELECT E.ssn, E.lname, E.salary
+  2  FROM EMPLOYEE E
+  3  WHERE E.salary IN (SELECT DISTINCT E.salary
+  4  			FROM EMPLOYEE E
+  5  			ORDER BY E.salary ASC
+  6  			FETCH FIRST 2 ROWS ONLY)
+  7  ORDER BY E.ssn;
+
+SSN       LNAME               SALARY                                            
+--------- --------------- ----------                                            
+123456789 Smith                30000                                            
+453453453 English              25000                                            
+987987987 Jabbar               25000                                            
+999887777 Zelaya               25000                                            
+
+SQL> --
+SQL> /*(135) RANK query
+SQL> Find the rank of the salary 30000 among all salaries. (HINT: The ranks in our database are 1 for 25000, 4 for 30000, 5 for 38000, and so on.)
+SQL> */
+SQL> SELECT RANK(30000) WITHIN GROUP (ORDER BY E.salary ASC) "RANK OF $30,000"
+  2  FROM EMPLOYEE E;
+
+RANK OF $30,000                                                                 
+---------------                                                                 
+              4                                                                 
+
+SQL> --
+SQL> /*(140) RANK query ... compare with the previous query.
+SQL> Find the rank of the salary 31000 among all salaries.
+SQL> */
+SQL> SELECT RANK(31000) WITHIN GROUP (ORDER BY E.salary ASC) "RANK OF $31,000"
+  2  FROM EMPLOYEE E;
+
+RANK OF $31,000                                                                 
+---------------                                                                 
+              5                                                                 
+
+SQL> --
+SQL> /*(145) DENSE RANK query
+SQL> Find the dense rank of the salary 30000 among all salaries. Hint: The dense ranks in our database are 1 for 25000, 2 for 30000, 3 for 38000, and so on.
+SQL> */
+SQL> -- <<Insert your SQL code after this line>>>
+SQL> --
+SQL> /*(150) DENSE RANK query ... compare with the previous query.
+SQL> Find the dense rank of the salary 31000 among all salaries. Hint: The dense ranks in our database are 1 for 25000, 2 for 30000, 3 for 38000, and so on.
+SQL> */
+SQL> -- <<Insert your SQL code after this line>>>
+SQL> --
+SQL> /*(155)HIERARCHICAL query (uses START WITH and CONNECT BY PRIOR)
+SQL> Find pairs of SSN's such that the first SSN in the pair is that of an employee while the second SSN in the pair is that of his/her supervisor. Start with SSN 453453453.
+SQL> Hint: The output of your query should be:
+SQL> 
+SQL> 453453453	     333445555
+SQL> 333445555	     888665555
+SQL> 888665555	     -
+SQL> */
+SQL> -- <<Insert your SQL code after this line>>>
+SQL> ---------------------------------------------------------------
+SQL> SET ECHO OFF
