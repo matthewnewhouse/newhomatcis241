@@ -24,7 +24,7 @@ class Blah(pg.sprite.Sprite):
         self.rect.y = random.randint(0,600)
         self.velocity = [r(0,3) - 3, r(0,3) - 3]
         self.explodifiers = None
-        self.boom = pg.mixer.Sound("./boom.mp3")
+#       self.boom = pg.mixer.Sound("./boom.mp3")
 
     def update(self):
         self.rect.x += self.velocity[0]
@@ -42,7 +42,7 @@ class Blah(pg.sprite.Sprite):
             self.velocity[0] = 0
             self.velocity[1] = 0
             self.rect.x = -100
-            self.boom.play()
+#            self.boom.play()
 
     def setExplodifiers(self, explodifiers):
         self.explodifiers = explodifiers
@@ -65,7 +65,11 @@ class Game:
                     pg.quit()
                     exit()
             # Take events
-
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_LEFT:
+                    x = 0;
+                if event.key == pg.K_RIGHT:
+                    x=1;
             # Update updateable objects
             self.blahs.update()
             # Redraw
