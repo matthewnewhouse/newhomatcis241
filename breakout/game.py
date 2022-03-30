@@ -26,6 +26,11 @@ class Game:
                     self.__running = False
                     pg.quit()
                     exit()
+            keys = pg.key.get_pressed()
+            if keys[pg.K_LEFT]:
+                self.paddle.moveLeft(1)
+            if keys[pg.K_RIGHT]:
+                self.paddle.moveRight(1)
             
             self.spriteList.update()
 
@@ -43,13 +48,23 @@ class Paddle(pg.sprite.Sprite):
 
         self.w = width
         self.h = 10
+        self.speed = 10
 
         self.image = pg.Surface([self.w,self.h])
         self.image.fill((0,0,0))
 
         pg.draw.rect(self.image, (0,0,0), [0,0,self.w,self.h])
         self.rect = self.image.get_rect()
+    
+    def moveLeft(self, length):
+        self.rect.x -= self.speed*length
+        if self.rect.x < 0:
+            self.rect.x = 0
 
+    def moveRight(self, length):
+        self.rect.x += self.speed*length
+        if self.rect.x > (800-self.w):
+            self.rect.x = 800-self.w
 
 def main():
     game = Game()
