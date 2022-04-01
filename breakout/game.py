@@ -131,13 +131,13 @@ class Ball(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        self.w = 15
-        self.h = 15
+        self.w = 20
+        self.h = 20
 
         self.image = pg.Surface([self.w,self.h])
-        self.image.fill((50,50,200))
+        self.image.fill((255,255,255))
 
-        pg.draw.rect(self.image, (50,50,200), [0,0,self.w,self.h])
+        pg.draw.circle(self.image, (50,50,200), (self.w/2,self.h/2),self.w/2 )
         self.velocityX = 3
         self.velocityY = 3
 
@@ -164,18 +164,19 @@ class Brick(pg.sprite.Sprite):
         self.w = 100
         
         self.image = pg.Surface([self.w,self.h])
-        self.image.fill(self.color)
+        self.image.fill((0,0,0))
         
         pg.draw.rect(self.image, self.color, [0,0,self.w, self.h])
         self.rect = self.image.get_rect()
     
     def hit(self):
-        self.health -= 50
+        damage = 33
+        self.health -= damage
         if self.health <= 0:
             self.kill()
-        self.red += 50/3
-        self.blue += 50/3
-        self.green += 50/3
+        self.red += damage/3
+        self.blue += damage/3
+        self.green += damage/3
         if self.red > 255:
             self.red = 255
         if self.blue > 255:
@@ -185,7 +186,6 @@ class Brick(pg.sprite.Sprite):
         self.color = (self.red,self.blue,self.green)
         self.image = pg.Surface([self.w,self.h])
         self.image.fill(self.color)
-        
 
 def main():
     game = Game()
