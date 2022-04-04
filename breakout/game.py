@@ -39,7 +39,7 @@ class Game:
                 self.brickList.add(b)
                 self.spriteList.add(b)
 
-        self.overlay = Overlay(5)
+        self.overlay = Overlay(100)
         self.overlay.rect.x = 0
         self.overlay.rect.y = 0
         self.spriteList.add(self.overlay)
@@ -85,11 +85,9 @@ class Game:
                 if pg.sprite.collide_mask(ball,self.paddle):
                     ball.bounce()
 
-            collided = False
             for ball in self.ballList:
                 brickCollision = pg.sprite.spritecollide(ball,self.brickList,False)
                 for b in brickCollision:
-                    if not collided:
                         if ball.velocityY>0:
                             ball.velocityX*=-1
                         ball.bounce()
@@ -99,7 +97,6 @@ class Game:
                             b.kill()
                         if(len(self.brickList) == 0):
                             self.setRunning(False)
-                        collided = True
 
             self.screen.fill((255,255,255))
             self.spriteList.draw(self.screen)
@@ -204,11 +201,11 @@ class Brick(pg.sprite.Sprite):
         super().__init__()
 
         r = random.randint
-        self.red = r(30,255)
-        self.blue = r(30,255)
-        self.green = r(30,255)
+        self.red = r(0,255)
+        self.blue = r(0,255)
+        self.green = r(0,255)
         self.color = (self.red,self.blue,self.green)
-        self.health = self.red + self.blue + self.green
+        self.health = 766 - (self.red + self.blue + self.green)
         self.h = 50
         self.w = 100
         
@@ -219,7 +216,7 @@ class Brick(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
     
     def hit(self):
-        damage = 33
+        damage = 25
         self.health -= damage
         if self.health <= 0:
             self.kill()
