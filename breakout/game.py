@@ -39,7 +39,7 @@ class Game:
                 self.brickList.add(b)
                 self.spriteList.add(b)
 
-        self.overlay = Overlay(100)
+        self.overlay = Overlay(10000)
         self.overlay.rect.x = 0
         self.overlay.rect.y = 0
         self.spriteList.add(self.overlay)
@@ -57,6 +57,7 @@ class Game:
                 self.paddle.moveLeft(1)
             if keys[pg.K_RIGHT]:
                 self.paddle.moveRight(1)
+
             currTime = pg.time.get_ticks()
 
             if currTime - self.addBall >= self.addCoolDown and keys[pg.K_SPACE]:
@@ -88,11 +89,15 @@ class Game:
             for ball in self.ballList:
                 brickCollision = pg.sprite.spritecollide(ball,self.brickList,False)
                 for b in brickCollision:
-                        if ball.velocityY>0:
-                            ball.velocityX*=-1
-                        ball.bounce()
-                        self.overlay.score+=1
-                        b.hit()
+                        
+                        currTime = pg.time.get_ticks()
+                        if currTime - ball.bounceTime >= ball.bounceCoolDown:
+                            if ball.velocityY>0:
+                                ball.velocityX*=-1
+                            ball.bounce()
+                            ball.bounceTime = currTime
+                            self.overlay.score+=1
+                            b.hit()
                         if b.health == 0:
                             b.kill()
                         if(len(self.brickList) == 0):
@@ -173,6 +178,10 @@ class Ball(pg.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
+        self.bounceTime = pg.time.get_ticks()
+        self.bounceCoolDown = 30
+
+
     def update(self):
         self.rect.x += self.velocityX
         self.rect.y += self.velocityY
@@ -181,8 +190,8 @@ class Ball(pg.sprite.Sprite):
         r = random.randint
         addedSpeed = .05
         maxSpeed = 5
-        ran = r(0,1)
-        if ran:
+        rand = r(0,1)
+        if rand:
             if self.velocityX < maxSpeed and self.velocityX > -maxSpeed:
                 if self.velocityX > 0:
                     self.velocityX+=addedSpeed
