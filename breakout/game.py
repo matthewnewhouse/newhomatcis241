@@ -18,9 +18,14 @@ class Game:
         self.paddle.rect.x = self.screenWidth/2 - self.paddle.w/2
         self.paddle.rect.y = self.screenHeight-50
 
+        self.ballList = pg.sprite.Group()
         self.ball = Ball()
         self.ball.rect.x = self.screenWidth/2 - self.ball.w/2
         self.ball.rect.y = self.screenHeight/2 - self.ball.h/2
+        self.ballList.add(self.ball)
+
+        self.addBall = pg.time.get_ticks()
+        self.addCoolDown = 200
 
         self.spriteList.add(self.paddle)
         self.spriteList.add(self.ball)
@@ -42,48 +47,59 @@ class Game:
     def run(self):
         while self.__running:
             events = pg.event.get()
+            keys = pg.key.get_pressed()
             for event in events:
                 if event.type == pg.QUIT:
                     self.__running = False
                     pg.quit()
                     exit()
-            keys = pg.key.get_pressed()
             if keys[pg.K_LEFT]:
                 self.paddle.moveLeft(1)
             if keys[pg.K_RIGHT]:
                 self.paddle.moveRight(1)
+            currTime = pg.time.get_ticks()
+
+            if currTime - self.addBall >= self.addCoolDown and keys[pg.K_SPACE]:
+                newBall = Ball()
+                newBall.rect.x = self.screenWidth/2 - newBall.w/2
+                newBall.rect.y = self.screenHeight/2 - newBall.h/2
+                self.ballList.add(newBall)
+                self.spriteList.add(newBall)
+                self.addBall = currTime
+
             
             self.spriteList.update()
 
-            if self.ball.rect.x >= self.screenWidth:
-                self.ball.velocityX*=-1
-            elif self.ball.rect.x<=0:
-                self.ball.velocityX*=-1
-            if self.ball.rect.y >= self.screenHeight:
-                self.ball.velocityY*=-1
-                self.overlay.lives-=1
-                if self.overlay.lives == 0:
-                    self.setRunning(False)
-            elif self.ball.rect.y<=0:
-                self.ball.velocityY*=-1
-        
-            if pg.sprite.collide_mask(self.ball,self.paddle):
-                self.ball.bounce()
+            for ball in self.ballList:
+                if ball.rect.x >= self.screenWidth:
+                    ball.velocityX*=-1
+                elif ball.rect.x<=0:
+                    ball.velocityX*=-1
+                if ball.rect.y >= self.screenHeight:
+                    ball.velocityY*=-1
+                    self.overlay.lives-=1
+                    if self.overlay.lives == 0:
+                        self.setRunning(False)
+                elif ball.rect.y<=0:
+                    ball.velocityY*=-1
+                if pg.sprite.collide_mask(ball,self.paddle):
+                    ball.bounce()
 
             collided = False
-            brickCollision = pg.sprite.spritecollide(self.ball,self.brickList,False)
-            for b in brickCollision:
-                if not collided:
-                    if self.ball.velocityY>0:
-                        self.ball.velocityX*=-1
-                    self.ball.bounce()
-                    self.overlay.score+=1
-                    b.hit()
-                    if b.health == 0:
-                        b.kill()
-                    if(len(self.brickList) == 0):
-                        self.setRunning(False)
-                    collided = True
+            for ball in self.ballList:
+                brickCollision = pg.sprite.spritecollide(ball,self.brickList,False)
+                for b in brickCollision:
+                    if not collided:
+                        if ball.velocityY>0:
+                            ball.velocityX*=-1
+                        ball.bounce()
+                        self.overlay.score+=1
+                        b.hit()
+                        if b.health == 0:
+                            b.kill()
+                        if(len(self.brickList) == 0):
+                            self.setRunning(False)
+                        collided = True
 
             self.screen.fill((255,255,255))
             self.spriteList.draw(self.screen)
@@ -143,10 +159,18 @@ class Ball(pg.sprite.Sprite):
         self.w = 20
         self.h = 20
 
+        r = random.randint
+        self.red = r(30,255)
+        self.blue = r(30,255)
+        self.green = r(30,255)
+        self.color = (self.red,self.blue,self.green)
+
+        
         self.image = pg.Surface([self.w,self.h])
         self.image.fill((255,255,255))
+        self.image.set_colorkey((255,255,255))
 
-        pg.draw.circle(self.image, (50,50,200), (self.w/2,self.h/2),self.w/2 )
+        pg.draw.circle(self.image, self.color, (self.w/2,self.h/2),self.w/2 )
         self.velocityX = 2
         self.velocityY = 2
 
