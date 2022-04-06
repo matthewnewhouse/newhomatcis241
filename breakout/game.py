@@ -95,6 +95,7 @@ class Game:
                             if ball.velocityY>0:
                                 ball.velocityX*=-1
                             ball.bounce()
+                            b.boom.play()
                             ball.bounceTime = currTime
                             self.overlay.score+=1
                             b.hit()
@@ -223,7 +224,9 @@ class Brick(pg.sprite.Sprite):
         
         pg.draw.rect(self.image, self.color, [0,0,self.w, self.h])
         self.rect = self.image.get_rect()
-    
+
+        self.boom = pg.mixer.Sound("./hit.mp3")
+
     def hit(self):
         damage = 25
         self.health -= damage

@@ -24,9 +24,11 @@ class Blah(pg.sprite.Sprite):
         self.rect.y = random.randint(0,600)
         self.velocity = [r(0,3) - 3, r(0,3) - 3]
         self.explodifiers = None
-#       self.boom = pg.mixer.Sound("./boom.mp3")
+        self.boom = pg.mixer.Sound("./hit.mp3")
+        self.boom.play()
 
     def update(self):
+        self.boom.play()
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
         if self.rect.x < 0:
@@ -42,7 +44,7 @@ class Blah(pg.sprite.Sprite):
             self.velocity[0] = 0
             self.velocity[1] = 0
             self.rect.x = -100
-#            self.boom.play()
+            self.boom.play()
 
     def setExplodifiers(self, explodifiers):
         self.explodifiers = explodifiers
