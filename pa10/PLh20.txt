@@ -1,0 +1,21 @@
+SQL> @PLh20.sql
+Enter the rate decrement: 55
+Enter the allowed min. rate: 200
++++++ Boat - 106: Old Rate = 300                                                
+----- Boat - 106: New Rate = 245                                                
++++++ Boat - 107: Old Rate = 350                                                
+----- Boat - 107: Update rejected; -2290...ORA-02290: check constraint          
+(NEWHOMAT.BIC4) violated                                                        
++++++ Boat - 108: Old Rate = 100                                                
+----- Boat - 108: Update rejected; The new rate would have been 45              
+
+PL/SQL procedure successfully completed.
+
+
+       BID BNAME           COLOR            RATE     LENGTH  LOGKEEPER          
+---------- --------------- ---------- ---------- ---------- ----------          
+       106 C#              red               245         27         32          
+       107 Bayside         white             350         32         85          
+       108 C++             blue              100         12         95          
+
+SQL> SPOOL OFF
