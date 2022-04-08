@@ -1,0 +1,46 @@
+<html>
+	<head>
+<style>
+	.marvel{
+		background-color: red;
+	}
+	.dc {
+		background-color: blue;
+	}
+</style>
+	</head>
+	<body>
+
+		
+			<h1> SUPERHEROAPI</h1>
+			<input id='search'> </input>
+			<button onclick='search()'>Search</button>
+			<div id='results'> </div>
+	<script>
+		function search(){
+			let term = document.getElementById('search').value;
+			let results = document.getElementById('results');
+			fetch("http//localhost:3000/search/" + term).then(
+				response => response.json()
+			).then(
+
+				json => {
+					results.innerHTML += '<h1>Results</h1>';
+					results.innerHTML += '<ul>';
+					json.forEach(
+						hero => {
+							if(hero.Univsere.includes('DC')){
+								results.innerHTML += '<li class="dc">';
+							} else{
+								results.innerHTML += '<li class="marvel">';
+							}
+							results.innerHTML+= hero.Name+ '</li>';
+						}
+					);
+					results.innerHTML +='</ul>';
+				}
+			)
+		}
+	</script>
+	</body>
+</html>
