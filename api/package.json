@@ -1,0 +1,16 @@
+{
+  "name": "superheroapi",
+  "version": "1.0.0",
+  "description": "Pure funk-awesomeness.",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo 'Start me up!' && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "All of us.",
+  "license": "ISC",
+  "dependencies": {
+    "csv": "^6.0.5",
+    "express": "^4.17.3"
+  }
+}
