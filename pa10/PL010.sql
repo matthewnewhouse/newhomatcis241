@@ -11,8 +11,8 @@ VARIABLE b NUMBER;
 
 -- Entering a PL/SQL block - notice how we reference s and b.
 BEGIN
-   :b := &&s + 1;
-   DBMS_OUTPUT.PUT_LINE('+++++ here it is .. '||:b||' and '|| &s);
+   :b := &&q + 1;
+   DBMS_OUTPUT.PUT_LINE('+++++ here it is .. '||:b||' and '|| &q);
 END;
 /
 -- Now printing, in SQL*Plus, the bind variable b.

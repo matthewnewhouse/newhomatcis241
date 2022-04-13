@@ -44,6 +44,15 @@ app.get('/search/:term',
 	}
 );
 
+app.get('/:term/:universe',
+	(req, res) => {
+		res.send(heroes.filter((hero)=> 
+			hero.Name.toLowerCase().includes
+			(req.params.term.toLowerCase()) 
+			&& hero.Universe.toLowerCase().includes
+			(req.params.universe.toLowerCase())));
+	});
+
 app.listen(port, () => {
 	console.log("I've become aware.");
 });
