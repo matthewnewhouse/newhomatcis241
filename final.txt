@@ -1,0 +1,1084 @@
+SQL> SET ECHO ON
+SQL> /*
+SQL> --
+SQL> CIS 353 - Database Design Project - Library Database
+SQL> Kyle Casey (Team Coordinator)
+SQL> Matthew Newhouse
+SQL> Tu Nguyen
+SQL> Alexis Webster
+SQL> --
+SQL> */
+SQL> --
+SQL> --
+SQL> --
+SQL> --
+SQL> -- ALL SQL/DDL CODE TO CREATE TABLES
+SQL> --
+SQL> CREATE TABLE Book (
+  2  ISBN	 CHAR(20),
+  3  publisher	 CHAR(20)  NOT NULL,
+  4  title	 CHAR(40)  NOT NULL,
+  5  retail_cost FLOAT	   NOT NULL,
+  6  --
+  7  --
+  8  --
+  9  -- PRIMARY KEY CONSTRAINT
+ 10  CONSTRAINT bookIC1 PRIMARY KEY (ISBN),
+ 11  -- RETAIL COST MUST BE GREATER THAN 0
+ 12  CONSTRAINT bookIC2 CHECK(retail_cost > 0)
+ 13  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE Librarian (
+  2  ssn	     INTEGER,
+  3  librarian_name  CHAR(20)	NOT NULL,
+  4  date_of_hire    DATE	NOT NULL,
+  5  mentor_ssn      INTEGER,
+  6  --
+  7  --
+  8  --
+  9  -- PRIMARY KEY CONSTRAINT
+ 10  CONSTRAINT lIC1 PRIMARY KEY (ssn),
+ 11  -- MENTOR FOREIGN KEY CONSTRAINT
+ 12  CONSTRAINT lIC2 FOREIGN KEY (mentor_ssn) REFERENCES Librarian(ssn),
+ 13  -- HIRE DATE CONSTRAINT (Must be hired after 2000)
+ 14  CONSTRAINT lIC3 CHECK((date_of_hire - TO_DATE( '01 Jan 2020', 'DD MON YYYY' )) > 0)
+ 15  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE LibraryCard (
+  2  card_number       INTEGER,
+  3  customer_name     CHAR(40)  NOT NULL,
+  4  expiration_date   DATE	 NOT NULL,
+  5  zip_code	       INTEGER	 NOT NULL,
+  6  --
+  7  --
+  8  --
+  9  -- PRIMARY KEY CONSTRAINT
+ 10  CONSTRAINT lcIC1 PRIMARY KEY (card_number),
+ 11  -- ZIP CODE CONSTRAINT (All Michigan zip codes start with a 4, our library is in Michigan)
+ 12  CONSTRAINT lcIC2 CHECK(zip_code >= 40000 AND zip_code < 50000)
+ 13  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE ReadingGroup (
+  2  id 	INTEGER,
+  3  genre	CHAR(40) NOT NULL,
+  4  group_name CHAR(40)  NOT NULL,
+  5  --
+  6  --
+  7  --
+  8  -- PRIMARY KEY CONSTRAINT
+  9  CONSTRAINT readIC1 PRIMARY KEY (id)
+ 10  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE Transaction (
+  2  transaction_number   INTEGER,
+  3  order_date 	  DATE	 NOT NULL,
+  4  return_date	  DATE	 NOT NULL,
+  5  due_date		  DATE	 NOT NULL,
+  6  penalty		  INTEGER,
+  7  librarian_ssn	  INTEGER NOT NULL,
+  8  c_number		  INTEGER NOT NULL,
+  9  --
+ 10  --
+ 11  --
+ 12  -- PRIMARY KEY CONSTRAINT
+ 13  CONSTRAINT tIC1 PRIMARY KEY (transaction_number),
+ 14  -- FOREIGN KEY CONSTRAINT FOR LIBRARIAN SSN
+ 15  CONSTRAINT tIC2 FOREIGN KEY (librarian_ssn) REFERENCES Librarian(ssn),
+ 16  -- FOREIGN KEY CONSTRIANT FOR CARD NUMBER
+ 17  CONSTRAINT tIC3 FOREIGN KEY (c_number) REFERENCES LibraryCard(card_number) ,
+ 18  -- THE BOOKS MUST BE DUE BACK WITHIN 1 MONTH OF THE ORDER
+ 19  CONSTRAINT tIC4 CHECK(due_date - order_date <= 31)
+ 20  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE BookCopy (
+  2  copy_number     INTEGER,
+  3  isbn	     CHAR(20),
+  4  condition	     CHAR(20) NOT NULL,
+  5  date_received   DATE NOT NULL,
+  6  tnumber	     INTEGER,
+  7  --
+  8  --
+  9  --
+ 10  -- PRIMARY KEY CONSTRAINT
+ 11  CONSTRAINT bcIC1 PRIMARY KEY (copy_number, isbn),
+ 12  -- TRANSACTION FOREIGN KEY
+ 13  CONSTRAINT bcIC2 FOREIGN KEY (tnumber) REFERENCES Transaction(transaction_number),
+ 14  -- BOOK CONDITION CONSTRAINT
+ 15  CONSTRAINT bcIC3 CHECK (condition IN ('New', 'Good', 'Bad')),
+ 16  -- NEWLY PUBLISHED CONSTRAINT, if bookcopy was received within this decade after 01/01/2020, must not have "bad" condition.
+ 17  CONSTRAINT bcIC4 CHECK (condition NOT IN ('Bad') OR (condition IN ('Bad') AND date_received < TO_DATE( '01 Jan 2020', 'DD MON YYYY' )))
+ 18  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE Authors (
+  2  a_isbn  CHAR(20),
+  3  author  CHAR(40) NOT NULL,
+  4  --
+  5  --
+  6  --
+  7  -- PRIMARY KEY CONSTRAINT
+  8  CONSTRAINT aIC1 PRIMARY KEY (a_isbn, author),
+  9  -- FOREIGN KEY CONSTRAINT
+ 10  CONSTRAINT aIC2 FOREIGN KEY (a_isbn) REFERENCES Book(ISBN)
+ 11  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> CREATE TABLE Joins (
+  2  groupid	     INTEGER,
+  3  card_num	     INTEGER,
+  4  date_of_join    DATE     NOT NULL,
+  5  --
+  6  --
+  7  --
+  8  -- PRIMARY KEY CONSTRIANT
+  9  CONSTRAINT jIC1 PRIMARY KEY (groupid, card_num),
+ 10  -- FOREIGN KEY CONSTRAINT FOR GROUP ID
+ 11  CONSTRAINT jIC2 FOREIGN KEY (groupid) REFERENCES ReadingGroup(id),
+ 12  -- FOREIGN KEY CONSTRAINT FOR CARD NUMBER
+ 13  CONSTRAINT jIC3 FOREIGN KEY (card_num) REFERENCES LibraryCard(card_number),
+ 14  -- DATE OF JOIN CONSTRAINT (MUST JOIN CLUB AFTER 01/01/2000)
+ 15  CONSTRAINT jIC4 CHECK(date_of_join > TO_DATE( '01 Jan 2000', 'DD MON YYYY' ))
+ 16  );
+
+Table created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> SET FEEDBACK OFF
+SQL> COMMIT;
+SQL> --
+SQL> --
+SQL> --
+SQL> -- INSERT STATEMENTS (TEST DATA)
+SQL> --
+SQL> --
+SQL> --
+SQL> -- BOOKS(ISBN, PUBLISHER, TITLE, COST)
+SQL> INSERT INTO Book VALUES ('1234567891234', 'George Allen', 'The Hobbit', 10.51);
+SQL> INSERT INTO Book VALUES ('1234567891235', 'George Allen', 'The Lord of The Rings', 30.51);
+SQL> INSERT INTO Book VALUES ('9876543212022', 'Scholastic', 'The Hunger Games', 15.99);
+SQL> INSERT INTO Book VALUES ('9780316726610', 'Hyperion', 'The Five People You Meet in Heaven', 7.99);
+SQL> INSERT INTO Book VALUES ('9874631221390', 'Disney', 'Percy Jackson', 5.99);
+SQL> INSERT INTO Book VALUES ('3213123809191' , 'Bloomsbury', 'Harry Potter', 20.99);
+SQL> INSERT INTO Book VALUES ('9780141321615', 'Puffin Books', 'Five Children and It', 5.99);
+SQL> INSERT INTO Book VALUES ('9781423145844', 'Disney', 'Be Our Guest', 14.01);
+SQL> INSERT INTO Book VALUES ('9781423145899', 'Disney', 'Frozen Adventure', 9.01);
+SQL> INSERT INTO Book VALUES ('9781423145869', 'Disney', 'Frozen Adventure 2', 5.01);
+SQL> -- LIBRARIANS(SSN,NAME,HIRE_DATE,MENTOR_SSN)
+SQL> INSERT INTO Librarian VALUES (342090842, 'Julia', TO_DATE('01/05/22', 'MM/DD/YY'), NULL);
+SQL> INSERT INTO Librarian VALUES (813291233, 'Bob', TO_DATE('05/05/20', 'MM/DD/YY'), NULL);
+SQL> INSERT INTO Librarian VALUES (246710121, 'Leah', TO_DATE('3/22/20', 'MM/DD/YY'),  342090842);
+SQL> INSERT INTO Librarian VALUES (123456789, 'Steven', TO_DATE('10/14/21', 'MM/DD/YY'), 246710121 );
+SQL> INSERT INTO Librarian VALUES (748201099, 'Wean',TO_DATE('11/19/20', 'MM/DD/YY'), NULL);
+SQL> -- LIBRARY CARDS(NUMBER,CUSTOMER_NAME,EXIPRATION_DATE,ZIP_CODE)
+SQL> INSERT INTO LibraryCard VALUES (54321, 'Joseph', TO_DATE('10/25/25', 'MM/DD/YY'), 49221);
+SQL> INSERT INTO LibraryCard VALUES (76543, 'Albert', TO_DATE('06/30/22', 'MM/DD/YY'), 49521);
+SQL> INSERT INTO LibraryCard VALUES (76528, 'Sam',TO_DATE('12/24/23', 'MM/DD/YY'), 49420);
+SQL> INSERT INTO LibraryCard VALUES (11111, 'Jay',TO_DATE('02/24/24', 'MM/DD/YY'), 45432);
+SQL> INSERT INTO LibraryCard VALUES (22222, 'Mabel',TO_DATE('12/25/27', 'MM/DD/YY'), 45531);
+SQL> INSERT INTO LibraryCard VALUES (33333, 'Jacob',TO_DATE('12/20/23', 'MM/DD/YY'), 42531);
+SQL> INSERT INTO LibraryCard VALUES (99999, 'Phil',TO_DATE('12/20/28', 'MM/DD/YY'), 42111);
+SQL> INSERT INTO LibraryCard VALUES (44444, 'Alex',TO_DATE('11/20/24', 'MM/DD/YY'), 42221);
+SQL> INSERT INTO LibraryCard VALUES (55555, 'Leah',TO_DATE('10/14/23', 'MM/DD/YY'), 42331);
+SQL> INSERT INTO LibraryCard VALUES (66666, 'Logan',TO_DATE('12/23/23', 'MM/DD/YY'), 42541);
+SQL> -- READING GROUPS(ID,GENRE,Name)
+SQL> INSERT INTO ReadingGroup VALUES (1001, 'Fantasy', 'Fans of Fantasy');
+SQL> INSERT INTO ReadingGroup VALUES (1002, 'True Crime Non-Fiction', 'Literary Detectives');
+SQL> INSERT INTO ReadingGroup VALUES (1003, 'Religious Fiction', 'Our Philosophy');
+SQL> INSERT INTO ReadingGroup VALUES (1004, 'American Historical Fiction', 'Amateur Histrians');
+SQL> INSERT INTO ReadingGroup VALUES (1005,'Young Adult', 'Authors of The Future');
+SQL> INSERT INTO ReadingGroup VALUES (1006, 'Fantasy', 'Fantasy Fanatics');
+SQL> -- TRANSACTION(TRANS_NUM, ORDER_DATE, RETURN_DATE,DUE_DATE,PENALTY,LIBRARIAN_SSN,CARD_NUM)
+SQL> INSERT INTO Transaction VALUES (12344,
+  2  	     TO_DATE('11/10/20', 'MM/DD/YY'),
+  3  	     TO_DATE('12/24/20', 'MM/DD/YY'),
+  4  	     TO_DATE('11/24/20', 'MM/DD/YY'),
+  5  	     20,123456789,54321);
+SQL> INSERT INTO Transaction VALUES (12345,
+  2  	     TO_DATE('02/02/22', 'MM/DD/YY'),
+  3  	     TO_DATE('02/16/22', 'MM/DD/YY'),
+  4  	     TO_DATE('02/15/22', 'MM/DD/YY'),
+  5  	     1,246710121,76543);
+SQL> INSERT INTO Transaction VALUES (12347,
+  2  	     TO_DATE('11/13/21', 'MM/DD/YY'),
+  3  	     TO_DATE('11/20/21', 'MM/DD/YY'),
+  4  	     TO_DATE('11/27/21', 'MM/DD/YY'),
+  5  	     0, 748201099, 76528);
+SQL> INSERT INTO Transaction VALUES (12349,
+  2  	     TO_DATE('10/12/21', 'MM/DD/YY'),
+  3  	     TO_DATE('12/21/21', 'MM/DD/YY'),
+  4  	     TO_DATE('10/31/21', 'MM/DD/YY'),
+  5  	     20, 748201099, 22222);
+SQL> INSERT INTO Transaction VALUES (12350,
+  2  	     TO_DATE('09/12/21', 'MM/DD/YY'),
+  3  	     TO_DATE('09/21/21', 'MM/DD/YY'),
+  4  	     TO_DATE('09/28/21', 'MM/DD/YY'),
+  5  	     10, 748201099, 33333);
+SQL> INSERT INTO Transaction VALUES (12351,
+  2  	     TO_DATE('10/12/21', 'MM/DD/YY'),
+  3  	     TO_DATE('12/21/21', 'MM/DD/YY'),
+  4  	     TO_DATE('10/31/21', 'MM/DD/YY'),
+  5  	     0, 123456789, 44444);
+SQL> -- BOOK COPIES(COPY_NUMBER, ISBN, CONDITION, DATE_RECEIVED, TRANSACTION NUMBER)
+SQL> INSERT INTO BookCopy VALUES (10,'1234567891234','Good',TO_DATE('01/05/99', 'MM/DD/YY'),12344);
+SQL> INSERT INTO BookCopy VALUES (1,'9876543212022','New',TO_DATE('10/22/12', 'MM/DD/YY'),12345);
+SQL> INSERT INTO BookCopy VALUES (5,'9780316726610', 'Bad',TO_DATE('02/04/18', 'MM/DD/YY'),12347);
+SQL> INSERT INTO BookCopy VALUES (6,'9780316726610', 'Good',TO_DATE('02/04/18', 'MM/DD/YY'),12351);
+SQL> INSERT INTO BookCopy VALUES (7,'9780316726610', 'New',TO_DATE('02/04/18', 'MM/DD/YY'),12350);
+SQL> INSERT INTO BookCopy VALUES (2,'9780316726610', 'Good',TO_DATE('07/07/99', 'MM/DD/YY'),NULL);
+SQL> INSERT INTO BookCopy VALUES (6,'9780141321615', 'New',TO_DATE('08/08/19', 'MM/DD/YY'),NULL);
+SQL> INSERT INTO BookCopy VALUES (1,'9781423145844', 'Bad',TO_DATE('02/08/01', 'MM/DD/YY'),12349);
+SQL> -- AUTHORS(AUTHOR_ISBN, AUTHOR_NAME)
+SQL> INSERT INTO Authors VALUES ('1234567891234', 'J. R. R. Tolkien');
+SQL> INSERT INTO Authors VALUES ('1234567891235', 'J. R. R. Tolkien');
+SQL> INSERT INTO Authors VALUES ('9876543212022', 'Suzanne Collins');
+SQL> INSERT INTO Authors VALUES ('9780316726610', 'Mitch Albom');
+SQL> INSERT INTO Authors VALUES ('9874631221390', 'Rick Riordan');
+SQL> INSERT INTO Authors VALUES ('3213123809191', 'J. K. Rowling');
+SQL> INSERT INTO Authors VALUES ('9780141321615', 'E. Nesbit');
+SQL> INSERT INTO Authors VALUES ('9781423145844', 'Theodore B. Kinni');
+SQL> INSERT INTO Authors VALUES ('9781423145899', 'Theodore B. Kinni');
+SQL> INSERT INTO Authors VALUES ('9781423145869', 'Theodore B. Kinni');
+SQL> -- JOINS(GROUP_ID, CARD_NUMBER, DATE_OF_JOIN)
+SQL> INSERT INTO Joins VALUES (1001, 54321,TO_DATE('01/07/00', 'MM/DD/YY'));
+SQL> INSERT INTO Joins VALUES (1002, 76543,TO_DATE('05/15/21', 'MM/DD/YY'));
+SQL> INSERT INTO Joins VALUES (1003, 76528,TO_DATE('09/08/21', 'MM/DD/YY'));
+SQL> INSERT INTO Joins VALUES (1004, 11111,TO_DATE('12/08/22', 'MM/DD/YY'));
+SQL> INSERT INTO Joins VALUES (1005, 22222,TO_DATE('01/02/19', 'MM/DD/YY'));
+SQL> --
+SQL> --
+SQL> --
+SQL> SET FEEDBACK ON
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> --
+SQL> --
+SQL> -- SHOW ALL TABLES
+SQL> SELECT * FROM Book;
+
+ISBN                 PUBLISHER                                                  
+-------------------- --------------------                                       
+TITLE                                    RETAIL_COST                            
+---------------------------------------- -----------                            
+1234567891234        George Allen                                               
+The Hobbit                                     10.51                            
+                                                                                
+1234567891235        George Allen                                               
+The Lord of The Rings                          30.51                            
+                                                                                
+9876543212022        Scholastic                                                 
+The Hunger Games                               15.99                            
+                                                                                
+
+ISBN                 PUBLISHER                                                  
+-------------------- --------------------                                       
+TITLE                                    RETAIL_COST                            
+---------------------------------------- -----------                            
+9780316726610        Hyperion                                                   
+The Five People You Meet in Heaven              7.99                            
+                                                                                
+9874631221390        Disney                                                     
+Percy Jackson                                   5.99                            
+                                                                                
+3213123809191        Bloomsbury                                                 
+Harry Potter                                   20.99                            
+                                                                                
+
+ISBN                 PUBLISHER                                                  
+-------------------- --------------------                                       
+TITLE                                    RETAIL_COST                            
+---------------------------------------- -----------                            
+9780141321615        Puffin Books                                               
+Five Children and It                            5.99                            
+                                                                                
+9781423145844        Disney                                                     
+Be Our Guest                                   14.01                            
+                                                                                
+9781423145899        Disney                                                     
+Frozen Adventure                                9.01                            
+                                                                                
+
+ISBN                 PUBLISHER                                                  
+-------------------- --------------------                                       
+TITLE                                    RETAIL_COST                            
+---------------------------------------- -----------                            
+9781423145869        Disney                                                     
+Frozen Adventure 2                              5.01                            
+                                                                                
+
+10 rows selected.
+
+SQL> SELECT * FROM Librarian;
+
+       SSN LIBRARIAN_NAME       DATE_OF_H MENTOR_SSN                            
+---------- -------------------- --------- ----------                            
+ 342090842 Julia                05-JAN-22                                       
+ 813291233 Bob                  05-MAY-20                                       
+ 246710121 Leah                 22-MAR-20  342090842                            
+ 123456789 Steven               14-OCT-21  246710121                            
+ 748201099 Wean                 19-NOV-20                                       
+
+5 rows selected.
+
+SQL> SELECT * FROM LibraryCard;
+
+CARD_NUMBER CUSTOMER_NAME                            EXPIRATIO   ZIP_CODE       
+----------- ---------------------------------------- --------- ----------       
+      54321 Joseph                                   25-OCT-25      49221       
+      76543 Albert                                   30-JUN-22      49521       
+      76528 Sam                                      24-DEC-23      49420       
+      11111 Jay                                      24-FEB-24      45432       
+      22222 Mabel                                    25-DEC-27      45531       
+      33333 Jacob                                    20-DEC-23      42531       
+      99999 Phil                                     20-DEC-28      42111       
+      44444 Alex                                     20-NOV-24      42221       
+      55555 Leah                                     14-OCT-23      42331       
+      66666 Logan                                    23-DEC-23      42541       
+
+10 rows selected.
+
+SQL> SELECT * FROM ReadingGroup;
+
+        ID GENRE                                                                
+---------- ----------------------------------------                             
+GROUP_NAME                                                                      
+----------------------------------------                                        
+      1001 Fantasy                                                              
+Fans of Fantasy                                                                 
+                                                                                
+      1002 True Crime Non-Fiction                                               
+Literary Detectives                                                             
+                                                                                
+      1003 Religious Fiction                                                    
+Our Philosophy                                                                  
+                                                                                
+
+        ID GENRE                                                                
+---------- ----------------------------------------                             
+GROUP_NAME                                                                      
+----------------------------------------                                        
+      1004 American Historical Fiction                                          
+Amateur Histrians                                                               
+                                                                                
+      1005 Young Adult                                                          
+Authors of The Future                                                           
+                                                                                
+      1006 Fantasy                                                              
+Fantasy Fanatics                                                                
+                                                                                
+
+6 rows selected.
+
+SQL> SELECT * FROM Transaction;
+
+TRANSACTION_NUMBER ORDER_DAT RETURN_DA DUE_DATE     PENALTY LIBRARIAN_SSN       
+------------------ --------- --------- --------- ---------- -------------       
+  C_NUMBER                                                                      
+----------                                                                      
+             12344 10-NOV-20 24-DEC-20 24-NOV-20         20     123456789       
+     54321                                                                      
+                                                                                
+             12345 02-FEB-22 16-FEB-22 15-FEB-22          1     246710121       
+     76543                                                                      
+                                                                                
+             12347 13-NOV-21 20-NOV-21 27-NOV-21          0     748201099       
+     76528                                                                      
+                                                                                
+
+TRANSACTION_NUMBER ORDER_DAT RETURN_DA DUE_DATE     PENALTY LIBRARIAN_SSN       
+------------------ --------- --------- --------- ---------- -------------       
+  C_NUMBER                                                                      
+----------                                                                      
+             12349 12-OCT-21 21-DEC-21 31-OCT-21         20     748201099       
+     22222                                                                      
+                                                                                
+             12350 12-SEP-21 21-SEP-21 28-SEP-21         10     748201099       
+     33333                                                                      
+                                                                                
+             12351 12-OCT-21 21-DEC-21 31-OCT-21          0     123456789       
+     44444                                                                      
+                                                                                
+
+6 rows selected.
+
+SQL> SELECT * FROM BookCopy;
+
+COPY_NUMBER ISBN                 CONDITION            DATE_RECE    TNUMBER      
+----------- -------------------- -------------------- --------- ----------      
+         10 1234567891234        Good                 05-JAN-99      12344      
+          1 9876543212022        New                  22-OCT-12      12345      
+          5 9780316726610        Bad                  04-FEB-18      12347      
+          6 9780316726610        Good                 04-FEB-18      12351      
+          7 9780316726610        New                  04-FEB-18      12350      
+          2 9780316726610        Good                 07-JUL-99                 
+          6 9780141321615        New                  08-AUG-19                 
+          1 9781423145844        Bad                  08-FEB-01      12349      
+
+8 rows selected.
+
+SQL> SELECT * FROM Authors;
+
+A_ISBN               AUTHOR                                                     
+-------------------- ----------------------------------------                   
+1234567891234        J. R. R. Tolkien                                           
+1234567891235        J. R. R. Tolkien                                           
+3213123809191        J. K. Rowling                                              
+9780141321615        E. Nesbit                                                  
+9780316726610        Mitch Albom                                                
+9781423145844        Theodore B. Kinni                                          
+9781423145869        Theodore B. Kinni                                          
+9781423145899        Theodore B. Kinni                                          
+9874631221390        Rick Riordan                                               
+9876543212022        Suzanne Collins                                            
+
+10 rows selected.
+
+SQL> SELECT * FROM Joins;
+
+   GROUPID   CARD_NUM DATE_OF_J                                                 
+---------- ---------- ---------                                                 
+      1001      54321 07-JAN-00                                                 
+      1002      76543 15-MAY-21                                                 
+      1003      76528 08-SEP-21                                                 
+      1004      11111 08-DEC-22                                                 
+      1005      22222 02-JAN-19                                                 
+
+5 rows selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- QUERIES
+SQL> --
+SQL> --
+SQL> -- Q01 - JOIN W/ 4 RELATIONS
+SQL> -- Get all card number, customer name, transaction number, group name, and date of joins.
+SQL> -- Essentially shows all customers with a book checked out and the group they are in and when they joined.
+SQL> SELECT LC.card_number, LC.customer_name, T.transaction_number, RG.group_name, J.date_of_join
+  2  FROM LibraryCard LC, ReadingGroup RG, Joins J, Transaction T
+  3  WHERE LC.card_number = T.c_number and LC.card_number = J.card_num and J.groupid = RG.id
+  4  ORDER BY LC.card_number;
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+GROUP_NAME                               DATE_OF_J                              
+---------------------------------------- ---------                              
+      22222 Mabel                                                 12349         
+Authors of The Future                    02-JAN-19                              
+                                                                                
+      54321 Joseph                                                12344         
+Fans of Fantasy                          07-JAN-00                              
+                                                                                
+      76528 Sam                                                   12347         
+Our Philosophy                           08-SEP-21                              
+                                                                                
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+GROUP_NAME                               DATE_OF_J                              
+---------------------------------------- ---------                              
+      76543 Albert                                                12345         
+Literary Detectives                      15-MAY-21                              
+                                                                                
+
+4 rows selected.
+
+SQL> --
+SQL> --
+SQL> -- Q02 - SELF JOIN QUERY
+SQL> -- Find the ssn's of the mentor and mentee Librarians.
+SQL> SELECT L1.ssn, L1.librarian_name,	L2.ssn, L2.librarian_name
+  2  FROM Librarian L1, Librarian L2
+  3  WHERE L1.ssn = L2.mentor_ssn;
+
+       SSN LIBRARIAN_NAME              SSN LIBRARIAN_NAME                       
+---------- -------------------- ---------- --------------------                 
+ 342090842 Julia                 246710121 Leah                                 
+ 246710121 Leah                  123456789 Steven                               
+
+2 rows selected.
+
+SQL> --
+SQL> --
+SQL> -- Q03 - MINUS QUERY
+SQL> -- Find the card number and name of any customers without any checked out books.
+SQL> SELECT LC.card_number, LC.customer_name
+  2  FROM LibraryCard LC, Transaction T
+  3  MINUS
+  4  SELECT LC.card_number, LC.customer_name
+  5  FROM LibraryCard LC, Transaction T
+  6  WHERE LC.card_number = T.c_number;
+
+CARD_NUMBER CUSTOMER_NAME                                                       
+----------- ----------------------------------------                            
+      11111 Jay                                                                 
+      55555 Leah                                                                
+      66666 Logan                                                               
+      99999 Phil                                                                
+
+4 rows selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- Q04 - MAX QUERY
+SQL> -- Find the book with the highest retail price.
+SQL> SELECT B.title, B.isbn, B.retail_cost
+  2  FROM Book B
+  3  WHERE B.retail_cost =
+  4  	     (SELECT MAX(B.retail_cost)
+  5  	     FROM Book B
+  6  );
+
+TITLE                                    ISBN                 RETAIL_COST       
+---------------------------------------- -------------------- -----------       
+The Lord of The Rings                    1234567891235              30.51       
+
+1 row selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- Q05 - GROUP BY / HAVING / ORDER BY QUERY
+SQL> -- Find all customers that have checked out a book with a 'bad' condition.
+SQL> SELECT LC.card_number, LC.customer_name
+  2  FROM LibraryCard LC, Transaction T, BookCopy BC
+  3  WHERE LC.card_number = T.c_number AND T.transaction_number = BC.tnumber
+  4  GROUP BY LC.card_number, LC.customer_name, BC.condition
+  5  HAVING BC.condition = 'Bad'
+  6  ORDER BY LC.card_number;
+
+CARD_NUMBER CUSTOMER_NAME                                                       
+----------- ----------------------------------------                            
+      22222 Mabel                                                               
+      76528 Sam                                                                 
+
+2 rows selected.
+
+SQL> --
+SQL> --
+SQL> -- Q06 - CORRELATED SUBQUERY
+SQL> -- Find all librarians not involved in any current transactions that were also hired before 01/01/2020.
+SQL> SELECT L.ssn, L.librarian_name
+  2  FROM Librarian L
+  3  WHERE L.date_of_hire > TO_DATE( '01 Jan 2020', 'DD MON YYYY' ) AND NOT EXISTS
+  4  	     (SELECT * FROM Transaction T WHERE T.librarian_ssn = L.ssn);
+
+       SSN LIBRARIAN_NAME                                                       
+---------- --------------------                                                 
+ 813291233 Bob                                                                  
+ 342090842 Julia                                                                
+
+2 rows selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- Q07 - NON-CORRELATED SUBQUERY
+SQL> -- Find all books that don't have any copies and are published by Disney.
+SQL> SELECT B.ISBN, B.title
+  2  FROM Book B
+  3  WHERE B.publisher = 'Disney'
+  4  AND B.ISBN NOT IN (SELECT BC.isbn FROM BookCopy BC);
+
+ISBN                 TITLE                                                      
+-------------------- ----------------------------------------                   
+9874631221390        Percy Jackson                                              
+9781423145899        Frozen Adventure                                           
+9781423145869        Frozen Adventure 2                                         
+
+3 rows selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- Q08 - RELATIONAL DIVISION QUERY
+SQL> -- Find all card numbers and names of every customer that has joined a reading group with a fantasy genre.
+SQL> SELECT LC.card_number, LC.customer_name
+  2  FROM LibraryCard LC
+  3  WHERE NOT EXISTS(
+  4  (SELECT RG.genre FROM ReadingGroup RG WHERE RG.genre = 'Fantasy')
+  5  MINUS
+  6  (SELECT RG.genre FROM ReadingGroup RG, Joins J WHERE RG.id = J.groupid
+  7  	     and J.card_num = LC.card_number and RG.genre = 'Fantasy' ));
+
+CARD_NUMBER CUSTOMER_NAME                                                       
+----------- ----------------------------------------                            
+      54321 Joseph                                                              
+
+1 row selected.
+
+SQL> --
+SQL> --
+SQL> -- Q09 - OUTER JOIN QUERY
+SQL> -- Show all transactions of customers for those that have them.
+SQL> SELECT LC.card_number, LC.customer_name, T.transaction_number, T.due_date
+  2  FROM LibraryCard LC LEFT OUTER JOIN Transaction T ON LC.card_number = T.c_number;
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+DUE_DATE                                                                        
+---------                                                                       
+      54321 Joseph                                                12344         
+24-NOV-20                                                                       
+                                                                                
+      76543 Albert                                                12345         
+15-FEB-22                                                                       
+                                                                                
+      76528 Sam                                                   12347         
+27-NOV-21                                                                       
+                                                                                
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+DUE_DATE                                                                        
+---------                                                                       
+      22222 Mabel                                                 12349         
+31-OCT-21                                                                       
+                                                                                
+      33333 Jacob                                                 12350         
+28-SEP-21                                                                       
+                                                                                
+      44444 Alex                                                  12351         
+31-OCT-21                                                                       
+                                                                                
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+DUE_DATE                                                                        
+---------                                                                       
+      11111 Jay                                                                 
+                                                                                
+                                                                                
+      55555 Leah                                                                
+                                                                                
+                                                                                
+      99999 Phil                                                                
+                                                                                
+                                                                                
+
+CARD_NUMBER CUSTOMER_NAME                            TRANSACTION_NUMBER         
+----------- ---------------------------------------- ------------------         
+DUE_DATE                                                                        
+---------                                                                       
+      66666 Logan                                                               
+                                                                                
+                                                                                
+
+10 rows selected.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> -- TESTING INTEGRITY CONSTRAINTS
+SQL> --
+SQL> --
+SQL> -- TESTING bookIC1 - PRIMARY KEY ISBN
+SQL> INSERT INTO Book VALUES ('9999987654321', 'TEST PUBLISHER', 'TEST BOOK', 99.00);
+
+1 row created.
+
+SQL> INSERT INTO Book VALUES ('9999987654321', 'TEST PUBLISHER', 'TEST BOOK', 99.00);
+INSERT INTO Book VALUES ('9999987654321', 'TEST PUBLISHER', 'TEST BOOK', 99.00)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.BOOKIC1) violated 
+
+
+SQL> --
+SQL> -- TESTING bookIC2 - RETAIL COST MUST BE GREATER THAN 0
+SQL> INSERT INTO Book VALUES ('9999987654322', 'TEST PUBLISHER', 'TEST BOOK', 0);
+INSERT INTO Book VALUES ('9999987654322', 'TEST PUBLISHER', 'TEST BOOK', 0)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.BOOKIC2) violated 
+
+
+SQL> INSERT INTO Book VALUES ('9999987654323', 'TEST PUBLISHER', 'TEST BOOK', -1);
+INSERT INTO Book VALUES ('9999987654323', 'TEST PUBLISHER', 'TEST BOOK', -1)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.BOOKIC2) violated 
+
+
+SQL> INSERT INTO Book VALUES ('9999987654324', 'TEST PUBLISHER', 'TEST BOOK', 1);
+
+1 row created.
+
+SQL> --
+SQL> --
+SQL> -- TESTING lIC1 - PRIMARY KEY SSN
+SQL> INSERT INTO Librarian VALUES (000000000, 'TEST', TO_DATE('07/01/20', 'MM/DD/YY'), NULL );
+
+1 row created.
+
+SQL> INSERT INTO Librarian VALUES (000000000, 'TEST', TO_DATE('07/01/20', 'MM/DD/YY'), NULL );
+INSERT INTO Librarian VALUES (000000000, 'TEST', TO_DATE('07/01/20', 'MM/DD/YY'), NULL )
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.LIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING lIC2 - FOREIGN KEY MENTOR SSN REFERENCES LIBRARIAN SSN ON DELETE SET NULL
+SQL> INSERT INTO Librarian VALUES (000000001, 'TEST', TO_DATE('05/01/20', 'MM/DD/YY'), NULL);
+
+1 row created.
+
+SQL> INSERT INTO Librarian VALUES (000000002, 'TEST', TO_DATE('06/01/20', 'MM/DD/YY'), 000000001);
+
+1 row created.
+
+SQL> DELETE FROM Librarian L  WHERE L.ssn = 000000001;
+DELETE FROM Librarian L  WHERE L.ssn = 000000001
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (NEWHOMAT.LIC2) violated - child record found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING lIC3 - DATE OF HIRE MUST BE AFTER 01/01/2000
+SQL> INSERT INTO Librarian VALUES (000000003, 'TEST', TO_DATE('02/01/1999', 'MM/DD/YYYY'), NULL );
+INSERT INTO Librarian VALUES (000000003, 'TEST', TO_DATE('02/01/1999', 'MM/DD/YYYY'), NULL )
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.LIC3) violated 
+
+
+SQL> INSERT INTO Librarian VALUES (000000005, 'TEST', TO_DATE('04/01/2020', 'MM/DD/YYYY'), NULL );
+
+1 row created.
+
+SQL> --
+SQL> --
+SQL> -- TESTING lcIC1 - PRIMARY KEY CARD_NUMBER
+SQL> INSERT INTO LibraryCard VALUES (00000, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 44444);
+
+1 row created.
+
+SQL> INSERT INTO LibraryCard VALUES (00000, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 44444);
+INSERT INTO LibraryCard VALUES (00000, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 44444)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.LCIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING lcIC2 - ZIP CODE BETWEEN 40000 and 50000 (ZIP CODE IN MICHIGAN)
+SQL> INSERT INTO LibraryCard VALUES (00001, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 34444);
+INSERT INTO LibraryCard VALUES (00001, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 34444)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.LCIC2) violated 
+
+
+SQL> INSERT INTO LibraryCard VALUES (00002, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 64444);
+INSERT INTO LibraryCard VALUES (00002, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 64444)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.LCIC2) violated 
+
+
+SQL> INSERT INTO LibraryCard VALUES (00003, 'TEST', TO_DATE('05/05/05', 'MM/DD/YY'), 40001);
+
+1 row created.
+
+SQL> --
+SQL> --
+SQL> -- TESTING readIC1 - PRIMARY KEY ID
+SQL> INSERT INTO ReadingGroup VALUES (0000, 'TEST', 'TEST');
+
+1 row created.
+
+SQL> INSERT INTO ReadingGroup VALUES (0000, 'TEST', 'TEST');
+INSERT INTO ReadingGroup VALUES (0000, 'TEST', 'TEST')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.READIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING tIC1 - PRIMARY KEY TRANSACTION_NUMBER
+SQL> INSERT INTO Transaction VALUES (00000,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+
+1 row created.
+
+SQL> INSERT INTO Transaction VALUES (00000,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+INSERT INTO Transaction VALUES (00000,
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.TIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING tIC2 - FOREIGN KEY LIBRARIAN_SSN REFERENCES LIBARIAN SSN
+SQL> INSERT INTO Transaction VALUES (00001,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+
+1 row created.
+
+SQL> INSERT INTO Transaction VALUES (00002,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,040404040,54321);
+INSERT INTO Transaction VALUES (00002,
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.TIC2) violated - parent key not found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING tIC3 - FOREIGN KEY C_NUMBER REFERENCES LIBRARY CARD CARD_NUMBER ON DELETE SET NULL
+SQL> INSERT INTO Transaction VALUES (00003,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+
+1 row created.
+
+SQL> INSERT INTO Transaction VALUES (00004,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,12121);
+INSERT INTO Transaction VALUES (00004,
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.TIC3) violated - parent key not found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING tIC4 - CHECK THAT DUE DATE IS WITHIN 1 MONTH OF ORDER DATE
+SQL> INSERT INTO Transaction VALUES (00005,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('12/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+INSERT INTO Transaction VALUES (00005,
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.TIC4) violated 
+
+
+SQL> INSERT INTO Transaction VALUES (00006,
+  2  	     TO_DATE('10/10/10', 'MM/DD/YY'),
+  3  	     TO_DATE('11/10/10', 'MM/DD/YY'),
+  4  	     TO_DATE('10/30/10', 'MM/DD/YY'),
+  5  	     0,123456789,54321);
+
+1 row created.
+
+SQL> --
+SQL> --
+SQL> -- TESTING bcIC1 - PRIMARY KEY COPY_NUMBER and ISBN
+SQL> INSERT INTO BookCopy VALUES (100,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),NULL);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (100,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),NULL);
+INSERT INTO BookCopy VALUES (100,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),NULL)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.BCIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING bcIC2 - FORIEGN KEY REFERENCES TRANSACTION TRANSACTION_NUMBER
+SQL> INSERT INTO BookCopy VALUES (11,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),00006);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (12,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),66666);
+INSERT INTO BookCopy VALUES (12,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),66666)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.BCIC2) violated - parent key not 
+found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING bcIC3 - CHECK CONDTION IN NEW, GOOD, OR BAD
+SQL> INSERT INTO BookCopy VALUES (13,'1234567891234','New',TO_DATE('01/05/99', 'MM/DD/YY'),NULL);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (14,'1234567891234','Good',TO_DATE('01/05/99', 'MM/DD/YY'),NULL);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (15,'1234567891234','Bad',TO_DATE('10/10/18', 'MM/DD/YY'),NULL);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (16,'1234567891234','Amazing',TO_DATE('01/05/99', 'MM/DD/YY'),NULL);
+INSERT INTO BookCopy VALUES (16,'1234567891234','Amazing',TO_DATE('01/05/99', 'MM/DD/YY'),NULL)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.BCIC3) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING bcIC4 - CHECK THAT BOOK'S IN BAD CONDITION AREN'T RECEIVED AFTER 01/01/2020
+SQL> INSERT INTO BookCopy VALUES (17,'1234567891234','Bad',TO_DATE('10/10/19', 'MM/DD/YY'),NULL);
+
+1 row created.
+
+SQL> INSERT INTO BookCopy VALUES (18,'1234567891234','Bad',TO_DATE('01/01/20', 'MM/DD/YY'),NULL);
+INSERT INTO BookCopy VALUES (18,'1234567891234','Bad',TO_DATE('01/01/20', 'MM/DD/YY'),NULL)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.BCIC4) violated 
+
+
+SQL> INSERT INTO BookCopy VALUES (19,'1234567891234','Bad',TO_DATE('10/10/22', 'MM/DD/YY'),NULL);
+INSERT INTO BookCopy VALUES (19,'1234567891234','Bad',TO_DATE('10/10/22', 'MM/DD/YY'),NULL)
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.BCIC4) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING aIC1 - PRIMARY KEY A_ISBN, AUTHOR
+SQL> INSERT INTO Authors VALUES ('1234567891234', 'Test');
+
+1 row created.
+
+SQL> INSERT INTO Authors VALUES ('1234567891234', 'Test');
+INSERT INTO Authors VALUES ('1234567891234', 'Test')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.AIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING aIC2 - FOREIGN KEY A_ISBN REFERENCES BOOK ISBN
+SQL> INSERT INTO Authors VALUES ('1234567891234', 'Test2');
+
+1 row created.
+
+SQL> INSERT INTO Authors VALUES ('8780123891232', 'Test2');
+INSERT INTO Authors VALUES ('8780123891232', 'Test2')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.AIC2) violated - parent key not found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING jIC1 - PRIMARY KEY GROUPID CARD_NUM
+SQL> INSERT INTO Joins VALUES (1001, 11111,TO_DATE('01/02/19', 'MM/DD/YY'));
+
+1 row created.
+
+SQL> INSERT INTO Joins VALUES (1001, 11111,TO_DATE('01/02/19', 'MM/DD/YY'));
+INSERT INTO Joins VALUES (1001, 11111,TO_DATE('01/02/19', 'MM/DD/YY'))
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NEWHOMAT.JIC1) violated 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING jIC2 - FOREIGN KEY GROUPID REFERENCES READGROUP ID
+SQL> INSERT INTO Joins VALUES (1561, 22222,TO_DATE('01/02/19', 'MM/DD/YY'));
+INSERT INTO Joins VALUES (1561, 22222,TO_DATE('01/02/19', 'MM/DD/YY'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.JIC2) violated - parent key not found 
+
+
+SQL> --
+SQL> -- TESTING jIC3 - FOREIGN KEY CARD_NUM REFERENCES LIBRARYCARD CARD_NUMBER
+SQL> INSERT INTO Joins VALUES (1001, 13231,TO_DATE('01/02/19', 'MM/DD/YY'));
+INSERT INTO Joins VALUES (1001, 13231,TO_DATE('01/02/19', 'MM/DD/YY'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (NEWHOMAT.JIC3) violated - parent key not found 
+
+
+SQL> --
+SQL> --
+SQL> -- TESTING jIC4 - CHECK DATE_OF_JOIN AFTER 01/01/2000
+SQL> INSERT INTO Joins VALUES (1002, 11111,TO_DATE('01/01/00', 'MM/DD/YY'));
+INSERT INTO Joins VALUES (1002, 11111,TO_DATE('01/01/00', 'MM/DD/YY'))
+*
+ERROR at line 1:
+ORA-02290: check constraint (NEWHOMAT.JIC4) violated 
+
+
+SQL> INSERT INTO Joins VALUES (1002, 22222,TO_DATE('10/10/19', 'MM/DD/YY'));
+
+1 row created.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> --
+SQL> --
+SQL> --
+SQL> SPOOL OFF
