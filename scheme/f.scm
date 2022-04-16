@@ -56,18 +56,13 @@
 )
 
 (define (digitN num n)
-	(remainder (quotient num (expt 10 (- (countdigits num) n)) 10)
+	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
 )
 
 
 (newline)
 (write "Testing 4")
 (newline)
-(write (countdigits 123))
-(write(countdigits 12345))
-(write(countdigits 1))
-(newline)
-(write (digitN 123456789 0))
 (write (digitN 123456789 1))
 (write (digitN 123456789 2))
 (write (digitN 123456789 3))
@@ -76,6 +71,7 @@
 (write (digitN 123456789 6))
 (write (digitN 123456789 7))
 (write (digitN 123456789 8))
+(write (digitN 123456789 9))
 (newline)
 
 ;#5: Two lists and returns whether or not the first list is shorter than the second
