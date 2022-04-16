@@ -2,6 +2,19 @@
 
 ;#2: Recaman's Sequence
 
+(define (recaman n)
+	(cond
+	  ((= n 0) 0)
+	  (else(- (recaman (- n 1)) n))
+	)
+)
+
+(newline)
+(write "Testing 2")
+(newline)
+(write(recaman 10))
+(newline)
+
 ;#3: Give The Nth Element Of A List
 
 (define l1 (list 1 2 3 4))
@@ -33,7 +46,37 @@
 (write(findN l5 0))
 (newline)
 
-;#4
+;#4: Gives the nth digit of a multi-digit number.
+
+(define (countdigits num)
+	(cond 
+	  ((< num 10) 1)
+	  (else (+ (countdigits (/ num 10)) 1))
+	)
+)
+
+(define (digitN num n)
+	(remainder (quotient num (expt 10 (- (countdigits num) n)) 10)
+)
+
+
+(newline)
+(write "Testing 4")
+(newline)
+(write (countdigits 123))
+(write(countdigits 12345))
+(write(countdigits 1))
+(newline)
+(write (digitN 123456789 0))
+(write (digitN 123456789 1))
+(write (digitN 123456789 2))
+(write (digitN 123456789 3))
+(write (digitN 123456789 4))
+(write (digitN 123456789 5))
+(write (digitN 123456789 6))
+(write (digitN 123456789 7))
+(write (digitN 123456789 8))
+(newline)
 
 ;#5: Two lists and returns whether or not the first list is shorter than the second
 
