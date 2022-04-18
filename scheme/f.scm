@@ -1,19 +1,6 @@
-;#1: Group Members - Matthew Newhouse,
+;#1: Group Members - Matthew Newhouse, Liam Mazure
 
-;#2: Recaman's Sequence
-
-(define (recaman n)
-	(cond
-	  ((= n 0) 0)
-	  (else(- (recaman (- n 1)) n))
-	)
-)
-
-(newline)
-(write "Testing 2")
-(newline)
-(write(recaman 10))
-(newline)
+;#2: Skip
 
 ;#3: Give The Nth Element Of A List
 
@@ -23,42 +10,35 @@
 (define l4 (list 1))
 (define l5 (list))
 
-(define (findN lis n )
-  (cond
-    ((null? lis) #f)
-    (else (findNitem lis n))
-    )
-)
-
 (define (findNitem lis n)
   (cond
+    ((null? lis) #f)
     ((eq? n 0) (car lis))
-    (else (findN (cdr lis) (- n 1)))
+    (else (findNitem (cdr lis) (- n 1)))
   )
 )
 
 (newline)
 (write "Testing 3")
 (newline)
-(write(findN l1 0))
-(write(findN l1 1))
-(write(findN l1 2))
-(write(findN l5 0))
+(write(findNitem l1 0))
+(write(findNitem l1 1))
+(write(findNitem l1 2))
+(write(findNitem l5 0))
 (newline)
 
 ;#4: Gives the nth digit of a multi-digit number.
 
 (define (countdigits num)
-	(cond 
+  	(cond 
 	  ((< num 10) 1)
 	  (else (+ (countdigits (/ num 10)) 1))
 	)
 )
 
 (define (digitN num n)
-	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
+  	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
 )
-
 
 (newline)
 (write "Testing 4")
