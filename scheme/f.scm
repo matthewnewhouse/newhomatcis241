@@ -17,6 +17,7 @@
     (else (findNitem (cdr lis) (- n 1)))
   )
 )
+
 (display "\nTesting 3\n")
 (display (findNitem l1 0))
 (display (findNitem l1 1))
@@ -36,8 +37,6 @@
 (define (digitN num n)
   	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
 )
-
-
 
 (display "\nTesting 4\n")
 (display (digitN 123456789 1))
@@ -62,6 +61,7 @@
 (display (shorter l2 l1))
 (display (shorter l5 l1))
 (display (shorter l1 l5))
+(display (shorter l1 l1))
 (display "\n")
 
 ;#6 Return The Length Of A List
@@ -81,7 +81,6 @@
 )
 
 (display "\nTesting 6\n")
-
 (display (len l1))
 (display (len l2))
 (display (len l3))
