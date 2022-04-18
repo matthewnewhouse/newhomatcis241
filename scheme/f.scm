@@ -17,15 +17,12 @@
     (else (findNitem (cdr lis) (- n 1)))
   )
 )
-
-(newline)
-(write "Testing 3")
-(newline)
-(write(findNitem l1 0))
-(write(findNitem l1 1))
-(write(findNitem l1 2))
-(write(findNitem l5 0))
-(newline)
+(display "\nTesting 3\n")
+(display (findNitem l1 0))
+(display (findNitem l1 1))
+(display (findNitem l1 2))
+(display (findNitem l5 0))
+(display "\n")
 
 ;#4: Gives the nth digit of a multi-digit number.
 
@@ -40,19 +37,19 @@
   	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
 )
 
-(newline)
-(write "Testing 4")
-(newline)
-(write (digitN 123456789 1))
-(write (digitN 123456789 2))
-(write (digitN 123456789 3))
-(write (digitN 123456789 4))
-(write (digitN 123456789 5))
-(write (digitN 123456789 6))
-(write (digitN 123456789 7))
-(write (digitN 123456789 8))
-(write (digitN 123456789 9))
-(newline)
+
+
+(display "\nTesting 4\n")
+(display (digitN 123456789 1))
+(display (digitN 123456789 2))
+(display (digitN 123456789 3))
+(display (digitN 123456789 4))
+(display (digitN 123456789 5))
+(display (digitN 123456789 6))
+(display (digitN 123456789 7))
+(display (digitN 123456789 8))
+(display (digitN 123456789 9))
+(display "\n")
 
 ;#5: Two lists and returns whether or not the first list is shorter than the second
 
@@ -60,14 +57,12 @@
 	(< (length lis1) (length lis2))
 )
 
-(newline)
-(write "Testing 5")
-(newline)
-(write (shorter l1 l2))
-(write (shorter l2 l1))
-(write (shorter l5 l1))
-(write (shorter l1 l5))
-(newline)
+(display "\nTesting 5\n")
+(display (shorter l1 l2))
+(display (shorter l2 l1))
+(display (shorter l5 l1))
+(display (shorter l1 l5))
+(display "\n")
 
 ;#6 Return The Length Of A List
 
@@ -85,12 +80,11 @@
 	)
 )
 
-(newline)
-(write "Testing 6")
-(newline)
-(write(len l1))
-(write(len l2))
-(write(len l3))
-(write(len l4))
-(write(len l5))
-(newline)
+(display "\nTesting 6\n")
+
+(display (len l1))
+(display (len l2))
+(display (len l3))
+(display (len l4))
+(display (len l5))
+(display "\n")
