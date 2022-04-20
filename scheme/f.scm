@@ -1,8 +1,6 @@
 ;#1: Group Members - Matthew Newhouse, Liam Mazure
 
-;#2: Skip
-
-;#3: Give The Nth Element Of A List
+;#2: Give The Nth Element Of A List
 
 (define l1 (list 1 2 3 4))
 (define l2 (list 1 2 3))
@@ -18,14 +16,14 @@
   )
 )
 
-(display "\nTesting 3\n")
+(display "\nTesting 2\n")
 (display (findNitem l1 0))
 (display (findNitem l1 1))
 (display (findNitem l1 2))
 (display (findNitem l5 0))
 (display "\n")
 
-;#4: Gives the nth digit of a multi-digit number.
+;#3: Gives the nth digit of a multi-digit number.
 
 (define (countdigits num)
   	(cond 
@@ -38,7 +36,7 @@
   	(remainder (quotient num (expt 10 (- (countdigits num) n))) 10)
 )
 
-(display "\nTesting 4\n")
+(display "\nTesting 3\n")
 (display (digitN 123456789 1))
 (display (digitN 123456789 2))
 (display (digitN 123456789 3))
@@ -50,13 +48,13 @@
 (display (digitN 123456789 9))
 (display "\n")
 
-;#5: Two lists and returns whether or not the first list is shorter than the second
+;#4: Two lists and returns whether or not the first list is shorter than the second
 
 (define (shorter lis1 lis2)
 	(< (length lis1) (length lis2))
 )
 
-(display "\nTesting 5\n")
+(display "\nTesting 4\n")
 (display (shorter l1 l2))
 (display (shorter l2 l1))
 (display (shorter l5 l1))
@@ -64,7 +62,7 @@
 (display (shorter l1 l1))
 (display "\n")
 
-;#6 Return The Length Of A List
+;#5 Return The Length Of A List
 
 (define (len lis )	
      (cond 
@@ -80,7 +78,7 @@
 	)
 )
 
-(display "\nTesting 6\n")
+(display "\nTesting 5\n")
 (display (len l1))
 (display (len l2))
 (display (len l3))
